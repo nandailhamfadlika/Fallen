@@ -1,0 +1,308 @@
+[gd_scene load_steps=34 format=3 uid="uid://omhamifighter01"]
+
+[ext_resource type="Script" path="res://src/characters/OmHami.gd" id="1_om_hami"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_01.png" id="2_idle01"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_02.png" id="3_idle02"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_03.png" id="4_idle03"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_04.png" id="5_idle04"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_05.png" id="6_idle05"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_06.png" id="7_idle06"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_07.png" id="8_idle07"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_08.png" id="9_idle08"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_01.png" id="10_walk01"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_02.png" id="11_walk02"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_03.png" id="12_walk03"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_04.png" id="13_walk04"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo_01_thrust.png" id="14_thrust"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo_02_sweep.png" id="15_sweep"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo_03_smash.png" id="16_smash"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/hurt_reeling.png" id="17_hurtreel"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/hurt_stagger.png" id="18_hurtstag"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/wall_slide.png" id="19_wallslide"]
+[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="20_hurtbox"]
+[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="21_hitbox"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_crouch.png" id="22_jumpcrouch"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_rise.png" id="23_jumprise"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_fall.png" id="24_jumpfall"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 24.0
+height = 104.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hurt"]
+radius = 28.0
+height = 112.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(96, 56)
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 1.04
+loop_mode = 1
+step = 0.13
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13, 0.26, 0.39, 0.52, 0.65, 0.78, 0.91),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_idle01"), ExtResource("3_idle02"), ExtResource("4_idle03"), ExtResource("5_idle04"), ExtResource("6_idle05"), ExtResource("7_idle06"), ExtResource("8_idle07"), ExtResource("9_idle08")]
+}
+
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_walk01"), ExtResource("11_walk02"), ExtResource("12_walk03"), ExtResource("13_walk04")]
+}
+
+[sub_resource type="Animation" id="Animation_jump"]
+resource_name = "jump"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("22_jumpcrouch"), ExtResource("23_jumprise")]
+}
+
+[sub_resource type="Animation" id="Animation_fall"]
+resource_name = "fall"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("24_jumpfall")]
+}
+
+[sub_resource type="Animation" id="Animation_combo_thrust"]
+resource_name = "combo_thrust"
+length = 0.28
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("14_thrust")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.04, 0.12, 0.18, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_combo_sweep"]
+resource_name = "combo_sweep"
+length = 0.32
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_sweep")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.04, 0.14, 0.2, 0.28),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_combo_smash"]
+resource_name = "combo_smash"
+length = 0.48
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("16_smash")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.08, 0.28, 0.42),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_hurt"]
+resource_name = "hurt"
+length = 0.35
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("17_hurtreel"), ExtResource("18_hurtstag")]
+}
+
+[sub_resource type="Animation" id="Animation_wall_slide"]
+resource_name = "wall_slide"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("19_wallslide")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_om_hami"]
+_data = {
+"combo_smash": SubResource("Animation_combo_smash"),
+"combo_sweep": SubResource("Animation_combo_sweep"),
+"combo_thrust": SubResource("Animation_combo_thrust"),
+"fall": SubResource("Animation_fall"),
+"hurt": SubResource("Animation_hurt"),
+"idle": SubResource("Animation_idle"),
+"jump": SubResource("Animation_jump"),
+"walk": SubResource("Animation_walk"),
+"wall_slide": SubResource("Animation_wall_slide")
+}
+
+[node name="OmHami" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_om_hami")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -52)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -70)
+scale = Vector2(0.31, 0.31)
+texture = ExtResource("2_idle01")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("20_hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -56)
+shape = SubResource("CapsuleShape2D_hurt")
+debug_color = Color(0, 0.6, 0.7, 0.3)
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("21_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(58, -50)
+shape = SubResource("RectangleShape2D_hit")
+debug_color = Color(0.9, 0.2, 0.1, 0.4)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_om_hami")
+}
+autoplay = "idle"

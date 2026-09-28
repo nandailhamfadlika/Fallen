@@ -1,0 +1,303 @@
+[gd_scene load_steps=24 format=3 uid="uid://aronfighter01"]
+
+[ext_resource type="Script" path="res://src/characters/Aron.gd" id="1_aron"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_01.png" id="2_idle01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_02.png" id="3_idle02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_03.png" id="4_idle03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_04.png" id="5_idle04"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_01_jab.png" id="6_jab"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_02_cross.png" id="7_cross"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_03_uppercut.png" id="8_uppercut"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/jump_rise.png" id="9_jumprise"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/jump_fall.png" id="10_jumpfall"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/wall_slide.png" id="11_wallslide"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt_stagger.png" id="12_hurtstagger"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt_reeling.png" id="13_hurtreeling"]
+[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="14_hurtbox"]
+[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="15_hitbox"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_01.png" id="16_run01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_02.png" id="17_run02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_03.png" id="18_run03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_04.png" id="19_run04"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 16.0
+height = 72.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hurt"]
+radius = 20.0
+height = 78.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(48, 40)
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_idle01"), ExtResource("3_idle02"), ExtResource("4_idle03"), ExtResource("5_idle04")]
+}
+
+[sub_resource type="Animation" id="Animation_run"]
+resource_name = "run"
+length = 0.44
+loop_mode = 1
+step = 0.11
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.11, 0.22, 0.33),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("16_run01"), ExtResource("17_run02"), ExtResource("18_run03"), ExtResource("19_run04")]
+}
+
+[sub_resource type="Animation" id="Animation_combo_jab"]
+resource_name = "combo_jab"
+length = 0.24
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_jab")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.04, 0.12, 0.18, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_combo_cross"]
+resource_name = "combo_cross"
+length = 0.26
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_cross")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.04, 0.14, 0.20, 0.26),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_combo_uppercut"]
+resource_name = "combo_uppercut"
+length = 0.42
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("8_uppercut")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06, 0.24, 0.42),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_jump"]
+resource_name = "jump"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_jumprise")]
+}
+
+[sub_resource type="Animation" id="Animation_fall"]
+resource_name = "fall"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_jumpfall")]
+}
+
+[sub_resource type="Animation" id="Animation_wall_slide"]
+resource_name = "wall_slide"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_wallslide")]
+}
+
+[sub_resource type="Animation" id="Animation_hurt"]
+resource_name = "hurt"
+length = 0.35
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("12_hurtstagger"), ExtResource("13_hurtreeling")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aron"]
+_data = {
+"combo_cross": SubResource("Animation_combo_cross"),
+"combo_jab": SubResource("Animation_combo_jab"),
+"combo_uppercut": SubResource("Animation_combo_uppercut"),
+"fall": SubResource("Animation_fall"),
+"hurt": SubResource("Animation_hurt"),
+"idle": SubResource("Animation_idle"),
+"jump": SubResource("Animation_jump"),
+"run": SubResource("Animation_run"),
+"wall_slide": SubResource("Animation_wall_slide")
+}
+
+[node name="Aron" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_aron")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -36)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -48)
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("2_idle01")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("14_hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -38)
+shape = SubResource("CapsuleShape2D_hurt")
+debug_color = Color(0, 0.6, 0.7, 0.3)
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("15_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(28, -42)
+shape = SubResource("RectangleShape2D_hit")
+debug_color = Color(0.9, 0.2, 0.1, 0.4)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_aron")
+}
+autoplay = "idle"

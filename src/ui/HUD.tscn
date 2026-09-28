@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3 uid="uid://hudview01"]
+
+[ext_resource type="Script" path="res://src/ui/HUD.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1"]
+bg_color = Color(0.12, 0.6, 0.9, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="P1Container" type="VBoxContainer" parent="."]
+offset_left = 40.0
+offset_top = 30.0
+offset_right = 380.0
+offset_bottom = 80.0
+
+[node name="P1NameLabel" type="Label" parent="P1Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "ARON"
+
+[node name="P1HPBar" type="ProgressBar" parent="P1Container"]
+custom_minimum_size = Vector2(340, 18)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_p1")
+value = 100.0
+show_percentage = false
+
+[node name="P2Container" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -380.0
+offset_top = 30.0
+offset_right = -40.0
+offset_bottom = 80.0
+grow_horizontal = 0
+
+[node name="P2NameLabel" type="Label" parent="P2Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.2, 1)
+theme_override_font_sizes/font_size = 18
+text = "TARGET DUMMY"
+horizontal_alignment = 2
+
+[node name="P2HPBar" type="ProgressBar" parent="P2Container"]
+custom_minimum_size = Vector2(340, 18)
+layout_mode = 2
+value = 100.0
+fill_mode = 1
+show_percentage = false
+
+[node name="CenterContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -80.0
+offset_right = 250.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="BannerLabel" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 46
+text = "ROUND 1"
+horizontal_alignment = 1
+
+[node name="SubBannerLabel" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 18
+text = "Press [R] to Rematch"
+horizontal_alignment = 1
+
+[node name="ComboLabel" type="Label" parent="."]
+offset_left = 60.0
+offset_top = 100.0
+offset_right = 240.0
+offset_bottom = 150.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "3 HITS!"

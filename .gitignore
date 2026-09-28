@@ -1,0 +1,7 @@
+# Abaikan editor Godot dan export templates
+Godot_editor.exe
+godot_templates.tpz
+*.tpz
+
+# Abaikan folder cache build Godot
+.godot/

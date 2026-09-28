@@ -1,0 +1,307 @@
+[gd_scene load_steps=12 format=3 uid="uid://stageselect01"]
+
+[ext_resource type="Script" path="res://src/ui/StageSelect.gd" id="1_stageselect"]
+[ext_resource type="Texture2D" path="res://assets/stages/temple_ruin_stage.png" id="2_panorama"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/ruined_academy_thumb.png" id="3_acad_thumb"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/temple_ruin_thumb.png" id="4_temple_thumb"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/random_stage_thumb.png" id="5_rand_thumb"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/locked_stage_thumb.png" id="6_lock_thumb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bezel"]
+bg_color = Color(0.08, 0.08, 0.09, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.45, 0.38, 0.25, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cursor"]
+bg_color = Color(0.9, 0.6, 0.1, 0.15)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.8, 0.2, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(1, 0.7, 0.1, 0.5)
+shadow_size = 8
+
+[sub_resource type="Gradient" id="Gradient_overlay"]
+colors = PackedColorArray(0.05, 0.05, 0.06, 0.1, 0.05, 0.05, 0.06, 0.95)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_overlay"]
+gradient = SubResource("Gradient_overlay")
+fill_from = Vector2(0.5, 0.3)
+fill_to = Vector2(0.5, 1)
+
+[node name="StageSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_stageselect")
+
+[node name="BackgroundBase" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.04, 0.05, 1)
+
+[node name="TopSection" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 380.0
+grow_horizontal = 2
+
+[node name="StagePanorama" type="TextureRect" parent="TopSection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_panorama")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VignetteOverlay" type="TextureRect" parent="TopSection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_overlay")
+expand_mode = 1
+
+[node name="GlowDivider" type="ColorRect" parent="TopSection"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -3.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.85, 0.65, 0.25, 0.8)
+
+[node name="BannerContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 390.0
+offset_bottom = 450.0
+grow_horizontal = 2
+theme_override_constants/separation = 2
+
+[node name="StageTitle" type="Label" parent="BannerContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "TEMPLE RUIN"
+horizontal_alignment = 1
+
+[node name="StageDesc" type="Label" parent="BannerContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
+theme_override_font_sizes/font_size = 13
+text = "Sacred Dragon Shrine flanked by stone effigies & suspended ledges"
+horizontal_alignment = 1
+
+[node name="BottomSection" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -250.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StoneBezel" type="Panel" parent="BottomSection"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -100.0
+offset_right = 460.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bezel")
+
+[node name="GridContainer" type="GridContainer" parent="BottomSection/StoneBezel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -70.0
+offset_right = 440.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 7
+
+[node name="SlotAcad" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("3_acad_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotTemple" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("4_temple_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotRand" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("5_rand_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock1" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock2" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock3" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock4" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock5" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock6" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock7" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock8" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock9" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock10" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotLock11" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("6_lock_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="P1Token" type="Panel" parent="BottomSection/StoneBezel"]
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 68.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cursor")
+
+[node name="Label" type="Label" parent="BottomSection/StoneBezel/P1Token"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_top = 2.0
+offset_right = -4.0
+offset_bottom = 22.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "P1"
+horizontal_alignment = 2
+
+[node name="StatusLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -28.0
+offset_right = 350.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.65, 0.65, 0.7, 1)
+theme_override_font_sizes/font_size = 13
+text = "[A] / [D] / ARROWS : SELECT ARENA    •    [F] / [ENTER] : CONFIRM    •    [ESC] : BACK"
+horizontal_alignment = 1
