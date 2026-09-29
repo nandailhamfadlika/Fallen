@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyx72pnqtv7u0"
-path="res://.godot/imported/idle_07.png-c5459b6781f088a63e5c4a0f2494cb23.ctex"
+uid="uid://cs0ywwuleq34o"
+path="res://.godot/imported/button_exit.png-02c27efd0ff03cc48f29748cc42dfaf4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/om_hami/idle/idle_07.png"
-dest_files=["res://.godot/imported/idle_07.png-c5459b6781f088a63e5c4a0f2494cb23.ctex"]
+source_file="res://assets/ui/button_exit.png"
+dest_files=["res://.godot/imported/button_exit.png-02c27efd0ff03cc48f29748cc42dfaf4.ctex"]
 
 [params]
 
