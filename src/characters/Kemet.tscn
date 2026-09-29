@@ -1,0 +1,305 @@
+[gd_scene load_steps=29 format=3 uid="uid://kemetfighter01"]
+
+[ext_resource type="Script" path="res://src/characters/Kemet.gd" id="1_kemet"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/idle/idle_01.png" id="2_idle01"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/idle/idle_02.png" id="3_idle02"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/idle/idle_03.png" id="4_idle03"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/idle/idle_04.png" id="5_idle04"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/run/run_01.png" id="6_run01"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/run/run_02.png" id="7_run02"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/run/run_03.png" id="8_run03"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/run/run_04.png" id="9_run04"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/combo_01_thrust.png" id="10_thrust"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/combo_02_cross.png" id="11_cross"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/combo_03_rising.png" id="12_rising"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/jump/jump_rise.png" id="13_jumprise"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/jump/jump_apex.png" id="14_jumpapex"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/jump/jump_fall.png" id="15_jumpfall"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/wall_slide.png" id="16_wallslide"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/wall_jump.png" id="17_walljump"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/hurt/hurt_impact.png" id="18_hurtimpact"]
+[ext_resource type="Texture2D" path="res://assets/characters/kemet/hurt/hurt_stagger.png" id="19_hurtstagger"]
+[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="20_hurtbox"]
+[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="21_hitbox"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 16.0
+height = 70.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hurt"]
+radius = 19.0
+height = 74.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(50, 42)
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 0.64
+loop_mode = 1
+step = 0.16
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16, 0.32, 0.48),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_idle01"), ExtResource("3_idle02"), ExtResource("4_idle03"), ExtResource("5_idle04")]
+}
+
+[sub_resource type="Animation" id="Animation_run"]
+resource_name = "run"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("6_run01"), ExtResource("7_run02"), ExtResource("8_run03"), ExtResource("9_run04")]
+}
+
+[sub_resource type="Animation" id="Animation_jump"]
+resource_name = "jump"
+length = 0.3
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("13_jumprise"), ExtResource("14_jumpapex")]
+}
+
+[sub_resource type="Animation" id="Animation_fall"]
+resource_name = "fall"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_jumpfall")]
+}
+
+[sub_resource type="Animation" id="Animation_wall_slide"]
+resource_name = "wall_slide"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("16_wallslide")]
+}
+
+[sub_resource type="Animation" id="Animation_hurt"]
+resource_name = "hurt"
+length = 0.35
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("18_hurtimpact"), ExtResource("19_hurtstagger")]
+}
+
+[sub_resource type="Animation" id="Animation_combo_thrust"]
+resource_name = "combo_thrust"
+length = 0.24
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_thrust")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.04, 0.12, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_combo_cross"]
+resource_name = "combo_cross"
+length = 0.28
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_cross")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06, 0.14, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_combo_rising"]
+resource_name = "combo_rising"
+length = 0.38
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_rising")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.08, 0.16, 0.32),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kemet"]
+_data = {
+"combo_cross": SubResource("Animation_combo_cross"),
+"combo_rising": SubResource("Animation_combo_rising"),
+"combo_thrust": SubResource("Animation_combo_thrust"),
+"fall": SubResource("Animation_fall"),
+"hurt": SubResource("Animation_hurt"),
+"idle": SubResource("Animation_idle"),
+"jump": SubResource("Animation_jump"),
+"run": SubResource("Animation_run"),
+"wall_slide": SubResource("Animation_wall_slide")
+}
+
+[node name="Kemet" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_kemet")
+fighter_name = "Kemet"
+speed = 310.0
+jump_velocity = -530.0
+wall_slide_max_speed = 120.0
+wall_jump_impulse = Vector2(400, -500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -35)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -43)
+scale = Vector2(0.31, 0.31)
+texture = ExtResource("2_idle01")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("20_hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -37)
+shape = SubResource("CapsuleShape2D_hurt")
+debug_color = Color(0, 0.6, 0.7, 0.3)
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("21_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(30, -38)
+shape = SubResource("RectangleShape2D_hit")
+debug_color = Color(0.9, 0.2, 0.1, 0.4)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kemet")
+}
+autoplay = "idle"

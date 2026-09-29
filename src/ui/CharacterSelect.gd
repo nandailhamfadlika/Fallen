@@ -19,11 +19,19 @@ const CHARACTERS = [
 		"portrait": "res://assets/ui/portraits/portrait_om_hami.png",
 		"preview": "res://assets/characters/om_hami/idle/idle_01.png",
 		"color": Color(1.0, 0.75, 0.2)
+	},
+	{
+		"id": "kemet",
+		"name": "KEMET",
+		"title": "Claw Assassin",
+		"portrait": "res://assets/ui/portraits/portrait_kemet.png",
+		"preview": "res://assets/characters/kemet/idle/idle_01.png",
+		"color": Color(0.95, 0.35, 0.25)
 	}
 ]
 
 var p1_index: int = 0
-var p2_index: int = 1
+var p2_index: int = 2
 var p1_ready: bool = false
 var p2_ready: bool = false
 var transition_started: bool = false
@@ -42,6 +50,7 @@ var transition_started: bool = false
 @onready var match_status_lbl: Label = $MatchStatusLabel
 @onready var slot_aron: TextureRect = $GridCenter/GridContainer/SlotAron
 @onready var slot_hami: TextureRect = $GridCenter/GridContainer/SlotHami
+@onready var slot_kemet: TextureRect = $GridCenter/GridContainer/SlotKemet
 @onready var stage_btn: Button = $StageSelectBtn
 
 func _ready() -> void:
@@ -49,10 +58,15 @@ func _ready() -> void:
 	_update_p2_display()
 	if stage_btn:
 		stage_btn.visible = false
+
 	slot_aron.mouse_filter = Control.MOUSE_FILTER_STOP
 	slot_hami.mouse_filter = Control.MOUSE_FILTER_STOP
-	slot_aron.gui_input.connect(_on_slot_aron_gui_input)
-	slot_hami.gui_input.connect(_on_slot_hami_gui_input)
+	slot_kemet.mouse_filter = Control.MOUSE_FILTER_STOP
+
+	slot_aron.gui_input.connect(func(event): _on_slot_gui_input(event, 0))
+	slot_hami.gui_input.connect(func(event): _on_slot_gui_input(event, 1))
+	slot_kemet.gui_input.connect(func(event): _on_slot_gui_input(event, 2))
+
 	# Wait for GridContainer layout calculation
 	await get_tree().process_frame
 	_update_cursors()
@@ -69,31 +83,16 @@ func _update_stage_button() -> void:
 		var s_name = "TEMPLE RUIN" if GameManager.selected_stage == "temple_ruin" else "RUINED ACADEMY"
 		stage_btn.text = "MAP: " + s_name + "  [CLICK TO SWITCH]"
 
-func _on_slot_aron_gui_input(event: InputEvent) -> void:
+func _on_slot_gui_input(event: InputEvent, idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and not transition_started:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			p1_index = 0
+			p1_index = idx
 			p1_ready = true
 			_update_p1_display()
 			_update_cursors()
 			_check_all_ready()
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			p2_index = 0
-			p2_ready = true
-			_update_p2_display()
-			_update_cursors()
-			_check_all_ready()
-
-func _on_slot_hami_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and not transition_started:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			p1_index = 1
-			p1_ready = true
-			_update_p1_display()
-			_update_cursors()
-			_check_all_ready()
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			p2_index = 1
+			p2_index = idx
 			p2_ready = true
 			_update_p2_display()
 			_update_cursors()
@@ -108,10 +107,16 @@ func _process(_delta: float) -> void:
 		GameManager.go_to_main_menu()
 		return
 
+	var char_count = CHARACTERS.size()
+
 	# Player 1 Inputs
 	if not p1_ready:
-		if Input.is_action_just_pressed("p1_move_left") or Input.is_action_just_pressed("p1_move_right"):
-			p1_index = 1 if p1_index == 0 else 0
+		if Input.is_action_just_pressed("p1_move_left"):
+			p1_index = (p1_index - 1 + char_count) % char_count
+			_update_p1_display()
+			_update_cursors()
+		elif Input.is_action_just_pressed("p1_move_right"):
+			p1_index = (p1_index + 1) % char_count
 			_update_p1_display()
 			_update_cursors()
 		elif Input.is_action_just_pressed("p1_attack") or Input.is_action_just_pressed("p1_jump"):
@@ -125,8 +130,12 @@ func _process(_delta: float) -> void:
 
 	# Player 2 Inputs
 	if not p2_ready:
-		if Input.is_action_just_pressed("p2_move_left") or Input.is_action_just_pressed("p2_move_right"):
-			p2_index = 1 if p2_index == 0 else 0
+		if Input.is_action_just_pressed("p2_move_left"):
+			p2_index = (p2_index - 1 + char_count) % char_count
+			_update_p2_display()
+			_update_cursors()
+		elif Input.is_action_just_pressed("p2_move_right"):
+			p2_index = (p2_index + 1) % char_count
 			_update_p2_display()
 			_update_cursors()
 		elif Input.is_action_just_pressed("p2_attack") or Input.is_action_just_pressed("p2_jump"):
@@ -164,12 +173,19 @@ func _update_p2_display() -> void:
 		p2_status_lbl.text = "[Arrows] Move | [Enter]/[K] Choose"
 		p2_status_lbl.modulate = Color(1.0, 0.9, 0.5)
 
+func _get_slot_by_index(idx: int) -> Control:
+	match idx:
+		0: return slot_aron
+		1: return slot_hami
+		2: return slot_kemet
+		_: return slot_aron
+
 func _update_cursors() -> void:
-	if not is_inside_tree() or not slot_aron or not slot_hami:
+	if not is_inside_tree() or not slot_aron or not slot_hami or not slot_kemet:
 		return
 
-	var target_slot_p1 = slot_aron if p1_index == 0 else slot_hami
-	var target_slot_p2 = slot_aron if p2_index == 0 else slot_hami
+	var target_slot_p1 = _get_slot_by_index(p1_index)
+	var target_slot_p2 = _get_slot_by_index(p2_index)
 	
 	# Global positioning so layout hierarchy never offsets cursors wrongly
 	p1_cursor.global_position = target_slot_p1.global_position - Vector2(4, 4)

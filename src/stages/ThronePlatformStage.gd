@@ -4,6 +4,7 @@ extends Node2D
 const FIGHTER_SCENES = {
 	"aron": preload("res://src/characters/Aron.tscn"),
 	"om_hami": preload("res://src/characters/OmHami.tscn"),
+	"kemet": preload("res://src/characters/Kemet.tscn"),
 	"dummy": preload("res://src/characters/DummyTarget.tscn")
 }
 

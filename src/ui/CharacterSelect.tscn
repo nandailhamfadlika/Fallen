@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://charselect01"]
+[gd_scene load_steps=11 format=3 uid="uid://charselect01"]
 
 [ext_resource type="Script" path="res://src/ui/CharacterSelect.gd" id="1_select"]
 [ext_resource type="Texture2D" path="res://assets/ui/char_select_bg.png" id="2_bg"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_om_hami.png" id="4_p_hami"]
 [ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_locked.png" id="5_p_locked"]
 [ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_01.png" id="6_prev_aron"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_kemet.png" id="7_p_kemet"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stone_panel"]
 bg_color = Color(0.12, 0.13, 0.15, 0.95)
@@ -312,10 +313,10 @@ texture = ExtResource("4_p_hami")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Slot3" type="TextureRect" parent="GridCenter/GridContainer"]
+[node name="SlotKemet" type="TextureRect" parent="GridCenter/GridContainer"]
 custom_minimum_size = Vector2(114, 114)
 layout_mode = 2
-texture = ExtResource("5_p_locked")
+texture = ExtResource("7_p_kemet")
 expand_mode = 1
 stretch_mode = 5
 

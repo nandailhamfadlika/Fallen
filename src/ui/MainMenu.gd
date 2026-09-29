@@ -48,6 +48,8 @@ func _ready() -> void:
 # ====================================
 
 func setup_button_effect(button: Button) -> void:
+    button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    button.resized.connect(func(): button.pivot_offset = button.size / 2.0)
     button.pivot_offset = button.size / 2.0
 
     var empty_style := StyleBoxEmpty.new()
