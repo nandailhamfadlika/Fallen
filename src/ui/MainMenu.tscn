@@ -1,7 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://mainmenu01"]
+[gd_scene format=3 uid="uid://mainmenu01"]
 
-[ext_resource type="Script" path="res://src/ui/MainMenu.gd" id="1_menu"]
-[ext_resource type="Texture2D" path="res://assets/ui/main_menu_bg.png" id="2_bg"]
+[ext_resource type="Script" uid="uid://x34qri30jg3" path="res://src/ui/MainMenu.gd" id="1_menu"]
+[ext_resource type="Texture2D" uid="uid://b2xvr10emirvp" path="res://assets/ui/main_menu_bg.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://d3wsagvo04hbl" path="res://assets/ui/button_vs_mode.png" id="3_l8p87"]
+[ext_resource type="Texture2D" uid="uid://be5ldjelb5c8u" path="res://assets/ui/button_training.png" id="4_ihbld"]
+[ext_resource type="Texture2D" uid="uid://27sbd3255wf5" path="res://assets/ui/button_setting.png" id="5_dbyr8"]
+[ext_resource type="Texture2D" uid="uid://cs0ywwuleq34o" path="res://assets/ui/button_exit.png" id="6_4h2rs"]
+[ext_resource type="Texture2D" uid="uid://b7tmrsn4ld1g" path="res://assets/ui/stages/logo_fallen.png" id="7_4h2rs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
 bg_color = Color(0.1, 0.05, 0.08, 0.3)
@@ -10,6 +15,18 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.5, 0.2, 0.25, 0.4)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.9, 0.2, 0.2, 0.65)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.8, 0.3, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
@@ -28,20 +45,6 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 shadow_color = Color(0.9, 0.15, 0.15, 0.6)
 shadow_size = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
-bg_color = Color(0.9, 0.2, 0.2, 0.65)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 0.8, 0.3, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
 bg_color = Color(0.08, 0.07, 0.09, 0.96)
@@ -69,7 +72,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=1936605650]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,7 +81,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=367462025]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -88,83 +91,92 @@ grow_vertical = 2
 texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
+metadata/_edit_lock_ = true
 
-[node name="MenuContainer" type="VBoxContainer" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=215042574]
+layout_mode = 0
+offset_left = 439.0
+offset_top = 123.0
+offset_right = 845.0
+offset_bottom = 355.0
+texture = ExtResource("7_4h2rs")
+expand_mode = 1
+
+[node name="MenuContainer" type="VBoxContainer" parent="." unique_id=839986111]
+custom_maximum_size = Vector2(1, -1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -140.0
-offset_top = -40.0
-offset_right = 140.0
-offset_bottom = 170.0
+offset_left = -122.0
+offset_top = 3.0
+offset_right = -121.0
+offset_bottom = 361.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = -8
 
-[node name="BtnVS" type="Button" parent="MenuContainer"]
+[node name="BtnVS" type="Button" parent="MenuContainer" unique_id=2106003264]
 custom_minimum_size = Vector2(280, 40)
 layout_mode = 2
 focus_neighbor_top = NodePath("../BtnExit")
 focus_neighbor_bottom = NodePath("../BtnTraining")
 theme_override_colors/font_color = Color(1, 0.9, 0.9, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_constants/icon_max_width = 240
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
-text = "VS MODE"
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+icon = ExtResource("3_l8p87")
 
-[node name="BtnTraining" type="Button" parent="MenuContainer"]
+[node name="BtnTraining" type="Button" parent="MenuContainer" unique_id=1427584044]
 custom_minimum_size = Vector2(280, 40)
 layout_mode = 2
 focus_neighbor_top = NodePath("../BtnVS")
 focus_neighbor_bottom = NodePath("../BtnSettings")
 theme_override_colors/font_color = Color(0.85, 0.8, 0.8, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 15
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_constants/icon_max_width = 240
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
-text = "TRAINING"
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+icon = ExtResource("4_ihbld")
 
-[node name="BtnSettings" type="Button" parent="MenuContainer"]
+[node name="BtnSettings" type="Button" parent="MenuContainer" unique_id=1088449880]
 custom_minimum_size = Vector2(280, 40)
 layout_mode = 2
 focus_neighbor_top = NodePath("../BtnTraining")
 focus_neighbor_bottom = NodePath("../BtnExit")
 theme_override_colors/font_color = Color(0.85, 0.8, 0.8, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_constants/icon_max_width = 240
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
-text = "SETTINGS"
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+icon = ExtResource("5_dbyr8")
 
-[node name="BtnExit" type="Button" parent="MenuContainer"]
+[node name="BtnExit" type="Button" parent="MenuContainer" unique_id=1664614867]
 custom_minimum_size = Vector2(280, 40)
 layout_mode = 2
 focus_neighbor_top = NodePath("../BtnSettings")
 focus_neighbor_bottom = NodePath("../BtnVS")
 theme_override_colors/font_color = Color(0.85, 0.8, 0.8, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_constants/icon_max_width = 240
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
-text = "EXIT"
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+icon = ExtResource("6_4h2rs")
 
-[node name="SettingsModal" type="Panel" parent="."]
+[node name="SettingsModal" type="Panel" parent="." unique_id=26128039]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -180,7 +192,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="Title" type="Label" parent="SettingsModal"]
+[node name="Title" type="Label" parent="SettingsModal" unique_id=754264675]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -192,7 +204,7 @@ theme_override_font_sizes/font_size = 18
 text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="VBox" type="VBoxContainer" parent="SettingsModal"]
+[node name="VBox" type="VBoxContainer" parent="SettingsModal" unique_id=1600392993]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -207,23 +219,23 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
 
-[node name="FullscreenCheck" type="CheckBox" parent="SettingsModal/VBox"]
+[node name="FullscreenCheck" type="CheckBox" parent="SettingsModal/VBox" unique_id=1952451481]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.9, 0.95, 1)
 theme_override_font_sizes/font_size = 14
 text = " Fullscreen Mode"
 
-[node name="AudioLabel" type="Label" parent="SettingsModal/VBox"]
+[node name="AudioLabel" type="Label" parent="SettingsModal/VBox" unique_id=1515509171]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
 theme_override_font_sizes/font_size = 13
 text = "Master Volume:"
 
-[node name="HSlider" type="HSlider" parent="SettingsModal/VBox"]
+[node name="HSlider" type="HSlider" parent="SettingsModal/VBox" unique_id=1180460778]
 layout_mode = 2
 value = 85.0
 
-[node name="BtnCloseSettings" type="Button" parent="SettingsModal"]
+[node name="BtnCloseSettings" type="Button" parent="SettingsModal" unique_id=1086764899]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 1
 anchors_preset = 7
@@ -239,6 +251,6 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_modal_btn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "CLOSE"
