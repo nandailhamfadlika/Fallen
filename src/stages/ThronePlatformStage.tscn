@@ -1,15 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://throneplatform01"]
+[gd_scene format=3 uid="uid://d2v482g2bhu8k"]
 
-[ext_resource type="Script" path="res://src/stages/ThronePlatformStage.gd" id="1_stage"]
-[ext_resource type="Script" path="res://src/stages/DeathZone.gd" id="2_death"]
-[ext_resource type="PackedScene" uid="uid://aronfighter01" path="res://src/characters/Aron.tscn" id="3_aron"]
-[ext_resource type="PackedScene" uid="uid://dummytarget01" path="res://src/characters/DummyTarget.tscn" id="4_dummy"]
+[ext_resource type="Script" uid="uid://3jfyggefxctn" path="res://src/stages/ThronePlatformStage.gd" id="1_stage"]
+[ext_resource type="Script" uid="uid://ph2ph23erkbj" path="res://src/stages/DeathZone.gd" id="2_death"]
 [ext_resource type="PackedScene" uid="uid://hudview01" path="res://src/ui/HUD.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://pausemenu01" path="res://src/ui/PauseMenu.tscn" id="6_pause"]
-[ext_resource type="Texture2D" path="res://assets/stages/ruined_school_stage.png" id="7_map"]
+[ext_resource type="Texture2D" uid="uid://db0p7eemkudjq" path="res://assets/stages/ruined_school_stage.png" id="7_map"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_main_island"]
-size = Vector2(535, 220)
+size = Vector2(642.5, 220)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_lower"]
 size = Vector2(155, 14)
@@ -29,13 +27,13 @@ size = Vector2(2400, 200)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_death"]
 size = Vector2(200, 1400)
 
-[node name="ThronePlatformStage" type="Node2D"]
+[node name="ThronePlatformStage" type="Node2D" unique_id=1404901652]
 script = ExtResource("1_stage")
 
-[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=1120220373]
 layer = -1
 
-[node name="StageIllustration" type="TextureRect" parent="BackgroundLayer"]
+[node name="StageIllustration" type="TextureRect" parent="BackgroundLayer" unique_id=481479235]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -45,63 +43,64 @@ texture = ExtResource("7_map")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="MainFloatingIsland" type="StaticBody2D" parent="."]
+[node name="MainFloatingIsland" type="StaticBody2D" parent="." unique_id=125580836]
 position = Vector2(598, 522)
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainFloatingIsland"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainFloatingIsland" unique_id=927249312]
+position = Vector2(53.75, 0)
 shape = SubResource("RectangleShape2D_main_island")
 
-[node name="LeftLowerPlatform" type="StaticBody2D" parent="."]
+[node name="LeftLowerPlatform" type="StaticBody2D" parent="." unique_id=1379272700]
 position = Vector2(237, 502)
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftLowerPlatform"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftLowerPlatform" unique_id=340581348]
 shape = SubResource("RectangleShape2D_left_lower")
 one_way_collision = true
 
-[node name="LeftUpperPlatform" type="StaticBody2D" parent="."]
+[node name="LeftUpperPlatform" type="StaticBody2D" parent="." unique_id=990408751]
 position = Vector2(420, 132)
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftUpperPlatform"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftUpperPlatform" unique_id=550418663]
 shape = SubResource("RectangleShape2D_left_upper")
 one_way_collision = true
 
-[node name="RightLowerPlatform" type="StaticBody2D" parent="."]
+[node name="RightLowerPlatform" type="StaticBody2D" parent="." unique_id=1644616073]
 position = Vector2(1040, 272)
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightLowerPlatform"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightLowerPlatform" unique_id=426620890]
 shape = SubResource("RectangleShape2D_right_lower")
 one_way_collision = true
 
-[node name="RightUpperPlatform" type="StaticBody2D" parent="."]
+[node name="RightUpperPlatform" type="StaticBody2D" parent="." unique_id=1317646832]
 position = Vector2(895, 132)
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightUpperPlatform"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightUpperPlatform" unique_id=1144002278]
 shape = SubResource("RectangleShape2D_right_upper")
 one_way_collision = true
 
-[node name="DeathZone" type="Area2D" parent="."]
+[node name="DeathZone" type="Area2D" parent="." unique_id=1730790982]
 script = ExtResource("2_death")
 
-[node name="BottomAbyssVortex" type="CollisionShape2D" parent="DeathZone"]
+[node name="BottomAbyssVortex" type="CollisionShape2D" parent="DeathZone" unique_id=1495682715]
 position = Vector2(640, 760)
 shape = SubResource("RectangleShape2D_bottom_death")
 debug_color = Color(1, 0.1, 0.1, 0.3)
 
-[node name="LeftDeathShape" type="CollisionShape2D" parent="DeathZone"]
+[node name="LeftDeathShape" type="CollisionShape2D" parent="DeathZone" unique_id=1082605842]
 position = Vector2(-150, 360)
 shape = SubResource("RectangleShape2D_side_death")
 debug_color = Color(1, 0.1, 0.1, 0.3)
 
-[node name="RightDeathShape" type="CollisionShape2D" parent="DeathZone"]
+[node name="RightDeathShape" type="CollisionShape2D" parent="DeathZone" unique_id=1043231526]
 position = Vector2(1430, 360)
 shape = SubResource("RectangleShape2D_side_death")
 debug_color = Color(1, 0.1, 0.1, 0.3)
 
-[node name="HUD" parent="." instance=ExtResource("5_hud")]
+[node name="HUD" parent="." unique_id=1697301907 instance=ExtResource("5_hud")]
 
-[node name="PauseMenu" parent="." instance=ExtResource("6_pause")]
+[node name="PauseMenu" parent="." unique_id=136742530 instance=ExtResource("6_pause")]
