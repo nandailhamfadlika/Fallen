@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=3 uid="uid://b708e57h44iyy"]
+
+[ext_resource type="Script" uid="uid://dsp4eqm0iqfl0" path="res://src/characters/AronRiggedPreview.gd" id="1_preview"]
+[ext_resource type="PackedScene" uid="uid://aronrigged001" path="res://src/characters/AronRigged.tscn" id="2_aron"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(800, 40)
+
+[node name="AronRiggedPreview" type="Node2D"]
+script = ExtResource("1_preview")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -60)
+zoom = Vector2(2.5, 2.5)
+
+[node name="Background" type="ColorRect" parent="."]
+offset_left = -600.0
+offset_top = -400.0
+offset_right = 600.0
+offset_bottom = 400.0
+color = Color(0.12, 0.13, 0.16, 1)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="FloorVisual" type="ColorRect" parent="Floor"]
+offset_left = -400.0
+offset_right = 400.0
+offset_bottom = 40.0
+color = Color(0.22, 0.24, 0.3, 1)
+
+[node name="Aron" parent="." instance=ExtResource("2_aron")]
+position = Vector2(-70, 0)
+
+[node name="TargetDummy" type="Node2D" parent="."]
+position = Vector2(120, -50)
+
+[node name="Orb" type="ColorRect" parent="TargetDummy"]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(0.9, 0.25, 0.25, 0.85)
+
+[node name="LabelDummy" type="Label" parent="TargetDummy"]
+offset_left = -40.0
+offset_top = -25.0
+offset_right = 40.0
+offset_bottom = -5.0
+text = "OPPONENT"
+horizontal_alignment = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Title" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 450.0
+offset_bottom = 50.0
+text = "ARON 2D SKELETAL RIG - IDLE & EYE TRACKING PREVIEW"
+
+[node name="Instructions" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 550.0
+offset_bottom = 120.0
+text = "• Animasi Idle: 60 FPS Bone Interpolation (Napas, Bahu, Tangan)
+• Mata: Fokus melirik ke arah LAWAN (bukan menatap monitor/kamera)
+• Tekan SPACE: Uji tatapan menyerang (Attacking)
+• Tekan H: Uji tatapan terkena damage (Hurt)"

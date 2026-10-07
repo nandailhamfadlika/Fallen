@@ -1,0 +1,239 @@
+[gd_scene load_steps=19 format=3 uid="uid://aronrigged001"]
+
+[ext_resource type="Script" path="res://src/characters/Aron.gd" id="1_aron"]
+[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="2_hurtbox"]
+[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="3_hitbox"]
+[ext_resource type="PackedScene" path="res://src/characters/AronEyeRig.tscn" id="4_headrig"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_torso.png" id="5_torso"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_hips.png" id="6_hips"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_arm_upper_l.png" id="7_arm_u_l"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_arm_lower_l.png" id="8_arm_l_l"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_glove_l.png" id="9_glove_l"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_arm_upper_r.png" id="10_arm_u_r"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_arm_lower_r.png" id="11_arm_l_r"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_glove_r.png" id="12_glove_r"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_thigh_l.png" id="13_thigh_l"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron_rig/puppet_shin_l.png" id="14_shin_l"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 17.0
+height = 80.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hurt"]
+radius = 21.0
+height = 86.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(56, 46)
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Rig/Skeleton2D/HipBone:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -230), Vector2(0, -222), Vector2(0, -230)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Rig/Skeleton2D/HipBone/TorsoBone:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.04, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Rig/Skeleton2D/HipBone/TorsoBone/HeadBone:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.04, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperR_Bone:rotation")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.08, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperL_Bone:rotation")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.08, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rig"]
+_data = {
+"idle": SubResource("Animation_idle")
+}
+
+[node name="Aron" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_aron")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -40)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+position = Vector2(0, -43)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape2D_hurt")
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+position = Vector2(32, -48)
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("3_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+shape = SubResource("RectangleShape2D_hit")
+
+[node name="Rig" type="Node2D" parent="."]
+scale = Vector2(0.2, 0.2)
+
+[node name="Skeleton2D" type="Skeleton2D" parent="Rig"]
+
+[node name="HipBone" type="Bone2D" parent="Rig/Skeleton2D"]
+position = Vector2(0, -230)
+rest = Transform2D(1, 0, 0, 1, 0, -230)
+
+[node name="SpriteHips" type="Sprite2D" parent="Rig/Skeleton2D/HipBone"]
+position = Vector2(0, 10)
+texture = ExtResource("6_hips")
+
+[node name="ThighL_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone"]
+position = Vector2(-25, 25)
+rest = Transform2D(1, 0, 0, 1, -25, 25)
+
+[node name="SpriteThighL" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/ThighL_Bone"]
+position = Vector2(0, 55)
+texture = ExtResource("13_thigh_l")
+
+[node name="ShinL_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/ThighL_Bone"]
+position = Vector2(0, 105)
+rest = Transform2D(1, 0, 0, 1, 0, 105)
+
+[node name="SpriteShinL" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/ThighL_Bone/ShinL_Bone"]
+position = Vector2(0, 55)
+texture = ExtResource("14_shin_l")
+
+[node name="ThighR_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone"]
+position = Vector2(25, 25)
+rest = Transform2D(1, 0, 0, 1, 25, 25)
+
+[node name="SpriteThighR" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/ThighR_Bone"]
+position = Vector2(0, 55)
+texture = ExtResource("13_thigh_l")
+flip_h = true
+
+[node name="ShinR_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/ThighR_Bone"]
+position = Vector2(0, 105)
+rest = Transform2D(1, 0, 0, 1, 0, 105)
+
+[node name="SpriteShinR" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/ThighR_Bone/ShinR_Bone"]
+position = Vector2(0, 55)
+texture = ExtResource("14_shin_l")
+flip_h = true
+
+[node name="TorsoBone" type="Bone2D" parent="Rig/Skeleton2D/HipBone"]
+position = Vector2(0, -35)
+rest = Transform2D(1, 0, 0, 1, 0, -35)
+
+[node name="SpriteTorso" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/TorsoBone"]
+position = Vector2(0, -60)
+texture = ExtResource("5_torso")
+
+[node name="HeadBone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/TorsoBone"]
+position = Vector2(0, -135)
+rest = Transform2D(1, 0, 0, 1, 0, -135)
+
+[node name="AronHead" parent="Rig/Skeleton2D/HipBone/TorsoBone/HeadBone" instance=ExtResource("4_headrig")]
+
+[node name="ArmUpperL_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/TorsoBone"]
+position = Vector2(-45, -110)
+rest = Transform2D(1, 0, 0, 1, -45, -110)
+
+[node name="SpriteArmUL" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperL_Bone"]
+position = Vector2(-10, 55)
+texture = ExtResource("7_arm_u_l")
+
+[node name="ArmLowerL_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperL_Bone"]
+position = Vector2(-15, 105)
+rest = Transform2D(1, 0, 0, 1, -15, 105)
+
+[node name="SpriteArmLL" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperL_Bone/ArmLowerL_Bone"]
+position = Vector2(0, 50)
+texture = ExtResource("8_arm_l_l")
+
+[node name="GloveL_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperL_Bone/ArmLowerL_Bone"]
+position = Vector2(-5, 95)
+rest = Transform2D(1, 0, 0, 1, -5, 95)
+
+[node name="SpriteGloveL" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperL_Bone/ArmLowerL_Bone/GloveL_Bone"]
+position = Vector2(0, 25)
+texture = ExtResource("9_glove_l")
+
+[node name="ArmUpperR_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/TorsoBone"]
+position = Vector2(45, -110)
+rest = Transform2D(1, 0, 0, 1, 45, -110)
+
+[node name="SpriteArmUR" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperR_Bone"]
+position = Vector2(10, 55)
+texture = ExtResource("10_arm_u_r")
+
+[node name="ArmLowerR_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperR_Bone"]
+position = Vector2(15, 105)
+rest = Transform2D(1, 0, 0, 1, 15, 105)
+
+[node name="SpriteArmLR" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperR_Bone/ArmLowerR_Bone"]
+position = Vector2(0, 50)
+texture = ExtResource("11_arm_l_r")
+
+[node name="GloveR_Bone" type="Bone2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperR_Bone/ArmLowerR_Bone"]
+position = Vector2(5, 95)
+rest = Transform2D(1, 0, 0, 1, 5, 95)
+
+[node name="SpriteGloveR" type="Sprite2D" parent="Rig/Skeleton2D/HipBone/TorsoBone/ArmUpperR_Bone/ArmLowerR_Bone/GloveR_Bone"]
+position = Vector2(0, 25)
+texture = ExtResource("12_glove_r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rig")
+}
+autoplay = "idle"
