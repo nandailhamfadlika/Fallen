@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://hudview01" path="res://src/ui/HUD.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://pausemenu01" path="res://src/ui/PauseMenu.tscn" id="6_pause"]
 [ext_resource type="Texture2D" uid="uid://db0p7eemkudjq" path="res://assets/stages/ruined_school_stage.png" id="7_map"]
+[ext_resource type="Script" path="res://src/core/BrawlhallaCamera.gd" id="8_cam"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_main_island"]
 size = Vector2(642.5, 220)
@@ -30,18 +31,18 @@ size = Vector2(200, 1400)
 [node name="ThronePlatformStage" type="Node2D" unique_id=1404901652]
 script = ExtResource("1_stage")
 
-[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=1120220373]
-layer = -1
+[node name="AbyssBackdrop" type="ColorRect" parent="."]
+z_index = -20
+offset_left = -600.0
+offset_top = -400.0
+offset_right = 1880.0
+offset_bottom = 1200.0
+color = Color(0.08, 0.07, 0.11, 1)
 
-[node name="StageIllustration" type="TextureRect" parent="BackgroundLayer" unique_id=481479235]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="StageIllustration" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(640, 360)
 texture = ExtResource("7_map")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="MainFloatingIsland" type="StaticBody2D" parent="." unique_id=125580836]
 position = Vector2(598, 522)
@@ -104,3 +105,14 @@ debug_color = Color(1, 0.1, 0.1, 0.3)
 [node name="HUD" parent="." unique_id=1697301907 instance=ExtResource("5_hud")]
 
 [node name="PauseMenu" parent="." unique_id=136742530 instance=ExtResource("6_pause")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("8_cam")
+stage_center = Vector2(640, 360)
+min_zoom = 1.0
+max_zoom = 1.35
+margin = Vector2(360, 240)
+follow_speed = 6.0
+zoom_speed = 5.0
+max_camera_y = 480.0

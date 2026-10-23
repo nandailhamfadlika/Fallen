@@ -20,6 +20,46 @@ const STAGE_OPTIONS = [
 		"locked": false
 	},
 	{
+		"id": "mad_lab",
+		"name": "MAD LAB",
+		"desc": "Overgrown bio-mechanical laboratory with toxic fluid vats & gantry",
+		"preview": "res://assets/stages/Mad Lab.jpg",
+		"thumb": "res://assets/ui/stages/mad_lab_thumb.png",
+		"locked": false
+	},
+	{
+		"id": "magic_waterfall",
+		"name": "MAGIC WATERFALL",
+		"desc": "Mystical moonlit cascading falls adorned with celestial tapestries",
+		"preview": "res://assets/stages/Magic Waterfall.jpg",
+		"thumb": "res://assets/ui/stages/magic_waterfall_thumb.png",
+		"locked": false
+	},
+	{
+		"id": "wild_west",
+		"name": "WILD WEST",
+		"desc": "Sun-drenched canyon mesa suspended amidst ancient sundial relics",
+		"preview": "res://assets/stages/Wild West.jpg",
+		"thumb": "res://assets/ui/stages/wild_west_thumb.png",
+		"locked": false
+	},
+	{
+		"id": "heaven_secret",
+		"name": "HEAVEN'S SECRET",
+		"desc": "Celestial sanctuary veiled above the clouds beneath the divine bonsai",
+		"preview": "res://assets/stages/Heaven secret.jpg",
+		"thumb": "res://assets/ui/stages/heaven_secret_thumb.png",
+		"locked": false
+	},
+	{
+		"id": "rooftop",
+		"name": "ROOFTOP BRAWL",
+		"desc": "Gritty urban sunset skyline with rooftop sparring ring & punchbag",
+		"preview": "res://assets/stages/Rooftop.jpg",
+		"thumb": "res://assets/ui/stages/rooftop_thumb.png",
+		"locked": false
+	},
+	{
 		"id": "random",
 		"name": "RANDOM ARENA",
 		"desc": "Fate decides the battlefield",
@@ -31,6 +71,7 @@ const STAGE_OPTIONS = [
 
 var selected_index: int = 1 # Default to Temple Ruin
 var is_locked_in: bool = false
+var is_settings_open: bool = false
 
 @onready var stage_preview: TextureRect = $TopSection/StagePanorama
 @onready var stage_title_lbl: Label = $BannerContainer/StageTitle
@@ -39,19 +80,69 @@ var is_locked_in: bool = false
 @onready var p1_token: Panel = $BottomSection/StoneBezel/P1Token
 @onready var status_lbl: Label = $StatusLabel
 
+# Settings UI references
+@onready var settings_btn: Button = $SettingsBtn
+@onready var settings_popup: Control = $SettingsPopup
+@onready var dialog_panel: PanelContainer = $SettingsPopup/DialogPanel
+@onready var backdrop: ColorRect = $SettingsPopup/Backdrop
+@onready var btn_30s: Button = $SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons/Btn30s
+@onready var btn_60s: Button = $SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons/Btn60s
+@onready var btn_99s: Button = $SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons/Btn99s
+@onready var btn_close: Button = $SettingsPopup/DialogPanel/Margin/VBox/CloseBox/BtnClose
+
+var style_opt_active: StyleBox
+var style_opt_inactive: StyleBox
 var slot_nodes: Array[Control] = []
 
 func _ready() -> void:
 	# Set initial selection from GameManager
-	if GameManager.selected_stage == "ruined_school":
-		selected_index = 0
-	else:
-		selected_index = 1
+	selected_index = 1
+	for i in range(STAGE_OPTIONS.size()):
+		if STAGE_OPTIONS[i]["id"] == GameManager.selected_stage:
+			selected_index = i
+			break
 
 	_setup_slots()
+	_setup_settings_popup()
 	await get_tree().process_frame
 	_update_display()
 	_update_token_position()
+
+func _setup_settings_popup() -> void:
+	if not settings_popup:
+		return
+	settings_popup.visible = false
+
+	# Cache styles from buttons
+	if btn_99s.has_theme_stylebox_override("normal"):
+		style_opt_active = btn_99s.get_theme_stylebox("normal")
+	if btn_30s.has_theme_stylebox_override("normal"):
+		style_opt_inactive = btn_30s.get_theme_stylebox("normal")
+
+	settings_btn.pressed.connect(_open_settings_popup)
+	btn_30s.pressed.connect(func(): _on_select_time(30))
+	btn_60s.pressed.connect(func(): _on_select_time(60))
+	btn_99s.pressed.connect(func(): _on_select_time(99))
+	btn_close.pressed.connect(_close_settings_popup)
+
+	# Click outside dialog to dismiss
+	backdrop.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed:
+			_close_settings_popup()
+	)
+
+	# Setup gamepad/keyboard focus navigation
+	btn_30s.focus_neighbor_right = btn_60s.get_path()
+	btn_60s.focus_neighbor_left = btn_30s.get_path()
+	btn_60s.focus_neighbor_right = btn_99s.get_path()
+	btn_99s.focus_neighbor_left = btn_60s.get_path()
+
+	btn_30s.focus_neighbor_bottom = btn_close.get_path()
+	btn_60s.focus_neighbor_bottom = btn_close.get_path()
+	btn_99s.focus_neighbor_bottom = btn_close.get_path()
+	btn_close.focus_neighbor_top = btn_60s.get_path()
+
+	_update_settings_ui()
 
 func _setup_slots() -> void:
 	slot_nodes.clear()
@@ -72,6 +163,18 @@ func _setup_slots() -> void:
 		)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_settings_open:
+		if event.is_action_pressed("pause") or (event is InputEventKey and event.pressed and (event.physical_keycode == KEY_ESCAPE or event.physical_keycode == KEY_T or event.physical_keycode == KEY_S)):
+			_close_settings_popup()
+			get_viewport().set_input_as_handled()
+		return
+
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.physical_keycode == KEY_T or event.physical_keycode == KEY_S:
+			_open_settings_popup()
+			get_viewport().set_input_as_handled()
+			return
+
 	if is_locked_in:
 		return
 
@@ -79,14 +182,102 @@ func _unhandled_input(event: InputEvent) -> void:
 		_move_selection(-1)
 	elif event.is_action_pressed("p1_move_right") or event.is_action_pressed("p2_move_right") or event.is_action_pressed("ui_right"):
 		_move_selection(1)
+	elif event.is_action_pressed("p1_up") or event.is_action_pressed("p2_up") or event.is_action_pressed("ui_up"):
+		_move_selection(-7)
+	elif event.is_action_pressed("p1_down") or event.is_action_pressed("p2_down") or event.is_action_pressed("ui_down"):
+		_move_selection(7)
 	elif event.is_action_pressed("p1_attack") or event.is_action_pressed("p2_attack") or event.is_action_pressed("ui_accept"):
 		_confirm_selection()
 	elif event.is_action_pressed("pause"):
 		GameManager.go_to_character_select()
 
+func _open_settings_popup() -> void:
+	if is_locked_in or is_settings_open or not settings_popup:
+		return
+	is_settings_open = true
+	settings_popup.visible = true
+	_update_settings_ui()
+
+	dialog_panel.pivot_offset = dialog_panel.size / 2.0
+	dialog_panel.scale = Vector2(0.92, 0.92)
+	dialog_panel.modulate.a = 0.0
+
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(dialog_panel, "scale", Vector2(1.0, 1.0), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(dialog_panel, "modulate:a", 1.0, 0.15)
+
+	# Focus current selected time
+	if GameManager.round_time_limit == 30:
+		btn_30s.grab_focus()
+	elif GameManager.round_time_limit == 60:
+		btn_60s.grab_focus()
+	else:
+		btn_99s.grab_focus()
+
+func _close_settings_popup() -> void:
+	if not is_settings_open:
+		return
+	is_settings_open = false
+	var tween = create_tween()
+	tween.tween_property(dialog_panel, "modulate:a", 0.0, 0.1)
+	await tween.finished
+	if not is_settings_open and settings_popup:
+		settings_popup.visible = false
+
+func _on_select_time(seconds: int) -> void:
+	GameManager.set_time_limit(seconds)
+	_update_settings_ui()
+	
+	var btn: Button = null
+	if seconds == 30: btn = btn_30s
+	elif seconds == 60: btn = btn_60s
+	elif seconds == 99: btn = btn_99s
+	if btn:
+		btn.pivot_offset = btn.size / 2.0
+		var tween = create_tween()
+		tween.tween_property(btn, "scale", Vector2(1.1, 1.1), 0.07)
+		tween.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.1)
+
+func _update_settings_ui() -> void:
+	var limit = GameManager.round_time_limit
+	if settings_btn:
+		settings_btn.text = "⚙ SETTINGS [T] (%ds)" % limit
+
+	var buttons_map = {
+		30: btn_30s,
+		60: btn_60s,
+		99: btn_99s
+	}
+
+	for time_val in buttons_map:
+		var btn = buttons_map[time_val] as Button
+		if not btn:
+			continue
+		if time_val == limit:
+			if style_opt_active:
+				btn.add_theme_stylebox_override("normal", style_opt_active)
+			btn.add_theme_color_override("font_color", Color(1.0, 0.9, 0.3))
+			btn.text = "✔ %ds" % time_val
+		else:
+			if style_opt_inactive:
+				btn.add_theme_stylebox_override("normal", style_opt_inactive)
+			btn.add_theme_color_override("font_color", Color(0.7, 0.72, 0.8))
+			btn.text = "%ds" % time_val
+
 func _move_selection(dir: int) -> void:
 	var total_selectable = STAGE_OPTIONS.size()
-	selected_index = (selected_index + dir + total_selectable) % total_selectable
+	if abs(dir) == 1:
+		selected_index = (selected_index + dir + total_selectable) % total_selectable
+	elif dir == 7: # Down
+		if selected_index < 7:
+			selected_index = 7 # Jump to random arena
+		else:
+			selected_index = 0
+	elif dir == -7: # Up
+		if selected_index == 7:
+			selected_index = 0
+		else:
+			selected_index = 7
 	_update_display()
 	_update_token_position()
 
@@ -119,8 +310,14 @@ func _confirm_selection() -> void:
 	var chosen_id = STAGE_OPTIONS[selected_index]["id"]
 	
 	if chosen_id == "random":
-		var roll = randi() % 2
-		chosen_id = "temple_ruin" if roll == 0 else "ruined_school"
+		var candidates: Array[String] = []
+		for opt in STAGE_OPTIONS:
+			if opt["id"] != "random" and not opt.get("locked", false):
+				candidates.append(opt["id"])
+		if candidates.size() > 0:
+			chosen_id = candidates[randi() % candidates.size()]
+		else:
+			chosen_id = "temple_ruin"
 	
 	GameManager.selected_stage = chosen_id
 	

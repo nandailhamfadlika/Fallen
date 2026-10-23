@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://stageselect01"]
+[gd_scene load_steps=25 format=3 uid="uid://stageselect01"]
 
 [ext_resource type="Script" path="res://src/ui/StageSelect.gd" id="1_stageselect"]
 [ext_resource type="Texture2D" path="res://assets/stages/temple_ruin_stage.png" id="2_panorama"]
@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" path="res://assets/ui/stages/temple_ruin_thumb.png" id="4_temple_thumb"]
 [ext_resource type="Texture2D" path="res://assets/ui/stages/random_stage_thumb.png" id="5_rand_thumb"]
 [ext_resource type="Texture2D" path="res://assets/ui/stages/locked_stage_thumb.png" id="6_lock_thumb"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/mad_lab_thumb.png" id="7_mad_lab_thumb"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/magic_waterfall_thumb.png" id="8_waterfall_thumb"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/wild_west_thumb.png" id="9_wild_west_thumb"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/heaven_secret_thumb.png" id="10_heaven_thumb"]
+[ext_resource type="Texture2D" path="res://assets/ui/stages/rooftop_thumb.png" id="11_rooftop_thumb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bezel"]
 bg_color = Color(0.08, 0.08, 0.09, 0.95)
@@ -33,6 +38,112 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 shadow_color = Color(1, 0.7, 0.1, 0.5)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_settings_btn"]
+bg_color = Color(0.08, 0.08, 0.1, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.5, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_settings_btn_hover"]
+bg_color = Color(0.18, 0.16, 0.12, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.35, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(1, 0.8, 0.2, 0.4)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialog"]
+bg_color = Color(0.09, 0.09, 0.12, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.85, 0.68, 0.25, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.85)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opt_active"]
+bg_color = Color(0.85, 0.65, 0.15, 0.28)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.88, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(1, 0.8, 0.2, 0.45)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opt_inactive"]
+bg_color = Color(0.06, 0.06, 0.08, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.35, 0.4, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opt_hover"]
+bg_color = Color(0.2, 0.18, 0.14, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.75, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_close"]
+bg_color = Color(0.14, 0.12, 0.08, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7, 0.55, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_close_hover"]
+bg_color = Color(0.25, 0.2, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.35, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(1, 0.8, 0.2, 0.4)
 shadow_size = 8
 
 [sub_resource type="Gradient" id="Gradient_overlay"]
@@ -182,6 +293,41 @@ texture = ExtResource("4_temple_thumb")
 expand_mode = 1
 stretch_mode = 6
 
+[node name="SlotMadLab" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("7_mad_lab_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotWaterfall" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("8_waterfall_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotWildWest" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("9_wild_west_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotHeaven" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("10_heaven_thumb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SlotRooftop" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
+custom_minimum_size = Vector2(112, 60)
+layout_mode = 2
+texture = ExtResource("11_rooftop_thumb")
+expand_mode = 1
+stretch_mode = 6
+
 [node name="SlotRand" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
 custom_minimum_size = Vector2(112, 60)
 layout_mode = 2
@@ -231,41 +377,6 @@ texture = ExtResource("6_lock_thumb")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="SlotLock7" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
-custom_minimum_size = Vector2(112, 60)
-layout_mode = 2
-texture = ExtResource("6_lock_thumb")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="SlotLock8" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
-custom_minimum_size = Vector2(112, 60)
-layout_mode = 2
-texture = ExtResource("6_lock_thumb")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="SlotLock9" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
-custom_minimum_size = Vector2(112, 60)
-layout_mode = 2
-texture = ExtResource("6_lock_thumb")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="SlotLock10" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
-custom_minimum_size = Vector2(112, 60)
-layout_mode = 2
-texture = ExtResource("6_lock_thumb")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="SlotLock11" type="TextureRect" parent="BottomSection/StoneBezel/GridContainer"]
-custom_minimum_size = Vector2(112, 60)
-layout_mode = 2
-texture = ExtResource("6_lock_thumb")
-expand_mode = 1
-stretch_mode = 6
-
 [node name="P1Token" type="Panel" parent="BottomSection/StoneBezel"]
 layout_mode = 0
 offset_right = 120.0
@@ -288,6 +399,26 @@ theme_override_font_sizes/font_size = 11
 text = "P1"
 horizontal_alignment = 2
 
+[node name="SettingsBtn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 54.0
+grow_horizontal = 0
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_settings_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_settings_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_settings_btn_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_settings_btn_hover")
+text = "⚙ SETTINGS [T] (99s)"
+
 [node name="StatusLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -295,13 +426,148 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -350.0
+offset_left = -450.0
 offset_top = -28.0
-offset_right = 350.0
+offset_right = 450.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.65, 0.65, 0.7, 1)
 theme_override_font_sizes/font_size = 13
-text = "[A] / [D] / ARROWS : SELECT ARENA    •    [F] / [ENTER] : CONFIRM    •    [ESC] : BACK"
+text = "[A] / [D] / ARROWS : ARENA    •    [F] / [ENTER] : CONFIRM    •    [T] / CLICK : SETTINGS    •    [ESC] : BACK"
 horizontal_alignment = 1
+
+[node name="SettingsPopup" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="ColorRect" parent="SettingsPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.05, 0.82)
+
+[node name="DialogPanel" type="PanelContainer" parent="SettingsPopup"]
+custom_minimum_size = Vector2(460, 290)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -145.0
+offset_right = 230.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialog")
+
+[node name="Margin" type="MarginContainer" parent="SettingsPopup/DialogPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 22
+
+[node name="VBox" type="VBoxContainer" parent="SettingsPopup/DialogPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderBox" type="VBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="SettingsPopup/DialogPanel/Margin/VBox/HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "⚔ BATTLE SETTINGS ⚔"
+horizontal_alignment = 1
+
+[node name="Divider" type="ColorRect" parent="SettingsPopup/DialogPanel/Margin/VBox/HeaderBox"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0.7, 0.55, 0.25, 0.8)
+
+[node name="TimeSection" type="VBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TimeSectionTitle" type="Label" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 13
+text = "ROUND TIME LIMIT"
+horizontal_alignment = 1
+
+[node name="TimeButtons" type="HBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Btn30s" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
+custom_minimum_size = Vector2(100, 42)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "30s"
+
+[node name="Btn60s" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
+custom_minimum_size = Vector2(100, 42)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "60s"
+
+[node name="Btn99s" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
+custom_minimum_size = Vector2(100, 42)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "99s"
+
+[node name="TimeRuleDesc" type="Label" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.68, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "When time runs out, fighter with higher remaining HP wins."
+horizontal_alignment = 1
+
+[node name="CloseBox" type="HBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnClose" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/CloseBox"]
+custom_minimum_size = Vector2(200, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_close")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_close_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_close_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_close_hover")
+text = "CONFIRM & CLOSE [ESC]"

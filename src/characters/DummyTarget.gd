@@ -9,6 +9,7 @@ var respawn_position: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	fighter_name = "Training Dummy"
 	player_id = 0
+	max_hp = 500.0
 	super._ready()
 	base_modulate = Color(1.0, 0.8, 0.4)
 	if sprite:
@@ -45,7 +46,8 @@ func _on_hp_changed(_cur: float, _max: float) -> void:
 
 func _update_labels() -> void:
 	if hp_label:
-		hp_label.text = "HP: %d%%" % int(current_hp)
+		var pct = int(ceil((current_hp / max_hp) * 100.0))
+		hp_label.text = "HP: %d%%" % max(0, pct)
 		# Color changes from green -> yellow -> red
 		var ratio = current_hp / max_hp
 		if ratio > 0.6:

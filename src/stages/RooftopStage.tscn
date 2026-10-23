@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=3 uid="uid://rooftop01"]
+
+[ext_resource type="Script" path="res://src/stages/ThronePlatformStage.gd" id="1_stage"]
+[ext_resource type="Script" path="res://src/stages/DeathZone.gd" id="2_death"]
+[ext_resource type="PackedScene" uid="uid://hudview01" path="res://src/ui/HUD.tscn" id="3_hud"]
+[ext_resource type="PackedScene" uid="uid://pausemenu01" path="res://src/ui/PauseMenu.tscn" id="4_pause"]
+[ext_resource type="Texture2D" path="res://assets/stages/Rooftop.jpg" id="5_map"]
+[ext_resource type="Script" path="res://src/core/BrawlhallaCamera.gd" id="6_cam"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_main_rooftop"]
+size = Vector2(731, 225)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_punch_frame"]
+size = Vector2(174, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_balcony"]
+size = Vector2(145, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_high_roof"]
+size = Vector2(248, 206)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_building"]
+size = Vector2(226, 258)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom_death"]
+size = Vector2(2400, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side_death"]
+size = Vector2(200, 1400)
+
+[node name="RooftopStage" type="Node2D"]
+script = ExtResource("1_stage")
+p1_spawn_pos = Vector2(520, 380)
+p2_spawn_pos = Vector2(760, 380)
+
+[node name="AbyssBackdrop" type="ColorRect" parent="."]
+z_index = -20
+offset_left = -600.0
+offset_top = -400.0
+offset_right = 1880.0
+offset_bottom = 1200.0
+color = Color(0.12, 0.08, 0.12, 1)
+
+[node name="StageIllustration" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(640, 360)
+scale = Vector2(0.46875, 0.46875)
+texture = ExtResource("5_map")
+
+[node name="MainRooftopPlatform" type="StaticBody2D" parent="."]
+position = Vector2(649, 520)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRooftopPlatform"]
+shape = SubResource("RectangleShape2D_main_rooftop")
+
+[node name="PunchFramePlatform" type="StaticBody2D" parent="."]
+position = Vector2(822, 228)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PunchFramePlatform"]
+shape = SubResource("RectangleShape2D_punch_frame")
+one_way_collision = true
+
+[node name="LeftBalconyPlatform" type="StaticBody2D" parent="."]
+position = Vector2(232, 467)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBalconyPlatform"]
+shape = SubResource("RectangleShape2D_left_balcony")
+one_way_collision = true
+
+[node name="LeftHighRoofPlatform" type="StaticBody2D" parent="."]
+position = Vector2(119, 342)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftHighRoofPlatform"]
+shape = SubResource("RectangleShape2D_left_high_roof")
+
+[node name="RightBuildingPlatform" type="StaticBody2D" parent="."]
+position = Vector2(1172, 481)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBuildingPlatform"]
+shape = SubResource("RectangleShape2D_right_building")
+
+[node name="DeathZone" type="Area2D" parent="."]
+script = ExtResource("2_death")
+
+[node name="BottomAbyssVortex" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(640, 780)
+shape = SubResource("RectangleShape2D_bottom_death")
+debug_color = Color(1, 0.1, 0.1, 0.3)
+
+[node name="LeftDeathShape" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(-150, 360)
+shape = SubResource("RectangleShape2D_side_death")
+debug_color = Color(1, 0.1, 0.1, 0.3)
+
+[node name="RightDeathShape" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(1430, 360)
+shape = SubResource("RectangleShape2D_side_death")
+debug_color = Color(1, 0.1, 0.1, 0.3)
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("6_cam")
+stage_center = Vector2(640, 360)
+min_zoom = 1.0
+max_zoom = 1.35
+margin = Vector2(360, 240)
+follow_speed = 6.0
+zoom_speed = 5.0
+max_camera_y = 520.0

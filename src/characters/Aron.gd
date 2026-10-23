@@ -3,6 +3,8 @@ extends FighterBase
 
 @onready var attack_hitbox: Hitbox = $AttackHitbox
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var blue_aura: GPUParticles2D = get_node_or_null("BlueAura")
+@onready var aura_sparks: GPUParticles2D = get_node_or_null("AuraSparks")
 
 var combo_step: int = 0
 var has_buffered_attack: bool = false
@@ -14,30 +16,18 @@ func _ready() -> void:
 	if attack_hitbox:
 		attack_hitbox.attacker_node = self
 		attack_hitbox.monitoring = false
+	if blue_aura:
+		blue_aura.emitting = true
+	if aura_sparks:
+		aura_sparks.emitting = true
 
 func _handle_state_physics(delta: float) -> void:
 	if current_state == State.DEAD:
 		return
 
-	var move_input = 0.0
-	if player_id == 1:
-		move_input = Input.get_axis("p1_move_left", "p1_move_right")
-	elif player_id == 2:
-		move_input = Input.get_axis("p2_move_left", "p2_move_right")
-
-	# Jump inputs
-	var jump_just_pressed = false
-	if player_id == 1:
-		jump_just_pressed = Input.is_action_just_pressed("p1_jump")
-	elif player_id == 2:
-		jump_just_pressed = Input.is_action_just_pressed("p2_jump")
-
-	# Attack inputs
-	var attack_just_pressed = false
-	if player_id == 1:
-		attack_just_pressed = Input.is_action_just_pressed("p1_attack")
-	elif player_id == 2:
-		attack_just_pressed = Input.is_action_just_pressed("p2_attack")
+	var move_input = get_move_input()
+	var jump_just_pressed = is_jump_just_pressed()
+	var attack_just_pressed = is_attack_just_pressed()
 
 	# Handle attacking state
 	if current_state == State.ATTACK:
@@ -126,6 +116,10 @@ func _on_enter_state(new_state: State) -> void:
 			anim_player.play("hurt")
 		State.DEAD:
 			anim_player.play("hurt")
+			if blue_aura:
+				blue_aura.emitting = false
+			if aura_sparks:
+				aura_sparks.emitting = false
 
 func start_combo() -> void:
 	combo_step = 1

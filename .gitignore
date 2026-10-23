@@ -2,6 +2,7 @@
 Godot_editor.exe
 godot_templates.tpz
 *.tpz
+*.pdf
 
 # Abaikan folder cache build Godot
 .godot/

@@ -3,6 +3,7 @@ extends Control
 
 @onready var menu_container: Control = $MenuContainer
 
+@onready var btn_campaign: Button = $MenuContainer/BtnCampaign
 @onready var btn_vs: Button = $MenuContainer/BtnVS
 @onready var btn_training: Button = $MenuContainer/BtnTraining
 @onready var btn_settings: Button = $MenuContainer/BtnSettings
@@ -19,6 +20,9 @@ const ANIMATION_DURATION := 0.3
 
 
 func _ready() -> void:
+    if btn_campaign:
+        btn_campaign.pressed.connect(_on_campaign_pressed)
+        setup_button_effect(btn_campaign)
     btn_vs.pressed.connect(_on_vs_pressed)
     btn_training.pressed.connect(_on_training_pressed)
     btn_settings.pressed.connect(_on_settings_pressed)
@@ -40,7 +44,10 @@ func _ready() -> void:
         )
 
     settings_modal.visible = false
-    btn_vs.grab_focus()
+    if btn_campaign:
+        btn_campaign.grab_focus()
+    else:
+        btn_vs.grab_focus()
 
 
 # ====================================
@@ -159,6 +166,11 @@ func stop_button_tween(button: Button) -> void:
 # ====================================
 # TOMBOL MENU
 # ====================================
+
+func _on_campaign_pressed() -> void:
+    GameManager.game_mode = "campaign"
+    GameManager.go_to_campaign_character_select()
+
 
 func _on_vs_pressed() -> void:
     GameManager.game_mode = "pvp"

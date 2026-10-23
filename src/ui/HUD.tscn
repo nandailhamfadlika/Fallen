@@ -1,33 +1,110 @@
-[gd_scene load_steps=3 format=3 uid="uid://hudview01"]
+[gd_scene load_steps=7 format=3 uid="uid://hudview01"]
 
 [ext_resource type="Script" path="res://src/ui/HUD.gd" id="1_hud"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1"]
-bg_color = Color(0.12, 0.6, 0.9, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.06, 0.07, 0.1, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24, 0.26, 0.35, 0.85)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1"]
+bg_color = Color(0.12, 0.65, 0.95, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p2"]
+bg_color = Color(0.95, 0.18, 0.22, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3"]
+bg_color = Color(0.27, 0.88, 0.36, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4"]
+bg_color = Color(0.82, 0.38, 0.98, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
 
 [node name="P1Container" type="VBoxContainer" parent="."]
 offset_left = 40.0
-offset_top = 30.0
-offset_right = 380.0
-offset_bottom = 80.0
+offset_top = 22.0
+offset_right = 400.0
+offset_bottom = 72.0
 
-[node name="P1NameLabel" type="Label" parent="P1Container"]
+[node name="P1Header" type="HBoxContainer" parent="P1Container"]
 layout_mode = 2
+
+[node name="P1NameLabel" type="Label" parent="P1Container/P1Header"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.3, 0.85, 1, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "ARON"
 
-[node name="P1HPBar" type="ProgressBar" parent="P1Container"]
-custom_minimum_size = Vector2(340, 18)
+[node name="P1HPPercent" type="Label" parent="P1Container/P1Header"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "100%"
+horizontal_alignment = 2
+
+[node name="P1HPBar" type="ProgressBar" parent="P1Container"]
+custom_minimum_size = Vector2(360, 16)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_p1")
+value = 100.0
+show_percentage = false
+
+[node name="P3Container" type="VBoxContainer" parent="."]
+visible = false
+offset_left = 40.0
+offset_top = 78.0
+offset_right = 400.0
+offset_bottom = 128.0
+
+[node name="P3Header" type="HBoxContainer" parent="P3Container"]
+layout_mode = 2
+
+[node name="P3NameLabel" type="Label" parent="P3Container/P3Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.35, 0.9, 0.45, 1)
+theme_override_font_sizes/font_size = 17
+text = "PLAYER 3"
+
+[node name="P3HPPercent" type="Label" parent="P3Container/P3Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.9, 0.45, 1)
+theme_override_font_sizes/font_size = 15
+text = "100%"
+horizontal_alignment = 2
+
+[node name="P3HPBar" type="ProgressBar" parent="P3Container"]
+custom_minimum_size = Vector2(360, 16)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_p3")
 value = 100.0
 show_percentage = false
 
@@ -35,64 +112,139 @@ show_percentage = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -380.0
-offset_top = 30.0
+offset_left = -400.0
+offset_top = 22.0
 offset_right = -40.0
-offset_bottom = 80.0
+offset_bottom = 72.0
 grow_horizontal = 0
 
-[node name="P2NameLabel" type="Label" parent="P2Container"]
+[node name="P2Header" type="HBoxContainer" parent="P2Container"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.7, 0.2, 1)
-theme_override_font_sizes/font_size = 18
-text = "TARGET DUMMY"
+
+[node name="P2HPPercent" type="Label" parent="P2Container/P2Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 15
+text = "100%"
+
+[node name="P2NameLabel" type="Label" parent="P2Container/P2Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 17
+text = "FIGHTER 2"
 horizontal_alignment = 2
 
 [node name="P2HPBar" type="ProgressBar" parent="P2Container"]
-custom_minimum_size = Vector2(340, 18)
+custom_minimum_size = Vector2(360, 16)
 layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_p2")
 value = 100.0
 fill_mode = 1
 show_percentage = false
 
-[node name="CenterContainer" type="VBoxContainer" parent="."]
+[node name="P4Container" type="VBoxContainer" parent="."]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -400.0
+offset_top = 78.0
+offset_right = -40.0
+offset_bottom = 128.0
+grow_horizontal = 0
+
+[node name="P4Header" type="HBoxContainer" parent="P4Container"]
+layout_mode = 2
+
+[node name="P4HPPercent" type="Label" parent="P4Container/P4Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.45, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "100%"
+
+[node name="P4NameLabel" type="Label" parent="P4Container/P4Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.45, 1, 1)
+theme_override_font_sizes/font_size = 17
+text = "PLAYER 4"
+horizontal_alignment = 2
+
+[node name="P4HPBar" type="ProgressBar" parent="P4Container"]
+custom_minimum_size = Vector2(360, 16)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_p4")
+value = 100.0
+fill_mode = 1
+show_percentage = false
+
+[node name="TimerContainer" type="VBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_top = 16.0
+offset_right = 70.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="TimerLabel" type="Label" parent="TimerContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.25, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 40
+text = "99"
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.0
+offset_left = -400.0
 offset_top = -80.0
-offset_right = 250.0
+offset_right = 400.0
 offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
 
-[node name="BannerLabel" type="Label" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="BannerLabel" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_font_sizes/font_size = 46
-text = "ROUND 1"
+theme_override_colors/font_shadow_color = Color(0.6, 0.1, 0.1, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 64
+text = "FIGHT!"
 horizontal_alignment = 1
 
-[node name="SubBannerLabel" type="Label" parent="CenterContainer"]
+[node name="SubBannerLabel" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
-theme_override_font_sizes/font_size = 18
-text = "Press [R] to Rematch"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 20
+text = "P1: WASD+[F]  vs  P2: Arrows+[Enter]"
 horizontal_alignment = 1
 
 [node name="ComboLabel" type="Label" parent="."]
-offset_left = 60.0
-offset_top = 100.0
+offset_left = 40.0
+offset_top = 135.0
 offset_right = 240.0
-offset_bottom = 150.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+offset_bottom = 175.0
+theme_override_colors/font_color = Color(0.2, 0.9, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 24
 text = "3 HITS!"

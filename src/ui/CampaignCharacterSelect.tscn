@@ -1,0 +1,721 @@
+[gd_scene load_steps=18 format=3 uid="uid://campaigncharselect01"]
+
+[ext_resource type="Script" path="res://src/ui/CampaignCharacterSelect.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/ui/char_select_bg.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/ui/bingkai_headertitle.png" id="3_frame"]
+[ext_resource type="FontFile" path="res://assets/fonts/MetalMania-Regular.ttf" id="4_font"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_aron.png" id="5_p_aron"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_om_hami.png" id="6_p_hami"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_kemet.png" id="7_p_kemet"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_butler.png" id="8_p_butler"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_mike.png" id="9_p_mike"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_muslan.png" id="10_p_muslan"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_rin.png" id="11_p_rin"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/portrait_sunkibo.png" id="12_p_sunkibo"]
+[ext_resource type="Texture2D" path="res://assets/ui/portraits/icon_lock.png" id="13_lock"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_showcase"]
+bg_color = Color(0.05, 0.07, 0.1, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.35, 0.5, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_portrait"]
+bg_color = Color(0.02, 0.03, 0.05, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.2, 0.85, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.2, 0.85, 1, 0.4)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.08, 0.1, 0.15, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.4, 0.55, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_focus"]
+bg_color = Color(0.12, 0.16, 0.24, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.82, 0.35, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(1, 0.82, 0.35, 0.5)
+shadow_size = 8
+
+[node name="CampaignCharacterSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.22, 0.24, 0.3, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DarkOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.04, 0.06, 0.5)
+
+[node name="HeaderFrame" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -240.0
+offset_top = -5.0
+offset_right = 240.0
+offset_bottom = 115.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("3_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HeaderTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 18.0
+offset_right = 220.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.96, 0.84, 0.43, 1)
+theme_override_colors/font_shadow_color = Color(0.58, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 34
+text = "CAMPAIGN MODE"
+horizontal_alignment = 1
+
+[node name="HeaderSubtitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 56.0
+offset_right = 200.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.78, 0.35, 1)
+theme_override_font_sizes/font_size = 14
+text = "SELECT YOUR HERO TO EMBARK"
+horizontal_alignment = 1
+
+[node name="MainHBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -250.0
+offset_right = 600.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="LeftShowcase" type="PanelContainer" parent="MainHBox"]
+custom_minimum_size = Vector2(430, 520)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_showcase")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainHBox/LeftShowcase"]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainHBox/LeftShowcase/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ArchetypeBadge" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "✦ SPEED BRAWLER / COMBO RUSHDOWN ✦"
+horizontal_alignment = 1
+
+[node name="PortraitFrame" type="PanelContainer" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(210, 210)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_portrait")
+
+[node name="PortraitTexture" type="TextureRect" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/PortraitFrame"]
+layout_mode = 2
+texture = ExtResource("5_p_aron")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HeroName" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.85, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 32
+text = "ARON"
+horizontal_alignment = 1
+
+[node name="HeroTitle" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.35, 1)
+theme_override_font_sizes/font_size = 15
+text = "Speed Brawler"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoreLabel" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.84, 0.9, 1)
+theme_override_font_sizes/font_size = 12
+text = "A relentless street brawler who channels electric agility into lightning-quick boxing combos. He sets out into the shattered world to uncover the origin of the Cataclysm."
+autowrap_mode = 3
+
+[node name="StatsGrid" type="GridContainer" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 4
+columns = 4
+
+[node name="LblSpeed" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "SPEED:"
+
+[node name="ValSpeed" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "★★★★★"
+
+[node name="LblPower" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "POWER:"
+
+[node name="ValPower" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "★★★☆☆"
+
+[node name="LblRange" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "RANGE:"
+
+[node name="ValRange" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "★★☆☆☆"
+
+[node name="LblTech" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "TECH:"
+
+[node name="ValTech" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "★★★☆☆"
+
+[node name="LockBadge" type="Label" parent="MainHBox/LeftShowcase/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 13
+text = "[ LOCKED - UNLOCK VIA CAMPAIGN ]"
+horizontal_alignment = 1
+
+[node name="RightRoster" type="VBoxContainer" parent="MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="RosterHeader" type="Label" parent="MainHBox/RightRoster"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.84, 0.43, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 24
+text = "ROSTER OF WARRIORS"
+horizontal_alignment = 1
+
+[node name="GridCenter" type="CenterContainer" parent="MainHBox/RightRoster"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="MainHBox/RightRoster/GridCenter"]
+layout_mode = 2
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 18
+columns = 4
+
+[node name="BtnAron" type="Button" parent="MainHBox/RightRoster/GridCenter/GridContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+
+[node name="Texture" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnAron"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_p_aron")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnAron"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.2, 0.85, 1, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 14
+text = "ARON"
+horizontal_alignment = 1
+
+[node name="BtnHami" type="Button" parent="MainHBox/RightRoster/GridCenter/GridContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+
+[node name="Texture" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnHami"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_p_hami")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnHami"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.78, 0.25, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 14
+text = "OM HAMI"
+horizontal_alignment = 1
+
+[node name="BtnKemet" type="Button" parent="MainHBox/RightRoster/GridCenter/GridContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+
+[node name="Texture" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnKemet"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_p_kemet")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnKemet"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.95, 0.35, 0.25, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 14
+text = "KEMET"
+horizontal_alignment = 1
+
+[node name="BtnButler" type="Button" parent="MainHBox/RightRoster/GridCenter/GridContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+
+[node name="Texture" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnButler"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_p_butler")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnButler"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.82, 0.35, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 14
+text = "BUTLER"
+horizontal_alignment = 1
+
+[node name="BtnMike" type="Button" parent="MainHBox/RightRoster/GridCenter/GridContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+
+[node name="Texture" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnMike"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_p_mike")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnMike"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.95, 0.65, 0.25, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 14
+text = "MIKE"
+horizontal_alignment = 1
+
+[node name="BtnMuslan" type="Button" parent="MainHBox/RightRoster/GridCenter/GridContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+
+[node name="Texture" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnMuslan"]
+modulate = Color(0.4, 0.4, 0.45, 0.8)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("10_p_muslan")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LockIcon" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnMuslan"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -28.0
+offset_right = 18.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_lock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnMuslan"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.6, 0.6, 0.65, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 14
+text = "MUSLAN"
+horizontal_alignment = 1
+
+[node name="BtnRin" type="Button" parent="MainHBox/RightRoster/GridCenter/GridContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+
+[node name="Texture" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnRin"]
+modulate = Color(0.4, 0.4, 0.45, 0.8)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("11_p_rin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LockIcon" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnRin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -28.0
+offset_right = 18.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_lock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnRin"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.6, 0.6, 0.65, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 14
+text = "RIN"
+horizontal_alignment = 1
+
+[node name="BtnSunkibo" type="Button" parent="MainHBox/RightRoster/GridCenter/GridContainer"]
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_focus")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+
+[node name="Texture" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnSunkibo"]
+modulate = Color(0.4, 0.4, 0.45, 0.8)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_p_sunkibo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LockIcon" type="TextureRect" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnSunkibo"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -28.0
+offset_right = 18.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_lock")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MainHBox/RightRoster/GridCenter/GridContainer/BtnSunkibo"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.6, 0.6, 0.65, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 14
+text = "SUNKIBO"
+horizontal_alignment = 1
+
+[node name="BottomBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = -58.0
+offset_right = -45.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="BtnBack" type="Button" parent="BottomBar"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "◀ BACK [ESC]"
+
+[node name="StatusHint" type="Label" parent="BottomBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 13
+text = "[WASD / ARROWS] Select Hero  •  [F / ENTER / SPACE] Start Campaign  •  [ESC] Back"
+horizontal_alignment = 1
+
+[node name="BtnStart" type="Button" parent="BottomBar"]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 18
+text = "START CAMPAIGN ▶ [ENTER/F]"

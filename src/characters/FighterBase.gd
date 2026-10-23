@@ -19,13 +19,13 @@ enum State {
 
 @export var fighter_name: String = "Fighter"
 @export var player_id: int = 1 # 1 = P1, 2 = P2, 0 = Dummy
-@export var max_hp: float = 100.0
+@export var max_hp: float = 250.0
 @export var speed: float = 280.0
 @export var jump_velocity: float = -520.0
 @export var wall_slide_max_speed: float = 150.0
 @export var wall_jump_impulse: Vector2 = Vector2(360.0, -480.0)
 
-var current_hp: float = 100.0
+var current_hp: float = 250.0
 var current_state: State = State.IDLE
 var facing_direction: int = 1 # 1 = right, -1 = left
 var air_jumps_left: int = 1
@@ -41,9 +41,69 @@ var fast_fall_gravity: float = 1800.0
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var hurtbox: Hurtbox = $Hurtbox
 
+const PlayerInputScript = preload("res://src/core/PlayerInput.gd")
+
 var base_modulate: Color = Color.WHITE
+var player_input = null
+
+func set_device(device_type_str: String, dev_id: int = -1) -> void:
+	player_input = PlayerInputScript.new()
+	match device_type_str:
+		"keyboard_wasd":
+			player_input.device_type = player_input.DeviceType.KEYBOARD_WASD
+		"keyboard_arrows":
+			player_input.device_type = player_input.DeviceType.KEYBOARD_ARROWS
+		"joypad":
+			player_input.device_type = player_input.DeviceType.JOYPAD
+			player_input.joypad_id = dev_id
+		_:
+			player_input.device_type = player_input.DeviceType.KEYBOARD_WASD
+
+func get_move_input() -> float:
+	if player_input:
+		return player_input.move_axis
+	if player_id == 1:
+		return Input.get_axis("p1_move_left", "p1_move_right")
+	elif player_id == 2:
+		return Input.get_axis("p2_move_left", "p2_move_right")
+	return 0.0
+
+func is_jump_just_pressed() -> bool:
+	if player_input:
+		return player_input.jump_just_pressed
+	if player_id == 1:
+		return Input.is_action_just_pressed("p1_jump")
+	elif player_id == 2:
+		return Input.is_action_just_pressed("p2_jump")
+	return false
+
+func is_attack_just_pressed() -> bool:
+	if player_input:
+		return player_input.attack_just_pressed
+	if player_id == 1:
+		return Input.is_action_just_pressed("p1_attack")
+	elif player_id == 2:
+		return Input.is_action_just_pressed("p2_attack")
+	return false
+
+func is_dodge_just_pressed() -> bool:
+	if player_input:
+		return player_input.dodge_just_pressed
+	if player_id == 1:
+		return Input.is_action_just_pressed("p1_dodge")
+	return false
+
+func is_down_just_pressed() -> bool:
+	if player_input:
+		return player_input.down_just_pressed
+	if player_id == 1:
+		return Input.is_action_just_pressed("p1_down")
+	elif player_id == 2:
+		return Input.is_action_just_pressed("p2_down")
+	return false
 
 func _ready() -> void:
+	add_to_group("fighters")
 	current_hp = max_hp
 	collision_layer = 2 # Characters
 	collision_mask = 1  # World (platforms & walls)
@@ -51,6 +111,14 @@ func _ready() -> void:
 		base_modulate = sprite.modulate
 
 func _physics_process(delta: float) -> void:
+	if player_input:
+		player_input.update()
+
+	if current_state != State.DEAD:
+		if global_position.y < -380.0 or global_position.y > 850.0 or global_position.x < -280.0 or global_position.x > 1560.0:
+			trigger_ring_out()
+			return
+
 	if hitstop_timer > 0.0:
 		hitstop_timer -= delta
 		return

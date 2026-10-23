@@ -1,0 +1,141 @@
+[gd_scene load_steps=14 format=3 uid="uid://magicwaterfall01"]
+
+[ext_resource type="Script" path="res://src/stages/ThronePlatformStage.gd" id="1_stage"]
+[ext_resource type="Script" path="res://src/stages/DeathZone.gd" id="2_death"]
+[ext_resource type="PackedScene" uid="uid://hudview01" path="res://src/ui/HUD.tscn" id="3_hud"]
+[ext_resource type="PackedScene" uid="uid://pausemenu01" path="res://src/ui/PauseMenu.tscn" id="4_pause"]
+[ext_resource type="Texture2D" path="res://assets/stages/Magic Waterfall.jpg" id="5_map"]
+[ext_resource type="Script" path="res://src/core/BrawlhallaCamera.gd" id="6_cam"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_main_pedestal"]
+size = Vector2(661, 103)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_cliff"]
+size = Vector2(356, 136)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mid_left_ledge"]
+size = Vector2(136, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upper_left_ledge"]
+size = Vector2(145, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top_center_ledge"]
+size = Vector2(141, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upper_right_ledge"]
+size = Vector2(141, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mid_right_ledge"]
+size = Vector2(141, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom_death"]
+size = Vector2(2400, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side_death"]
+size = Vector2(200, 1400)
+
+[node name="MagicWaterfallStage" type="Node2D"]
+script = ExtResource("1_stage")
+p1_spawn_pos = Vector2(700, 460)
+p2_spawn_pos = Vector2(950, 460)
+
+[node name="AbyssBackdrop" type="ColorRect" parent="."]
+z_index = -20
+offset_left = -600.0
+offset_top = -400.0
+offset_right = 1880.0
+offset_bottom = 1200.0
+color = Color(0.05, 0.05, 0.12, 1)
+
+[node name="StageIllustration" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(640, 360)
+scale = Vector2(0.46875, 0.46875)
+texture = ExtResource("5_map")
+
+[node name="MainPedestalPlatform" type="StaticBody2D" parent="."]
+position = Vector2(827, 548)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainPedestalPlatform"]
+shape = SubResource("RectangleShape2D_main_pedestal")
+
+[node name="LeftCliffPlatform" type="StaticBody2D" parent="."]
+position = Vector2(173, 565)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftCliffPlatform"]
+shape = SubResource("RectangleShape2D_left_cliff")
+
+[node name="MidLeftLedge" type="StaticBody2D" parent="."]
+position = Vector2(588, 383)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MidLeftLedge"]
+shape = SubResource("RectangleShape2D_mid_left_ledge")
+one_way_collision = true
+
+[node name="UpperLeftLedge" type="StaticBody2D" parent="."]
+position = Vector2(705, 289)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperLeftLedge"]
+shape = SubResource("RectangleShape2D_upper_left_ledge")
+one_way_collision = true
+
+[node name="TopCenterLedge" type="StaticBody2D" parent="."]
+position = Vector2(815, 214)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopCenterLedge"]
+shape = SubResource("RectangleShape2D_top_center_ledge")
+one_way_collision = true
+
+[node name="UpperRightLedge" type="StaticBody2D" parent="."]
+position = Vector2(933, 296)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperRightLedge"]
+shape = SubResource("RectangleShape2D_upper_right_ledge")
+one_way_collision = true
+
+[node name="MidRightLedge" type="StaticBody2D" parent="."]
+position = Vector2(1050, 385)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MidRightLedge"]
+shape = SubResource("RectangleShape2D_mid_right_ledge")
+one_way_collision = true
+
+[node name="DeathZone" type="Area2D" parent="."]
+script = ExtResource("2_death")
+
+[node name="BottomAbyssVortex" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(640, 780)
+shape = SubResource("RectangleShape2D_bottom_death")
+debug_color = Color(1, 0.1, 0.1, 0.3)
+
+[node name="LeftDeathShape" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(-150, 360)
+shape = SubResource("RectangleShape2D_side_death")
+debug_color = Color(1, 0.1, 0.1, 0.3)
+
+[node name="RightDeathShape" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(1430, 360)
+shape = SubResource("RectangleShape2D_side_death")
+debug_color = Color(1, 0.1, 0.1, 0.3)
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("6_cam")
+stage_center = Vector2(640, 360)
+min_zoom = 1.0
+max_zoom = 1.35
+margin = Vector2(360, 240)
+follow_speed = 6.0
+zoom_speed = 5.0
+max_camera_y = 520.0

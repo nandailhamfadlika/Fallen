@@ -13,7 +13,7 @@ var can_chain_combo: bool = false
 
 func _ready() -> void:
 	fighter_name = "Kemet"
-	max_hp = 100.0
+	max_hp = 240.0
 	speed = 310.0
 	jump_velocity = -530.0
 	wall_slide_max_speed = 120.0
@@ -40,21 +40,9 @@ func _handle_state_physics(delta: float) -> void:
 	if current_state == State.DEAD:
 		return
 
-	var move_input = 0.0
-	if player_id == 1:
-		move_input = Input.get_axis("p1_move_left", "p1_move_right")
-	elif player_id == 2:
-		move_input = Input.get_axis("p2_move_left", "p2_move_right")
-
-	var jump_just_pressed = false
-	var attack_just_pressed = false
-
-	if player_id == 1:
-		jump_just_pressed = Input.is_action_just_pressed("p1_jump")
-		attack_just_pressed = Input.is_action_just_pressed("p1_attack")
-	elif player_id == 2:
-		jump_just_pressed = Input.is_action_just_pressed("p2_jump")
-		attack_just_pressed = Input.is_action_just_pressed("p2_attack")
+	var move_input = get_move_input()
+	var jump_just_pressed = is_jump_just_pressed()
+	var attack_just_pressed = is_attack_just_pressed()
 
 	# Attacking state physics
 	if current_state == State.ATTACK:

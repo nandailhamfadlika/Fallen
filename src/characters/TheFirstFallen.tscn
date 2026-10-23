@@ -1,0 +1,614 @@
+[gd_scene load_steps=81 format=3 uid="uid://thefirstfallen01"]
+
+[ext_resource type="Script" path="res://src/characters/TheFirstFallen.gd" id="1_boss"]
+[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="2_hurtbox"]
+[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="3_hitbox"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/idle/idle_01.png" id="4_p1_idle_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/idle/idle_02.png" id="5_p1_idle_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/idle/idle_03.png" id="6_p1_idle_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/idle/idle_04.png" id="7_p1_idle_04"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/run/run_01.png" id="8_p1_run_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/run/run_02.png" id="9_p1_run_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/run/run_03.png" id="10_p1_run_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/jump/jump_rise.png" id="11_p1_jump_rise"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/jump/jump_apex.png" id="12_p1_jump_apex"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/jump/jump_fall.png" id="13_p1_jump_fall"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/jump/jump_land.png" id="14_p1_jump_land"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/wall/wall_slide.png" id="15_p1_wall_slide"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_01_windup.png" id="16_p1_c1_wind"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_01_strike.png" id="17_p1_c1_strike"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_01_recover.png" id="18_p1_c1_recov"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_02_windup.png" id="19_p1_c2_wind"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_02_strike.png" id="20_p1_c2_strike"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_02_recover.png" id="21_p1_c2_recov"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_03_windup.png" id="22_p1_c3_wind"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_03_strike.png" id="23_p1_c3_strike"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/combo/combo_03_recover.png" id="24_p1_c3_recov"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/hurt/hurt_01.png" id="25_p1_hurt_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/hurt/hurt_02.png" id="26_p1_hurt_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase1/hurt/hurt_03.png" id="27_p1_hurt_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/idle/idle_01.png" id="28_p2_idle_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/idle/idle_02.png" id="29_p2_idle_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/idle/idle_03.png" id="30_p2_idle_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/idle/idle_04.png" id="31_p2_idle_04"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/walk/walk_01.png" id="32_p2_walk_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/walk/walk_02.png" id="33_p2_walk_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/walk/walk_03.png" id="34_p2_walk_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/walk/walk_04.png" id="35_p2_walk_04"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/jump/jump_rise.png" id="36_p2_jump_rise"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/jump/jump_apex.png" id="37_p2_jump_apex"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/jump/jump_fall.png" id="38_p2_jump_fall"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/jump/jump_land.png" id="39_p2_jump_land"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/wall/wall_slide.png" id="40_p2_wall_slide"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_01_windup.png" id="41_p2_c1_wind"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_01_strike.png" id="42_p2_c1_strike"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_01_recover.png" id="43_p2_c1_recov"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_02_windup.png" id="44_p2_c2_wind"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_02_strike.png" id="45_p2_c2_strike"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_02_recover.png" id="46_p2_c2_recov"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_03_windup.png" id="47_p2_c3_wind"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_03_strike.png" id="48_p2_c3_strike"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/combo/combo_03_recover.png" id="49_p2_c3_recov"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/hurt/hurt_01.png" id="50_p2_hurt_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/hurt/hurt_02.png" id="51_p2_hurt_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/the_first_fallen/phase2/hurt/hurt_03.png" id="52_p2_hurt_03"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 26.0
+height = 110.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hurt"]
+radius = 30.0
+height = 116.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(110, 75)
+
+[sub_resource type="Gradient" id="Gradient_void"]
+offsets = PackedFloat32Array(0, 0.35, 0.75, 1)
+colors = PackedColorArray(0.9, 0.15, 0.25, 0.9, 0.5, 0.05, 0.55, 0.8, 0.15, 0.02, 0.25, 0.6, 0.02, 0.01, 0.04, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_void"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 28.0
+direction = Vector3(0, -1, 0)
+spread = 45.0
+initial_velocity_min = 30.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, -40, 0)
+scale_min = 3.5
+scale_max = 7.0
+color = Color(0.85, 0.15, 0.35, 0.8)
+
+[sub_resource type="Animation" id="Animation_p1_idle"]
+resource_name = "p1_idle"
+length = 0.64
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.16, 0.32, 0.48),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_p1_idle_01"), ExtResource("5_p1_idle_02"), ExtResource("6_p1_idle_03"), ExtResource("7_p1_idle_04")]
+}
+
+[sub_resource type="Animation" id="Animation_p1_run"]
+resource_name = "p1_run"
+length = 0.45
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("8_p1_run_01"), ExtResource("9_p1_run_02"), ExtResource("10_p1_run_03")]
+}
+
+[sub_resource type="Animation" id="Animation_p1_jump"]
+resource_name = "p1_jump"
+length = 0.4
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("11_p1_jump_rise"), ExtResource("12_p1_jump_apex")]
+}
+
+[sub_resource type="Animation" id="Animation_p1_fall"]
+resource_name = "p1_fall"
+length = 0.3
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_p1_jump_fall")]
+}
+
+[sub_resource type="Animation" id="Animation_p1_wall_slide"]
+resource_name = "p1_wall_slide"
+length = 0.3
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_p1_wall_slide")]
+}
+
+[sub_resource type="Animation" id="Animation_p1_hurt"]
+resource_name = "p1_hurt"
+length = 0.36
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.12, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("25_p1_hurt_01"), ExtResource("26_p1_hurt_02"), ExtResource("27_p1_hurt_03")]
+}
+
+[sub_resource type="Animation" id="Animation_p1_combo_1"]
+resource_name = "p1_combo_1"
+length = 0.32
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.08, 0.22),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("16_p1_c1_wind"), ExtResource("17_p1_c1_strike"), ExtResource("18_p1_c1_recov")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.08, 0.16, 0.22, 0.32),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p1_combo_2"]
+resource_name = "p1_combo_2"
+length = 0.36
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.1, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("19_p1_c2_wind"), ExtResource("20_p1_c2_strike"), ExtResource("21_p1_c2_recov")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.18, 0.24, 0.36),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p1_combo_3"]
+resource_name = "p1_combo_3"
+length = 0.5
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.14, 0.34),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("22_p1_c3_wind"), ExtResource("23_p1_c3_strike"), ExtResource("24_p1_c3_recov")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.14, 0.26, 0.34, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p2_idle"]
+resource_name = "p2_idle"
+length = 0.64
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.16, 0.32, 0.48),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("28_p2_idle_01"), ExtResource("29_p2_idle_02"), ExtResource("30_p2_idle_03"), ExtResource("31_p2_idle_04")]
+}
+
+[sub_resource type="Animation" id="Animation_p2_walk"]
+resource_name = "p2_walk"
+length = 0.52
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.13, 0.26, 0.39),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("32_p2_walk_01"), ExtResource("33_p2_walk_02"), ExtResource("34_p2_walk_03"), ExtResource("35_p2_walk_04")]
+}
+
+[sub_resource type="Animation" id="Animation_p2_jump"]
+resource_name = "p2_jump"
+length = 0.4
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("36_p2_jump_rise"), ExtResource("37_p2_jump_apex")]
+}
+
+[sub_resource type="Animation" id="Animation_p2_fall"]
+resource_name = "p2_fall"
+length = 0.3
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("38_p2_jump_fall")]
+}
+
+[sub_resource type="Animation" id="Animation_p2_wall_slide"]
+resource_name = "p2_wall_slide"
+length = 0.3
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("40_p2_wall_slide")]
+}
+
+[sub_resource type="Animation" id="Animation_p2_hurt"]
+resource_name = "p2_hurt"
+length = 0.36
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.12, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("50_p2_hurt_01"), ExtResource("51_p2_hurt_02"), ExtResource("52_p2_hurt_03")]
+}
+
+[sub_resource type="Animation" id="Animation_p2_combo_1"]
+resource_name = "p2_combo_1"
+length = 0.28
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.06, 0.18),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("41_p2_c1_wind"), ExtResource("42_p2_c1_strike"), ExtResource("43_p2_c1_recov")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06, 0.12, 0.18, 0.28),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p2_combo_2"]
+resource_name = "p2_combo_2"
+length = 0.3
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.08, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("44_p2_c2_wind"), ExtResource("45_p2_c2_strike"), ExtResource("46_p2_c2_recov")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.08, 0.14, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p2_combo_3"]
+resource_name = "p2_combo_3"
+length = 0.44
+loop_mode = 0
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0, 0.12, 0.28),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("47_p2_c3_wind"), ExtResource("48_p2_c3_strike"), ExtResource("49_p2_c3_recov")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.12, 0.22, 0.28, 0.44),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_combo_animation"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_boss"]
+_data = {
+"p1_idle": SubResource("Animation_p1_idle"),
+"p1_run": SubResource("Animation_p1_run"),
+"p1_jump": SubResource("Animation_p1_jump"),
+"p1_fall": SubResource("Animation_p1_fall"),
+"p1_wall_slide": SubResource("Animation_p1_wall_slide"),
+"p1_hurt": SubResource("Animation_p1_hurt"),
+"p1_combo_1": SubResource("Animation_p1_combo_1"),
+"p1_combo_2": SubResource("Animation_p1_combo_2"),
+"p1_combo_3": SubResource("Animation_p1_combo_3"),
+"p2_idle": SubResource("Animation_p2_idle"),
+"p2_walk": SubResource("Animation_p2_walk"),
+"p2_jump": SubResource("Animation_p2_jump"),
+"p2_fall": SubResource("Animation_p2_fall"),
+"p2_wall_slide": SubResource("Animation_p2_wall_slide"),
+"p2_hurt": SubResource("Animation_p2_hurt"),
+"p2_combo_1": SubResource("Animation_p2_combo_1"),
+"p2_combo_2": SubResource("Animation_p2_combo_2"),
+"p2_combo_3": SubResource("Animation_p2_combo_3"),
+}
+
+[node name="TheFirstFallen" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_boss")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_boss")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -55)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="VoidParticles" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+position = Vector2(0, -55)
+amount = 28
+process_material = SubResource("ParticleProcessMaterial_void")
+lifetime = 0.9
+preprocess = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -96)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("4_p1_idle_01")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -55)
+shape = SubResource("CapsuleShape2D_hurt")
+debug_color = Color(0.9, 0.2, 0.2, 0.3)
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("3_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(55, -55)
+shape = SubResource("RectangleShape2D_hit")
+debug_color = Color(0.85, 0.1, 0.1, 0.4)

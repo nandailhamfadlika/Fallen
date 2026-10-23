@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://campaignstoryscene01"]
+
+[ext_resource type="Script" path="res://src/ui/cutscenes/CampaignStoryScene.gd" id="1_story"]
+[ext_resource type="PackedScene" uid="uid://visualnovelplayer01" path="res://src/ui/cutscenes/VisualNovelPlayer.tscn" id="2_vn"]
+
+[node name="CampaignStoryScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_story")
+
+[node name="VisualNovelPlayer" parent="." instance=ExtResource("2_vn")]
+layout_mode = 1
+auto_start = false

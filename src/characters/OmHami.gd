@@ -12,7 +12,7 @@ var has_buffered_attack: bool = false
 
 func _ready() -> void:
 	fighter_name = "Om Hami"
-	max_hp = 110.0
+	max_hp = 275.0
 	speed = 250.0
 	jump_velocity = -500.0
 	super._ready()
@@ -37,22 +37,9 @@ func _handle_state_physics(delta: float) -> void:
 	if current_state == State.DEAD:
 		return
 
-	var move_dir = 0.0
-	if player_id == 1:
-		move_dir = Input.get_axis("p1_move_left", "p1_move_right")
-	elif player_id == 2:
-		move_dir = Input.get_axis("p2_move_left", "p2_move_right")
-
-	# Determine input actions
-	var jump_just_pressed = false
-	var attack_just_pressed = false
-
-	if player_id == 1:
-		jump_just_pressed = Input.is_action_just_pressed("p1_jump")
-		attack_just_pressed = Input.is_action_just_pressed("p1_attack")
-	elif player_id == 2:
-		jump_just_pressed = Input.is_action_just_pressed("p2_jump")
-		attack_just_pressed = Input.is_action_just_pressed("p2_attack")
+	var move_dir = get_move_input()
+	var jump_just_pressed = is_jump_just_pressed()
+	var attack_just_pressed = is_attack_just_pressed()
 
 	# Attacking state
 	if current_state == State.ATTACK:
