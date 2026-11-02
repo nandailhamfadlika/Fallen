@@ -9,6 +9,7 @@ FALLEN.exe
 FALLEN.pck
 *.exe
 *.pck
+*.zip
 
 # Abaikan folder cache build Godot
 .godot/
