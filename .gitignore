@@ -4,5 +4,20 @@ godot_templates.tpz
 *.tpz
 *.pdf
 
+# Build output / binaries (> 100MB)
+FALLEN.exe
+FALLEN.pck
+*.exe
+*.pck
+
 # Abaikan folder cache build Godot
 .godot/
+
+# Gemini / Agent Skills
+.agents/
+.gemini/
+skills-lock.json
+
+# Python cache
+__pycache__/
+*.pyc

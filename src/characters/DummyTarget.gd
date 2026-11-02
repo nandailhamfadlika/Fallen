@@ -58,6 +58,7 @@ func _update_labels() -> void:
 			hp_label.modulate = Color(1.0, 0.25, 0.25)
 
 func respawn() -> void:
+	current_state = State.IDLE
 	global_position = respawn_position
 	velocity = Vector2.ZERO
 	current_hp = max_hp

@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://aronpreviewarena01"]
+
+[ext_resource type="Script" path="res://src/characters/AronPreview.gd" id="1_prev"]
+[ext_resource type="PackedScene" uid="uid://aronfighter01" path="res://src/characters/Aron.tscn" id="2_aron"]
+[ext_resource type="PackedScene" uid="uid://dummytarget01" path="res://src/characters/DummyTarget.tscn" id="3_dummy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(1280, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(40, 720)
+
+[node name="AronPreview" type="Node2D"]
+script = ExtResource("1_prev")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(640, 620)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+offset_left = -640.0
+offset_top = -30.0
+offset_right = 640.0
+offset_bottom = 30.0
+color = Color(0.18, 0.22, 0.28, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(20, 360)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(1260, 360)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Aron" parent="." instance=ExtResource("2_aron")]
+position = Vector2(420, 590)
+
+[node name="DummyTarget" parent="." instance=ExtResource("3_dummy")]
+position = Vector2(740, 590)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 440.0
+offset_bottom = 220.0
+
+[node name="Margin" type="MarginContainer" parent="CanvasLayer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/Panel/Margin"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "ARON REVAMP TEST ARENA"
+
+[node name="Controls" type="Label" parent="CanvasLayer/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "• Move: A / D | Jump: W or Space
+• Attack (Ground): F (Jab -> Cross -> Uppercut [J-Jump])
+• Attack (Mid-Air): F (Air Jab -> Air Hook -> Hammer Slam)
+• Block: Hold Shift (tanpa arah)
+• Dash: Shift + A or D (Cooldown 2.0s)"
+
+[node name="DashCooldownLabel" type="Label" parent="CanvasLayer/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Dash Status: READY"

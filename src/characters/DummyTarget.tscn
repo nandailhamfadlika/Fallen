@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/characters/DummyTarget.gd" id="1_dummy"]
 [ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_01.png" id="2_idle01"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt_stagger.png" id="3_hurtstagger"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt/hurt_01.png" id="3_hurtstagger"]
 [ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="4_hurtbox"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]

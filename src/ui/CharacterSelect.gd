@@ -57,27 +57,27 @@ const CHARACTERS = [
 		"name": "MUSLAN",
 		"title": "The Southern Troubadour",
 		"portrait": "res://assets/ui/portraits/portrait_muslan.png",
-		"preview": "res://assets/ui/portraits/portrait_muslan.png",
-		"color": Color(0.5, 0.75, 0.9),
-		"locked": true
+		"preview": "res://assets/characters/muslan/idle/idle_01.png",
+		"color": Color(0.35, 0.7, 0.95),
+		"locked": false
 	},
 	{
 		"id": "rin",
 		"name": "RIN",
 		"title": "The Mystic Weaver",
 		"portrait": "res://assets/ui/portraits/portrait_rin.png",
-		"preview": "res://assets/ui/portraits/portrait_rin.png",
-		"color": Color(0.9, 0.45, 0.7),
-		"locked": true
+		"preview": "res://assets/characters/rin/idle/idle_01.png",
+		"color": Color(0.95, 0.4, 0.65),
+		"locked": false
 	},
 	{
 		"id": "sunkibo",
 		"name": "SUNKIBO",
 		"title": "The Ignored Scion",
 		"portrait": "res://assets/ui/portraits/portrait_sunkibo.png",
-		"preview": "res://assets/ui/portraits/portrait_sunkibo.png",
+		"preview": "res://assets/characters/sunkibo/idle/idle_01.png",
 		"color": Color(0.9, 0.6, 0.2),
-		"locked": true
+		"locked": false
 	}
 ]
 
@@ -139,6 +139,14 @@ func _ready() -> void:
 			slot_nodes.append(child)
 			child.mouse_filter = Control.MOUSE_FILTER_STOP
 			child.gui_input.connect(func(event: InputEvent): _on_slot_gui_input(event, idx))
+
+			# Sinkronisasi status visual terkunci
+			if idx < CHARACTERS.size():
+				var is_locked = CHARACTERS[idx].get("locked", false)
+				var lock_icon = child.get_node_or_null("LockOverlay")
+				if lock_icon:
+					lock_icon.visible = is_locked
+				child.modulate = Color(0.45, 0.45, 0.5, 1.0) if is_locked else Color.WHITE
 
 	# Inisialisasi 4 Player Slot (Semua dimulai unjoined)
 	slots.clear()

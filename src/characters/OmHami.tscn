@@ -1,61 +1,80 @@
-[gd_scene load_steps=34 format=3 uid="uid://omhamifighter01"]
+[gd_scene load_steps=53 format=3 uid="uid://omhamifighter01"]
 
 [ext_resource type="Script" path="res://src/characters/OmHami.gd" id="1_om_hami"]
 [ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_01.png" id="2_idle01"]
 [ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_02.png" id="3_idle02"]
 [ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_03.png" id="4_idle03"]
 [ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_04.png" id="5_idle04"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_05.png" id="6_idle05"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_06.png" id="7_idle06"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_07.png" id="8_idle07"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/idle/idle_08.png" id="9_idle08"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_01.png" id="10_walk01"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_02.png" id="11_walk02"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_03.png" id="12_walk03"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_04.png" id="13_walk04"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo_01_thrust.png" id="14_thrust"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo_02_sweep.png" id="15_sweep"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo_03_smash.png" id="16_smash"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/hurt_reeling.png" id="17_hurtreel"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/hurt_stagger.png" id="18_hurtstag"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/wall_slide.png" id="19_wallslide"]
-[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="20_hurtbox"]
-[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="21_hitbox"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_crouch.png" id="22_jumpcrouch"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_rise.png" id="23_jumprise"]
-[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_fall.png" id="24_jumpfall"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_01.png" id="6_walk01"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_02.png" id="7_walk02"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_03.png" id="8_walk03"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_04.png" id="9_walk04"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_05.png" id="10_walk05"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/walk/walk_06.png" id="11_walk06"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_crouch.png" id="12_jumpcrouch"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_rise.png" id="13_jumprise"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_apex.png" id="14_jumpapex"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_fall_start.png" id="15_jumpfallstart"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/jump/jump_fall.png" id="16_jumpfall"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/hurt/hurt_01.png" id="17_hurt01"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/hurt/hurt_02.png" id="18_hurt02"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/hurt/hurt_03.png" id="19_hurt03"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/wall/wall_slide_01.png" id="20_wall01"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/wall/wall_slide_02.png" id="21_wall02"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/wall/wall_slide_03.png" id="22_wall03"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_01_1.png" id="23_c1_1"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_01_2.png" id="24_c1_2"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_01_3.png" id="25_c1_3"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_02_1.png" id="26_c2_1"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_02_2.png" id="27_c2_2"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_02_3.png" id="28_c2_3"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_03_1.png" id="29_c3_1"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_03_2.png" id="30_c3_2"]
+[ext_resource type="Texture2D" path="res://assets/characters/om_hami/combo/combo_03_3.png" id="31_c3_3"]
+[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="32_hurtbox"]
+[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="33_hitbox"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
-radius = 24.0
-height = 104.0
+radius = 17.0
+height = 80.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hurt"]
-radius = 28.0
-height = 112.0
+radius = 21.0
+height = 86.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
-size = Vector2(96, 56)
+size = Vector2(80, 48)
+
+[sub_resource type="Gradient" id="Gradient_smoke"]
+offsets = PackedFloat32Array(0, 0.25, 0.7, 1)
+colors = PackedColorArray(0.9, 0.9, 0.92, 0.7, 0.72, 0.72, 0.75, 0.55, 0.45, 0.45, 0.48, 0.3, 0.3, 0.3, 0.32, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_smoke"]
+gradient = SubResource("Gradient_smoke")
+
+[sub_resource type="Curve" id="Curve_smoke_scale"]
+_data = [Vector2(0, 0.6), 0.0, 1.2, 0, 0, Vector2(1, 1.8), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_smoke"]
+curve = SubResource("Curve_smoke_scale")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_smoke"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0.5, -1, 0)
+spread = 35.0
+initial_velocity_min = 12.0
+initial_velocity_max = 28.0
+gravity = Vector3(0, -24, 0)
+scale_min = 2.0
+scale_max = 3.6
+scale_curve = SubResource("CurveTexture_smoke")
+color_ramp = SubResource("GradientTexture1D_smoke")
 
 [sub_resource type="Animation" id="Animation_idle"]
 resource_name = "idle"
-length = 1.04
-loop_mode = 1
-step = 0.13
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13, 0.26, 0.39, 0.52, 0.65, 0.78, 0.91),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("2_idle01"), ExtResource("3_idle02"), ExtResource("4_idle03"), ExtResource("5_idle04"), ExtResource("6_idle05"), ExtResource("7_idle06"), ExtResource("8_idle07"), ExtResource("9_idle08")]
-}
-
-[sub_resource type="Animation" id="Animation_walk"]
-resource_name = "walk"
 length = 0.6
 loop_mode = 1
 step = 0.15
@@ -69,12 +88,14 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("10_walk01"), ExtResource("11_walk02"), ExtResource("12_walk03"), ExtResource("13_walk04")]
+"values": [ExtResource("2_idle01"), ExtResource("3_idle02"), ExtResource("4_idle03"), ExtResource("5_idle04")]
 }
 
-[sub_resource type="Animation" id="Animation_jump"]
-resource_name = "jump"
-length = 0.25
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -82,15 +103,33 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.08),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("22_jumpcrouch"), ExtResource("23_jumprise")]
+"values": [ExtResource("6_walk01"), ExtResource("7_walk02"), ExtResource("8_walk03"), ExtResource("9_walk04"), ExtResource("10_walk05"), ExtResource("11_walk06")]
+}
+
+[sub_resource type="Animation" id="Animation_jump"]
+resource_name = "jump"
+length = 0.26
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.18),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("12_jumpcrouch"), ExtResource("13_jumprise"), ExtResource("14_jumpapex")]
 }
 
 [sub_resource type="Animation" id="Animation_fall"]
 resource_name = "fall"
 length = 0.2
+loop_mode = 1
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -98,10 +137,45 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("24_jumpfall")]
+"values": [ExtResource("15_jumpfallstart"), ExtResource("16_jumpfall")]
+}
+
+[sub_resource type="Animation" id="Animation_wall_slide"]
+resource_name = "wall_slide"
+length = 0.3
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("20_wall01"), ExtResource("21_wall02"), ExtResource("22_wall03")]
+}
+
+[sub_resource type="Animation" id="Animation_hurt"]
+resource_name = "hurt"
+length = 0.36
+step = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("17_hurt01"), ExtResource("18_hurt02"), ExtResource("19_hurt03")]
 }
 
 [sub_resource type="Animation" id="Animation_combo_thrust"]
@@ -115,10 +189,10 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.08, 0.18),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("14_thrust")]
+"values": [ExtResource("23_c1_1"), ExtResource("24_c1_2"), ExtResource("25_c1_3")]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -127,7 +201,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.04, 0.12, 0.18, 0.24),
+"times": PackedFloat32Array(0.08, 0.16, 0.2, 0.26),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
 "args": [],
@@ -155,10 +229,10 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("15_sweep")]
+"values": [ExtResource("26_c2_1"), ExtResource("27_c2_2"), ExtResource("28_c2_3")]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -167,7 +241,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.04, 0.14, 0.2, 0.28),
+"times": PackedFloat32Array(0.1, 0.18, 0.22, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
 "args": [],
@@ -195,10 +269,10 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.14, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("16_smash")]
+"values": [ExtResource("29_c3_1"), ExtResource("30_c3_2"), ExtResource("31_c3_3")]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -207,7 +281,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.08, 0.28, 0.42),
+"times": PackedFloat32Array(0.14, 0.28, 0.44),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -219,39 +293,6 @@ tracks/1/keys = {
 "args": [],
 "method": &"finish_combo_animation"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_hurt"]
-resource_name = "hurt"
-length = 0.35
-step = 0.15
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("17_hurtreel"), ExtResource("18_hurtstag")]
-}
-
-[sub_resource type="Animation" id="Animation_wall_slide"]
-resource_name = "wall_slide"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("19_wallslide")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_om_hami"]
@@ -272,32 +313,39 @@ collision_layer = 2
 script = ExtResource("1_om_hami")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -52)
+position = Vector2(0, -40)
 shape = SubResource("CapsuleShape2D_body")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -70)
+position = Vector2(0, -52)
 scale = Vector2(0.31, 0.31)
 texture = ExtResource("2_idle01")
+
+[node name="SmokeParticles" type="GPUParticles2D" parent="."]
+position = Vector2(10, -62)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_smoke")
+lifetime = 0.9
+explosiveness = 0.05
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("20_hurtbox")
+script = ExtResource("32_hurtbox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, -56)
+position = Vector2(0, -43)
 shape = SubResource("CapsuleShape2D_hurt")
 debug_color = Color(0, 0.6, 0.7, 0.3)
 
 [node name="AttackHitbox" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 8
-script = ExtResource("21_hitbox")
+script = ExtResource("33_hitbox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
-position = Vector2(58, -50)
+position = Vector2(46, -42)
 shape = SubResource("RectangleShape2D_hit")
 debug_color = Color(0.9, 0.2, 0.1, 0.4)
 

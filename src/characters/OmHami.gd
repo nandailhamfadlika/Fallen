@@ -9,6 +9,7 @@ var can_chain_combo: bool = false
 var has_buffered_attack: bool = false
 
 @onready var attack_hitbox: Hitbox = $AttackHitbox
+@onready var smoke_particles: GPUParticles2D = get_node_or_null("SmokeParticles")
 
 func _ready() -> void:
 	fighter_name = "Om Hami"
@@ -21,6 +22,9 @@ func _ready() -> void:
 		attack_hitbox.attacker_node = self
 		attack_hitbox.monitoring = false
 
+	if smoke_particles:
+		smoke_particles.emitting = true
+
 	if anim_player:
 		anim_player.animation_finished.connect(_on_animation_finished)
 
@@ -32,6 +36,10 @@ func set_facing(dir: int) -> void:
 	super.set_facing(dir)
 	if attack_hitbox:
 		attack_hitbox.position.x = abs(attack_hitbox.position.x) * facing_direction
+	if smoke_particles:
+		smoke_particles.position.x = abs(smoke_particles.position.x) * facing_direction
+		if smoke_particles.process_material is ParticleProcessMaterial:
+			(smoke_particles.process_material as ParticleProcessMaterial).direction.x = 0.5 * facing_direction
 
 func _handle_state_physics(delta: float) -> void:
 	if current_state == State.DEAD:
@@ -65,9 +73,10 @@ func _handle_state_physics(delta: float) -> void:
 	if current_state == State.WALL_SLIDE:
 		var wall_normal_x = get_wall_normal().x
 		if sprite and wall_normal_x != 0:
-			# Face cane towards wall
-			sprite.flip_h = (wall_normal_x < 0)
-			sprite.position.x = 6.0 if (wall_normal_x < 0) else -6.0
+			# Dinding di kanan (wall_normal_x < 0): raw sprite bertumpu ke kanan -> flip_h = false
+			# Dinding di kiri (wall_normal_x > 0): balik sprite ke kiri -> flip_h = true
+			sprite.flip_h = (wall_normal_x > 0)
+			sprite.position.x = 4.0 if (wall_normal_x < 0) else -4.0
 		if jump_just_pressed:
 			var jump_dir = wall_normal_x if wall_normal_x != 0 else 1.0
 			velocity.x = jump_dir * wall_jump_impulse.x
@@ -94,7 +103,7 @@ func _handle_state_physics(delta: float) -> void:
 	# Horizontal movement
 	if move_dir != 0.0:
 		velocity.x = move_dir * speed
-		set_facing(int(move_dir))
+		set_facing(int(sign(move_dir)))
 		if is_on_floor() and current_state != State.RUN:
 			change_state(State.RUN)
 	else:
@@ -108,8 +117,15 @@ func _handle_state_physics(delta: float) -> void:
 			change_state(State.FALL)
 
 func _on_enter_state(new_state: State) -> void:
-	if new_state != State.WALL_SLIDE and sprite:
-		sprite.position.x = 0
+	if new_state != State.WALL_SLIDE:
+		if sprite:
+			sprite.position.x = 0
+		set_facing(facing_direction)
+	else:
+		var wall_normal_x = get_wall_normal().x
+		if sprite and wall_normal_x != 0:
+			sprite.flip_h = (wall_normal_x > 0)
+			sprite.position.x = 4.0 if (wall_normal_x < 0) else -4.0
 	if not anim_player:
 		return
 
@@ -174,6 +190,8 @@ func _play_combo_step(step: int) -> void:
 			attack_hitbox.knockback_direction = Vector2(forward_x * 0.7, -0.7).normalized()
 			attack_hitbox.hitstun_duration = 0.40
 			attack_hitbox.hitstop_duration = 0.12
+			if smoke_particles:
+				smoke_particles.amount = 40
 			anim_player.play("combo_smash")
 
 func enable_hitbox() -> void:
@@ -194,5 +212,7 @@ func finish_combo_animation() -> void:
 	can_chain_combo = false
 	has_buffered_attack = false
 	combo_step = 1
+	if smoke_particles:
+		smoke_particles.amount = 20
 	if current_state == State.ATTACK:
 		change_state(State.IDLE if is_on_floor() else State.FALL)

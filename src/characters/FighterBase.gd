@@ -14,7 +14,9 @@ enum State {
 	WALL_SLIDE,
 	ATTACK,
 	HURT,
-	DEAD
+	DEAD,
+	BLOCK,
+	DASH
 }
 
 @export var fighter_name: String = "Fighter"
@@ -42,11 +44,24 @@ var fast_fall_gravity: float = 1800.0
 @onready var hurtbox: Hurtbox = $Hurtbox
 
 const PlayerInputScript = preload("res://src/core/PlayerInput.gd")
+const FighterAIControllerScript = preload("res://src/core/FighterAIController.gd")
 
 var base_modulate: Color = Color.WHITE
 var player_input = null
+var ai_controller = null
+var input_enabled: bool = true
 
 func set_device(device_type_str: String, dev_id: int = -1) -> void:
+	if device_type_str == "ai_bot":
+		var diff = "medium"
+		var gm = get_node_or_null("/root/GameManager")
+		if gm and "campaign_difficulty" in gm:
+			diff = gm.campaign_difficulty
+		ai_controller = FighterAIControllerScript.new(self, diff)
+		player_input = ai_controller
+		return
+
+	ai_controller = null
 	player_input = PlayerInputScript.new()
 	match device_type_str:
 		"keyboard_wasd":
@@ -60,6 +75,8 @@ func set_device(device_type_str: String, dev_id: int = -1) -> void:
 			player_input.device_type = player_input.DeviceType.KEYBOARD_WASD
 
 func get_move_input() -> float:
+	if not input_enabled:
+		return 0.0
 	if player_input:
 		return player_input.move_axis
 	if player_id == 1:
@@ -69,6 +86,8 @@ func get_move_input() -> float:
 	return 0.0
 
 func is_jump_just_pressed() -> bool:
+	if not input_enabled:
+		return false
 	if player_input:
 		return player_input.jump_just_pressed
 	if player_id == 1:
@@ -78,22 +97,46 @@ func is_jump_just_pressed() -> bool:
 	return false
 
 func is_attack_just_pressed() -> bool:
+	if not input_enabled:
+		return false
+	var pressed = false
 	if player_input:
-		return player_input.attack_just_pressed
-	if player_id == 1:
-		return Input.is_action_just_pressed("p1_attack")
+		pressed = player_input.attack_just_pressed
+	elif player_id == 1:
+		pressed = Input.is_action_just_pressed("p1_attack")
 	elif player_id == 2:
-		return Input.is_action_just_pressed("p2_attack")
-	return false
+		pressed = Input.is_action_just_pressed("p2_attack")
+	if pressed and is_invulnerable:
+		is_invulnerable = false
+		if sprite:
+			sprite.modulate = base_modulate
+	return pressed
 
 func is_dodge_just_pressed() -> bool:
+	if not input_enabled:
+		return false
 	if player_input:
 		return player_input.dodge_just_pressed
 	if player_id == 1:
 		return Input.is_action_just_pressed("p1_dodge")
+	elif player_id == 2:
+		return Input.is_action_just_pressed("p2_dodge")
+	return false
+
+func is_dodge_held() -> bool:
+	if not input_enabled:
+		return false
+	if player_input:
+		return player_input.dodge_held
+	if player_id == 1:
+		return Input.is_action_pressed("p1_dodge")
+	elif player_id == 2:
+		return Input.is_action_pressed("p2_dodge")
 	return false
 
 func is_down_just_pressed() -> bool:
+	if not input_enabled:
+		return false
 	if player_input:
 		return player_input.down_just_pressed
 	if player_id == 1:
@@ -109,6 +152,7 @@ func _ready() -> void:
 	collision_mask = 1  # World (platforms & walls)
 	if sprite:
 		base_modulate = sprite.modulate
+	set_facing(facing_direction)
 
 func _physics_process(delta: float) -> void:
 	if player_input:
@@ -148,36 +192,63 @@ func _handle_state_physics(_delta: float) -> void:
 func _post_physics_checks() -> void:
 	if is_on_floor():
 		air_jumps_left = 1
-		if current_state == State.FALL or current_state == State.WALL_SLIDE:
+		if current_state == State.FALL or current_state == State.WALL_SLIDE or current_state == State.JUMP:
 			change_state(State.IDLE if abs(velocity.x) < 10 else State.RUN)
 
 	# Check wall slide condition
-	if not is_on_floor() and is_on_wall() and velocity.y > 0 and current_state != State.HURT and current_state != State.ATTACK:
+	if not is_on_floor() and is_on_wall() and velocity.y > 0 and current_state != State.HURT and current_state != State.ATTACK and current_state != State.DASH and current_state != State.BLOCK:
 		if current_state != State.WALL_SLIDE:
 			change_state(State.WALL_SLIDE)
 	elif current_state == State.WALL_SLIDE and not is_on_wall():
 		change_state(State.FALL)
 
 func change_state(new_state: State) -> void:
-	if current_state == State.DEAD:
+	if current_state == State.DEAD and new_state != State.IDLE and new_state != State.FALL:
 		return
 	var old_state = current_state
 	current_state = new_state
 	state_changed.emit(old_state, new_state)
 	_on_enter_state(new_state)
 
+func respawn_to(spawn_pos: Vector2) -> void:
+	global_position = spawn_pos
+	velocity = Vector2.ZERO
+	current_hp = max_hp
+	hp_changed.emit(current_hp, max_hp)
+	input_enabled = true
+	hitstun_timer = 0.0
+	hitstop_timer = 0.0
+	air_jumps_left = 1
+	if sprite:
+		sprite.modulate = base_modulate
+	set_facing(facing_direction)
+	current_state = State.IDLE
+	change_state(State.FALL)
+
+func grant_spawn_invulnerability(duration: float = 1.5) -> void:
+	is_invulnerable = true
+	if sprite:
+		var tween = create_tween().set_loops(int(duration / 0.24))
+		tween.tween_property(sprite, "modulate:a", 0.35, 0.12)
+		tween.tween_property(sprite, "modulate:a", 1.0, 0.12)
+	await get_tree().create_timer(duration).timeout
+	is_invulnerable = false
+	if sprite:
+		sprite.modulate = base_modulate
+
 func _on_enter_state(_new_state: State) -> void:
 	# Virtual method for animation updates
 	pass
 
 func set_facing(dir: int) -> void:
-	if dir != 0 and dir != facing_direction:
-		facing_direction = dir
-		if sprite:
-			sprite.flip_h = (facing_direction < 0)
-		var attack_hb = get_node_or_null("AttackHitbox")
-		if attack_hb:
-			attack_hb.position.x = abs(attack_hb.position.x) * facing_direction
+	if dir == 0:
+		return
+	facing_direction = dir
+	if sprite:
+		sprite.flip_h = (facing_direction < 0)
+	var attack_hb = get_node_or_null("AttackHitbox")
+	if attack_hb:
+		attack_hb.position.x = abs(attack_hb.position.x) * facing_direction
 
 func take_damage(data: CombatData) -> void:
 	if current_state == State.DEAD or is_invulnerable:

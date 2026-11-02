@@ -1,24 +1,60 @@
-[gd_scene load_steps=24 format=3 uid="uid://aronfighter01"]
+[gd_scene load_steps=81 format=3 uid="uid://aronfighter01"]
 
 [ext_resource type="Script" path="res://src/characters/Aron.gd" id="1_aron"]
 [ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_01.png" id="2_idle01"]
 [ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_02.png" id="3_idle02"]
 [ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_03.png" id="4_idle03"]
 [ext_resource type="Texture2D" path="res://assets/characters/aron/idle/idle_04.png" id="5_idle04"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_01_jab.png" id="6_jab"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_02_cross.png" id="7_cross"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_03_uppercut.png" id="8_uppercut"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/jump_rise.png" id="9_jumprise"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/jump_fall.png" id="10_jumpfall"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/wall_slide.png" id="11_wallslide"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt_stagger.png" id="12_hurtstagger"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt_reeling.png" id="13_hurtreeling"]
-[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="14_hurtbox"]
-[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="15_hitbox"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_01.png" id="16_run01"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_02.png" id="17_run02"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_03.png" id="18_run03"]
-[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_04.png" id="19_run04"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_01.png" id="6_run01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_02.png" id="7_run02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_03.png" id="8_run03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_04.png" id="9_run04"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_05.png" id="10_run05"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/run/run_06.png" id="11_run06"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/jump/jump_01_takeoff.png" id="12_j01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/jump/jump_02_rise.png" id="13_j02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/jump/jump_03_apex.png" id="14_j03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/jump/jump_04_fall_start.png" id="15_j04"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/jump/jump_05_fast_fall.png" id="16_j05"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/jump/jump_06_land_prep.png" id="17_j06"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/wall/wall_01_grab.png" id="18_w01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/wall/wall_02_slide.png" id="19_w02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/wall/wall_03_cling.png" id="20_w03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/wall/wall_04_prep.png" id="21_w04"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt/hurt_01.png" id="22_h01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt/hurt_02.png" id="23_h02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt/hurt_03.png" id="24_h03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/hurt/hurt_04.png" id="25_h04"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/block/block_01.png" id="26_b01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/block/block_02.png" id="27_b02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/block/block_03_impact.png" id="28_b03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/block/block_04.png" id="29_b04"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/dash/dash_01.png" id="30_d01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/dash/dash_02.png" id="31_d02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/dash/dash_03.png" id="32_d03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/dash/dash_04.png" id="33_d04"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/dash/dash_05.png" id="34_d05"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/dash/dash_06.png" id="35_d06"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit1_01_windup.png" id="36_c1_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit1_02_jab.png" id="37_c1_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit1_03_recover.png" id="38_c1_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit2_01_windup.png" id="39_c2_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit2_02_cross.png" id="40_c2_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit2_03_recover.png" id="41_c2_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit3_01_crouch.png" id="42_c3_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit3_02_rise.png" id="43_c3_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo/hit3_03_apex.png" id="44_c3_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air1_01_windup.png" id="45_a1_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air1_02_jab.png" id="46_a1_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air1_03_recover.png" id="47_a1_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air2_01_windup.png" id="48_a2_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air2_02_hook.png" id="49_a2_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air2_03_recover.png" id="50_a2_03"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air3_01_windup.png" id="51_a3_01"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air3_02_slam.png" id="52_a3_02"]
+[ext_resource type="Texture2D" path="res://assets/characters/aron/combo_air/air3_03_recover.png" id="53_a3_03"]
+[ext_resource type="Script" path="res://src/combat/Hurtbox.gd" id="54_hurtbox"]
+[ext_resource type="Script" path="res://src/combat/Hitbox.gd" id="55_hitbox"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 17.0
@@ -29,55 +65,35 @@ radius = 21.0
 height = 86.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
-size = Vector2(56, 46)
+size = Vector2(70, 44)
 
-[sub_resource type="Gradient" id="Gradient_blue_aura"]
-offsets = PackedFloat32Array(0, 0.2, 0.65, 1)
-colors = PackedColorArray(0.85, 0.96, 1, 0.95, 0.2, 0.75, 1, 0.9, 0.05, 0.35, 0.95, 0.7, 0.02, 0.1, 0.5, 0)
+[sub_resource type="Gradient" id="Gradient_aura"]
+offsets = PackedFloat32Array(0, 0.22, 0.65, 1)
+colors = PackedColorArray(0.85, 1, 1, 0.95, 0.18, 0.88, 1, 0.85, 0.05, 0.45, 0.95, 0.55, 0.02, 0.15, 0.65, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_blue_aura"]
-gradient = SubResource("Gradient_blue_aura")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aura"]
+gradient = SubResource("Gradient_aura")
 
-[sub_resource type="Curve" id="Curve_blue_aura_scale"]
-_data = [Vector2(0, 0.9), 0.0, 0.0, 0, 0, Vector2(0.3, 1.35), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_aura_scale"]
+_data = [Vector2(0, 0.75), 0.0, 0.0, 0, 0, Vector2(0.35, 1.25), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_blue_aura"]
-curve = SubResource("Curve_blue_aura_scale")
+[sub_resource type="CurveTexture" id="CurveTexture_aura"]
+curve = SubResource("Curve_aura_scale")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_blue_aura"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aura"]
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(18, 38, 1)
 direction = Vector3(0, -1, 0)
-spread = 22.0
-initial_velocity_min = 28.0
-initial_velocity_max = 58.0
-gravity = Vector3(0, -75, 0)
-scale_min = 2.4
-scale_max = 4.2
-scale_curve = SubResource("CurveTexture_blue_aura")
-color_ramp = SubResource("GradientTexture1D_blue_aura")
-
-[sub_resource type="Gradient" id="Gradient_aura_sparks"]
-offsets = PackedFloat32Array(0, 0.7, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.3, 0.85, 1, 0.85, 0.05, 0.4, 0.9, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_aura_sparks"]
-gradient = SubResource("Gradient_aura_sparks")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aura_sparks"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(16, 36, 1)
-direction = Vector3(0, -1, 0)
-spread = 40.0
-initial_velocity_min = 35.0
-initial_velocity_max = 85.0
-gravity = Vector3(0, -110, 0)
-scale_min = 1.0
-scale_max = 1.8
-color_ramp = SubResource("GradientTexture1D_aura_sparks")
+spread = 24.0
+initial_velocity_min = 22.0
+initial_velocity_max = 52.0
+gravity = Vector3(0, -55, 0)
+scale_min = 2.2
+scale_max = 3.8
+scale_curve = SubResource("CurveTexture_aura")
+color_ramp = SubResource("GradientTexture1D_aura")
 
 [sub_resource type="Animation" id="Animation_idle"]
 resource_name = "idle"
@@ -99,9 +115,9 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_run"]
 resource_name = "run"
-length = 0.44
+length = 0.48
 loop_mode = 1
-step = 0.11
+step = 0.08
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -109,10 +125,131 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.11, 0.22, 0.33),
+"times": PackedFloat32Array(0, 0.08, 0.16, 0.24, 0.32, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("6_run01"), ExtResource("7_run02"), ExtResource("8_run03"), ExtResource("9_run04"), ExtResource("10_run05"), ExtResource("11_run06")]
+}
+
+[sub_resource type="Animation" id="Animation_jump"]
+resource_name = "jump"
+length = 0.24
+step = 0.08
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.16),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("12_j01"), ExtResource("13_j02"), ExtResource("14_j03")]
+}
+
+[sub_resource type="Animation" id="Animation_fall"]
+resource_name = "fall"
+length = 0.24
+step = 0.08
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.16),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("15_j04"), ExtResource("16_j05"), ExtResource("17_j06")]
+}
+
+[sub_resource type="Animation" id="Animation_wall_slide"]
+resource_name = "wall_slide"
+length = 0.48
+loop_mode = 1
+step = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("16_run01"), ExtResource("17_run02"), ExtResource("18_run03"), ExtResource("19_run04")]
+"values": [ExtResource("18_w01"), ExtResource("19_w02"), ExtResource("20_w03"), ExtResource("21_w04")]
+}
+
+[sub_resource type="Animation" id="Animation_hurt"]
+resource_name = "hurt"
+length = 0.36
+step = 0.09
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.09, 0.18, 0.27),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("22_h01"), ExtResource("23_h02"), ExtResource("24_h03"), ExtResource("25_h04")]
+}
+
+[sub_resource type="Animation" id="Animation_block"]
+resource_name = "block"
+length = 0.3
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("26_b01"), ExtResource("27_b02")]
+}
+
+[sub_resource type="Animation" id="Animation_block_impact"]
+resource_name = "block_impact"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("28_b03"), ExtResource("29_b04")]
+}
+
+[sub_resource type="Animation" id="Animation_dash"]
+resource_name = "dash"
+length = 0.24
+step = 0.04
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12, 0.16, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("30_d01"), ExtResource("31_d02"), ExtResource("32_d03"), ExtResource("33_d04"), ExtResource("34_d05"), ExtResource("35_d06")]
 }
 
 [sub_resource type="Animation" id="Animation_combo_jab"]
@@ -126,10 +263,10 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.06, 0.18),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("6_jab")]
+"values": [ExtResource("36_c1_01"), ExtResource("37_c1_02"), ExtResource("38_c1_03")]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -138,7 +275,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.04, 0.12, 0.18, 0.24),
+"times": PackedFloat32Array(0.06, 0.12, 0.18, 0.24),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
 "args": [],
@@ -166,10 +303,10 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.08, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("7_cross")]
+"values": [ExtResource("39_c2_01"), ExtResource("40_c2_02"), ExtResource("41_c2_03")]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -178,7 +315,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.04, 0.14, 0.20, 0.26),
+"times": PackedFloat32Array(0.08, 0.14, 0.2, 0.26),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
 "args": [],
@@ -206,10 +343,10 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.08, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("8_uppercut")]
+"values": [ExtResource("42_c3_01"), ExtResource("43_c3_02"), ExtResource("44_c3_03")]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -218,11 +355,17 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.06, 0.24, 0.42),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0.08, 0.1, 0.16, 0.24, 0.42),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "values": [{
 "args": [],
 "method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"apply_uppercut_impulse"
+}, {
+"args": [],
+"method": &"open_air_combo_window"
 }, {
 "args": [],
 "method": &"disable_hitbox"
@@ -232,9 +375,10 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_jump"]
-resource_name = "jump"
-length = 0.2
+[sub_resource type="Animation" id="Animation_air_combo_1"]
+resource_name = "air_combo_1"
+length = 0.22
+step = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -242,15 +386,39 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.06, 0.16),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("9_jumprise")]
+"values": [ExtResource("45_a1_01"), ExtResource("46_a1_02"), ExtResource("47_a1_03")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06, 0.12, 0.16, 0.22),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_air_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_air_combo_animation"
+}]
 }
 
-[sub_resource type="Animation" id="Animation_fall"]
-resource_name = "fall"
-length = 0.2
+[sub_resource type="Animation" id="Animation_air_combo_2"]
+resource_name = "air_combo_2"
+length = 0.24
+step = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -258,15 +426,39 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.06, 0.18),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("10_jumpfall")]
+"values": [ExtResource("48_a2_01"), ExtResource("49_a2_02"), ExtResource("50_a2_03")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06, 0.12, 0.18, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"open_air_combo_window"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_air_combo_animation"
+}]
 }
 
-[sub_resource type="Animation" id="Animation_wall_slide"]
-resource_name = "wall_slide"
-length = 0.2
+[sub_resource type="Animation" id="Animation_air_combo_3"]
+resource_name = "air_combo_3"
+length = 0.36
+step = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -274,34 +466,43 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ExtResource("11_wallslide")]
+"values": [ExtResource("51_a3_01"), ExtResource("52_a3_02"), ExtResource("53_a3_03")]
 }
-
-[sub_resource type="Animation" id="Animation_hurt"]
-resource_name = "hurt"
-length = 0.35
-step = 0.15
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("12_hurtstagger"), ExtResource("13_hurtreeling")]
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.24, 0.36),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}, {
+"args": [],
+"method": &"finish_air_combo_animation"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_aron"]
 _data = {
+"air_combo_1": SubResource("Animation_air_combo_1"),
+"air_combo_2": SubResource("Animation_air_combo_2"),
+"air_combo_3": SubResource("Animation_air_combo_3"),
+"block": SubResource("Animation_block"),
+"block_impact": SubResource("Animation_block_impact"),
 "combo_cross": SubResource("Animation_combo_cross"),
 "combo_jab": SubResource("Animation_combo_jab"),
 "combo_uppercut": SubResource("Animation_combo_uppercut"),
+"dash": SubResource("Animation_dash"),
 "fall": SubResource("Animation_fall"),
 "hurt": SubResource("Animation_hurt"),
 "idle": SubResource("Animation_idle"),
@@ -314,53 +515,47 @@ _data = {
 collision_layer = 2
 script = ExtResource("1_aron")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."] 
 position = Vector2(0, -40)
 shape = SubResource("CapsuleShape2D_body")
 
-[node name="BlueAura" type="GPUParticles2D" parent="."]
-show_behind_parent = true
-position = Vector2(0, -42)
-amount = 40
-process_material = SubResource("ParticleProcessMaterial_blue_aura")
-lifetime = 0.55
-preprocess = 0.5
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."] 
 texture_filter = 1
 position = Vector2(0, -52)
 scale = Vector2(0.31, 0.31)
 texture = ExtResource("2_idle01")
 
-[node name="AuraSparks" type="GPUParticles2D" parent="."]
-z_index = 1
+[node name="AuraParticles" type="GPUParticles2D" parent="."] 
+show_behind_parent = true
+z_index = -1
 position = Vector2(0, -42)
-amount = 16
-process_material = SubResource("ParticleProcessMaterial_aura_sparks")
-lifetime = 0.45
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_aura")
+lifetime = 0.55
 preprocess = 0.5
+explosiveness = 0.05
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="."] 
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("14_hurtbox")
+script = ExtResource("54_hurtbox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, -43)
 shape = SubResource("CapsuleShape2D_hurt")
 debug_color = Color(0, 0.6, 0.7, 0.3)
 
-[node name="AttackHitbox" type="Area2D" parent="."]
+[node name="AttackHitbox" type="Area2D" parent="."] 
+position = Vector2(52, -44)
 collision_layer = 4
 collision_mask = 8
-script = ExtResource("15_hitbox")
+script = ExtResource("55_hitbox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
-position = Vector2(32, -48)
 shape = SubResource("RectangleShape2D_hit")
 debug_color = Color(0.9, 0.2, 0.1, 0.4)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."] 
 libraries = {
 "": SubResource("AnimationLibrary_aron")
 }

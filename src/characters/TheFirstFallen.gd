@@ -33,7 +33,8 @@ var knockback_resistance: float = 0.08 # Only receives 8% knockback velocity
 
 func _ready() -> void:
 	fighter_name = "The First Fallen"
-	player_id = 0 # Non-playable NPC
+	if player_id <= 1:
+		player_id = 2
 	
 	super._ready()
 	
@@ -141,9 +142,7 @@ func _physics_process(delta: float) -> void:
 			if velocity.y > 0 and current_state != State.FALL and current_state != State.WALL_SLIDE:
 				change_state(State.FALL)
 
-	# Phase 2 auto-trigger at 50% HP
-	if current_phase == BossPhase.PHASE_1_ARMORED and current_hp <= (max_hp * 0.5) and not phase_transformed:
-		trigger_phase_2_transformation()
+	# Phase 2 is triggered only after Phase 1 HP is completely depleted (0 HP) in take_damage()
 
 func _enforce_arena_bounds() -> void:
 	# Prevent the boss from ever falling out of the stage or getting rung out
@@ -328,23 +327,48 @@ func finish_combo_animation() -> void:
 
 func trigger_phase_2_transformation() -> void:
 	phase_transformed = true
+	is_invulnerable = true
 	change_state(State.HURT)
-	
-	# Dramatic Transformation flash & camera impact
+	velocity = Vector2.ZERO
+	apply_phase(BossPhase.PHASE_2_BEAST)
+
+	# Camera shake impact
+	var cam = get_viewport().get_camera_2d() if get_viewport() else null
+	if cam and "shake_intensity" in cam:
+		cam.shake_intensity = 26.0
+
+	# Show Phase 2 Banner on HUD if available
+	var tree = get_tree()
+	if tree:
+		var hud = tree.get_first_node_in_group("hud")
+		if not hud:
+			var root_stage = tree.current_scene
+			if root_stage and "hud" in root_stage and root_stage.hud:
+				hud = root_stage.hud
+		if hud and hud.has_method("show_banner"):
+			hud.show_banner("PHASE 2 UNLEASHED!", "BEAST OF THE VOID AWAKENS!")
+			hud.update_fighter_stocks(player_id, 1, 2)
+			tree.create_timer(1.8).timeout.connect(func():
+				if is_instance_valid(hud) and hud.has_method("hide_banner"):
+					hud.hide_banner()
+			)
+
+	# Dramatic Transformation flash & shockwave
 	var tw = create_tween()
-	tw.tween_property(sprite, "modulate", Color(3.5, 0.4, 0.6, 1.0), 0.35)
+	tw.tween_property(sprite, "modulate", Color(4.0, 0.3, 0.6, 1.0), 0.45)
 	tw.tween_callback(func():
 		apply_phase(BossPhase.PHASE_2_BEAST)
-		# Trigger void shockwave push
-		var fighters = get_tree().get_nodes_in_group("fighters")
-		for f in fighters:
+		# Powerful void shockwave repels all opponents
+		var f_list = get_tree().get_nodes_in_group("fighters") if get_tree() else []
+		for f in f_list:
 			if f != self and f is FighterBase:
 				var push_dir = sign(f.global_position.x - global_position.x)
 				if push_dir == 0: push_dir = 1
-				f.velocity = Vector2(push_dir * 550.0, -320.0)
+				f.velocity = Vector2(push_dir * 620.0, -340.0)
 	)
-	tw.tween_property(sprite, "modulate", Color.WHITE, 0.4)
+	tw.tween_property(sprite, "modulate", Color.WHITE, 0.5)
 	tw.tween_callback(func():
+		is_invulnerable = false
 		change_state(State.IDLE)
 	)
 
@@ -364,16 +388,22 @@ func take_damage(data: CombatData) -> void:
 	hitstop_timer = 0.08
 
 	if current_hp <= 0.0:
-		change_state(State.DEAD)
-		died.emit("KO")
-		return
+		if current_phase == BossPhase.PHASE_1_ARMORED and not phase_transformed:
+			current_hp = 0.0
+			hp_changed.emit(0.0, max_hp)
+			trigger_phase_2_transformation()
+			return
+		else:
+			change_state(State.DEAD)
+			died.emit("KO")
+			return
 
 	# Hurt state reaction (stagger) without flying away
 	if current_state != State.ATTACK:
 		change_state(State.HURT)
 
 func set_facing(dir: int) -> void:
-	if dir != 0 and dir != facing_direction:
+	if dir != 0:
 		facing_direction = dir
 		_update_facing_nodes(dir)
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://mainmenu01"]
 
-[ext_resource type="Script" uid="uid://x34qri30jg3" path="res://src/ui/MainMenu.gd" id="1_menu"]
+[ext_resource type="Script" path="res://src/ui/MainMenu.gd" id="1_menu"]
 [ext_resource type="Texture2D" uid="uid://b2xvr10emirvp" path="res://assets/ui/main_menu_bg.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://d3wsagvo04hbl" path="res://assets/ui/button_vs_mode.png" id="3_l8p87"]
 [ext_resource type="Texture2D" uid="uid://be5ldjelb5c8u" path="res://assets/ui/button_training.png" id="4_ihbld"]
@@ -126,7 +126,7 @@ theme_override_constants/separation = -8
 custom_minimum_size = Vector2(240, 40)
 layout_mode = 2
 focus_neighbor_top = NodePath("../BtnExit")
-focus_neighbor_bottom = NodePath("../BtnCampaign")
+focus_neighbor_bottom = NodePath("../BtnVS")
 theme_override_colors/font_color = Color(1, 0.9, 0.9, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
@@ -277,3 +277,189 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_modal_btn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "CLOSE"
+[node name="DifficultyModal" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -215.0
+offset_right = 280.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Title" type="Label" parent="DifficultyModal"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 16.0
+offset_bottom = 44.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 20
+text = "CAMPAIGN DIFFICULTY"
+horizontal_alignment = 1
+
+[node name="SubTitle" type="Label" parent="DifficultyModal"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 44.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "Pilih intensitas kecerdasan dan agresi lawan dalam Soul Trial"
+horizontal_alignment = 1
+
+[node name="VBox" type="VBoxContainer" parent="DifficultyModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -125.0
+offset_right = 240.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="BtnEasy" type="Button" parent="DifficultyModal/VBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_modal_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+alignment = 0
+
+[node name="Margin" type="MarginContainer" parent="DifficultyModal/VBox/BtnEasy"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="TextVBox" type="VBoxContainer" parent="DifficultyModal/VBox/BtnEasy/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Header" type="Label" parent="DifficultyModal/VBox/BtnEasy/Margin/TextVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.95, 0.45, 1)
+theme_override_font_sizes/font_size = 15
+text = "🟢 NOVICE (EASY)"
+
+[node name="Desc" type="Label" parent="DifficultyModal/VBox/BtnEasy/Margin/TextVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "Serangan musuh santai, refleks terukur, ideal untuk pemula."
+
+[node name="BtnMedium" type="Button" parent="DifficultyModal/VBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_modal_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+alignment = 0
+
+[node name="Margin" type="MarginContainer" parent="DifficultyModal/VBox/BtnMedium"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="TextVBox" type="VBoxContainer" parent="DifficultyModal/VBox/BtnMedium/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Header" type="Label" parent="DifficultyModal/VBox/BtnMedium/Margin/TextVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.25, 1)
+theme_override_font_sizes/font_size = 15
+text = "🟡 WARRIOR (MEDIUM)"
+
+[node name="Desc" type="Label" parent="DifficultyModal/VBox/BtnMedium/Margin/TextVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "Tantangan seimbang. AI aktif mengejar, combo 2-3 hit, dan recovery."
+
+[node name="BtnHard" type="Button" parent="DifficultyModal/VBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_modal_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+alignment = 0
+
+[node name="Margin" type="MarginContainer" parent="DifficultyModal/VBox/BtnHard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="TextVBox" type="VBoxContainer" parent="DifficultyModal/VBox/BtnHard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Header" type="Label" parent="DifficultyModal/VBox/BtnHard/Margin/TextVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 15
+text = "🔴 SOVEREIGN (HARD)"
+
+[node name="Desc" type="Label" parent="DifficultyModal/VBox/BtnHard/Margin/TextVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "Ujian sesungguhnya. Agresi tinggi, refleks cepat, dan punish tajam."
+
+[node name="BtnCloseDifficulty" type="Button" parent="DifficultyModal"]
+custom_minimum_size = Vector2(140, 34)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -48.0
+offset_right = 70.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_modal_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "BATAL [ESC]"

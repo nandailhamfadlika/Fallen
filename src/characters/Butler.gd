@@ -91,6 +91,9 @@ func _handle_state_physics(delta: float) -> void:
 			change_state(State.FALL)
 
 func _on_enter_state(new_state: State) -> void:
+	if new_state != State.WALL_SLIDE:
+		set_facing(facing_direction)
+
 	if not anim_player:
 		return
 
@@ -111,7 +114,7 @@ func _on_enter_state(new_state: State) -> void:
 			anim_player.play("hurt")
 
 func set_facing(dir: int) -> void:
-	if dir != 0 and dir != facing_direction:
+	if dir != 0:
 		facing_direction = dir
 		_update_facing_nodes(dir)
 

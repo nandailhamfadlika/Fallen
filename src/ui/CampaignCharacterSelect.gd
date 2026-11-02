@@ -84,46 +84,46 @@ const CHARACTERS = [
 		"id": "muslan",
 		"name": "MUSLAN",
 		"title": "The Southern Troubadour",
-		"archetype": "✦ SONIC WEAPONEER (LOCKED) ✦",
-		"lore": "A wandering minstrel whose melodies conceal devastating sonic shockwaves. Complete Campaign acts to unlock.",
+		"archetype": "✦ GUITAR WEAPONEER / SONIC TROUBADOUR ✦",
+		"lore": "A wandering urban minstrel wielding a heavy hard guitar case as a devastating melee weapon. Blends fluid acrobatic movement with heavy blunt impact strikes.",
 		"portrait": "res://assets/ui/portraits/portrait_muslan.png",
-		"preview": "res://assets/ui/portraits/portrait_muslan.png",
-		"color": Color(0.5, 0.75, 0.9),
+		"preview": "res://assets/characters/muslan/idle/idle_01.png",
+		"color": Color(0.35, 0.7, 0.95),
 		"speed": "★★★☆☆",
 		"power": "★★★☆☆",
 		"range": "★★★★☆",
 		"tech": "★★★★☆",
-		"locked": true
+		"locked": false
 	},
 	{
 		"id": "rin",
 		"name": "RIN",
 		"title": "The Mystic Weaver",
-		"archetype": "✦ CELESTIAL WEAVER (LOCKED) ✦",
-		"lore": "A guardian who weaves astral threads into defensive barriers and binding traps. Complete Campaign acts to unlock.",
+		"archetype": "✦ CELESTIAL WEAVER / ASTRAL HOVER ✦",
+		"lore": "A mystical guardian who hovers freely in mid-air, manipulating incandescent energy ribbons into piercing whips, spiraling drills, and cosmic shockwaves.",
 		"portrait": "res://assets/ui/portraits/portrait_rin.png",
-		"preview": "res://assets/ui/portraits/portrait_rin.png",
-		"color": Color(0.9, 0.45, 0.7),
+		"preview": "res://assets/characters/rin/idle/idle_01.png",
+		"color": Color(0.95, 0.4, 0.65),
 		"speed": "★★★★☆",
 		"power": "★★★☆☆",
 		"range": "★★★★☆",
 		"tech": "★★★★★",
-		"locked": true
+		"locked": false
 	},
 	{
 		"id": "sunkibo",
 		"name": "SUNKIBO",
 		"title": "The Ignored Scion",
-		"archetype": "✦ HIDDEN MONARCH (LOCKED) ✦",
-		"lore": "An exile noble who carries ancient sovereign powers sealed within his golden sash. Complete Campaign acts to unlock.",
+		"archetype": "✦ CELESTIAL MONKEY KING / RUYI SAGE ✦",
+		"lore": "A prodigy martial artist wielding the sacred red-and-gold Ruyi staff. Agile, acrobatic, and relentless, he channels the spirit of the Great Sage with devastating celestial earthshaker strikes.",
 		"portrait": "res://assets/ui/portraits/portrait_sunkibo.png",
-		"preview": "res://assets/ui/portraits/portrait_sunkibo.png",
+		"preview": "res://assets/characters/sunkibo/idle/idle_01.png",
 		"color": Color(0.9, 0.6, 0.2),
-		"speed": "★★★★☆",
+		"speed": "★★★★★",
 		"power": "★★★★☆",
-		"range": "★★★☆☆",
-		"tech": "★★★★☆",
-		"locked": true
+		"range": "★★★★☆",
+		"tech": "★★★★★",
+		"locked": false
 	}
 ]
 
@@ -181,6 +181,16 @@ func _setup_roster_buttons() -> void:
 			# Atur pivot di tengah untuk animasi hover/focus
 			btn.resized.connect(func(): btn.pivot_offset = btn.size / 2.0)
 			btn.pivot_offset = btn.size / 2.0
+
+			# Sinkronisasi status terkunci/terbuka visual
+			if char_idx < CHARACTERS.size():
+				var is_locked = CHARACTERS[char_idx].get("locked", false)
+				var tex = btn.get_node_or_null("Texture")
+				var lock_icon = btn.get_node_or_null("LockIcon")
+				if lock_icon:
+					lock_icon.visible = is_locked
+				if tex:
+					tex.modulate = Color(0.4, 0.4, 0.45, 0.8) if is_locked else Color.WHITE
 
 			btn.pressed.connect(func(): _on_button_clicked(char_idx))
 			btn.focus_entered.connect(func(): _on_button_focused(char_idx))

@@ -36,6 +36,7 @@ var start_just_pressed: bool = false
 var jump_held: bool = false
 var attack_held: bool = false
 var down_held: bool = false
+var dodge_held: bool = false
 
 func update() -> void:
 	var cur_jump = false
@@ -140,6 +141,7 @@ func update() -> void:
 	jump_held = cur_jump
 	attack_held = cur_attack
 	down_held = cur_down
+	dodge_held = cur_dodge
 
 	# Simpan state sebelumnya
 	_prev_jump = cur_jump

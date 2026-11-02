@@ -111,8 +111,10 @@ func _handle_state_physics(delta: float) -> void:
 			change_state(State.FALL)
 
 func _on_enter_state(new_state: State) -> void:
-	if new_state != State.WALL_SLIDE and sprite:
-		sprite.position.x = 0
+	if new_state != State.WALL_SLIDE:
+		if sprite:
+			sprite.position.x = 0
+		set_facing(facing_direction)
 	if not anim_player:
 		return
 

@@ -2,6 +2,8 @@ class_name HUD
 extends CanvasLayer
 
 const OffscreenIndicatorScene = preload("res://src/ui/OffscreenIndicator.tscn")
+const GEM_ACTIVE = preload("res://assets/ui/gem_active.png")
+const GEM_EMPTY = preload("res://assets/ui/gem_empty.png")
 
 const PLAYER_COLORS = [
 	Color(0.2, 0.85, 1.0),   # P1 Cyan
@@ -15,24 +17,28 @@ const PLAYER_COLORS = [
 @onready var p1_bar: ProgressBar = $P1Container/P1HPBar
 @onready var p1_label: Label = $P1Container/P1Header/P1NameLabel
 @onready var p1_percent: Label = $P1Container/P1Header/P1HPPercent
+@onready var p1_stock_container: HBoxContainer = $P1Container/P1StockContainer
 
 # Player 2 UI
 @onready var p2_container: Control = $P2Container
 @onready var p2_bar: ProgressBar = $P2Container/P2HPBar
 @onready var p2_label: Label = $P2Container/P2Header/P2NameLabel
 @onready var p2_percent: Label = $P2Container/P2Header/P2HPPercent
+@onready var p2_stock_container: HBoxContainer = $P2Container/P2StockContainer
 
 # Player 3 UI
 @onready var p3_container: Control = $P3Container
 @onready var p3_bar: ProgressBar = $P3Container/P3HPBar
 @onready var p3_label: Label = $P3Container/P3Header/P3NameLabel
 @onready var p3_percent: Label = $P3Container/P3Header/P3HPPercent
+@onready var p3_stock_container: HBoxContainer = $P3Container/P3StockContainer
 
 # Player 4 UI
 @onready var p4_container: Control = $P4Container
 @onready var p4_bar: ProgressBar = $P4Container/P4HPBar
 @onready var p4_label: Label = $P4Container/P4Header/P4NameLabel
 @onready var p4_percent: Label = $P4Container/P4Header/P4HPPercent
+@onready var p4_stock_container: HBoxContainer = $P4Container/P4StockContainer
 
 @onready var banner_label: Label = $CenterContainer/VBoxContainer/BannerLabel
 @onready var sub_banner: Label = $CenterContainer/VBoxContainer/SubBannerLabel
@@ -82,6 +88,10 @@ func setup_multiplayer(fighters: Array, players_data: Array[Dictionary]) -> void
 			if percents[idx]:
 				percents[idx].text = "100%"
 
+		# Initialize stock gems display
+		var max_st = GameManager.round_stocks
+		update_fighter_stocks(p_id, max_st, max_st)
+
 		# Spawn offscreen indicator
 		var ind = OffscreenIndicatorScene.instantiate()
 		add_child(ind)
@@ -94,6 +104,31 @@ func setup_offscreen_tracker(p1_fighter: CharacterBody2D, p2_fighter: CharacterB
 		{"player_id": 1, "color": PLAYER_COLORS[0]},
 		{"player_id": 2, "color": PLAYER_COLORS[1]}
 	])
+
+func update_fighter_stocks(player_id: int, current_stocks: int, max_stocks: int) -> void:
+	var stock_containers = [p1_stock_container, p2_stock_container, p3_stock_container, p4_stock_container]
+	var idx = player_id - 1
+	if idx < 0 or idx >= stock_containers.size():
+		return
+	var container = stock_containers[idx]
+	if not container:
+		return
+
+	# Re-create or update icons
+	for child in container.get_children():
+		child.queue_free()
+
+	for i in range(max_stocks):
+		var rect = TextureRect.new()
+		rect.custom_minimum_size = Vector2(22, 28)
+		rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		
+		var is_active = (i < current_stocks)
+		rect.texture = GEM_ACTIVE if is_active else GEM_EMPTY
+		if not is_active:
+			rect.modulate = Color(0.65, 0.65, 0.7, 0.45)
+		container.add_child(rect)
 
 func update_fighter_hp(player_id: int, cur: float, max_hp: float) -> void:
 	var bars = [p1_bar, p2_bar, p3_bar, p4_bar]

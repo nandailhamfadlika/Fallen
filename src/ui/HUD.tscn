@@ -76,6 +76,10 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_p1")
 value = 100.0
 show_percentage = false
 
+[node name="P1StockContainer" type="HBoxContainer" parent="P1Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
 [node name="P3Container" type="VBoxContainer" parent="."]
 visible = false
 offset_left = 40.0
@@ -107,6 +111,10 @@ theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_p3")
 value = 100.0
 show_percentage = false
+
+[node name="P3StockContainer" type="HBoxContainer" parent="P3Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="P2Container" type="VBoxContainer" parent="."]
 anchors_preset = 1
@@ -144,6 +152,11 @@ value = 100.0
 fill_mode = 1
 show_percentage = false
 
+[node name="P2StockContainer" type="HBoxContainer" parent="P2Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 2
+
 [node name="P4Container" type="VBoxContainer" parent="."]
 visible = false
 anchors_preset = 1
@@ -180,6 +193,11 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_p4")
 value = 100.0
 fill_mode = 1
 show_percentage = false
+
+[node name="P4StockContainer" type="HBoxContainer" parent="P4Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 2
 
 [node name="TimerContainer" type="VBoxContainer" parent="."]
 anchors_preset = 5

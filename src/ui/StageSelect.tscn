@@ -456,17 +456,17 @@ grow_vertical = 2
 color = Color(0.02, 0.03, 0.05, 0.82)
 
 [node name="DialogPanel" type="PanelContainer" parent="SettingsPopup"]
-custom_minimum_size = Vector2(460, 290)
+custom_minimum_size = Vector2(500, 370)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -230.0
-offset_top = -145.0
-offset_right = 230.0
-offset_bottom = 145.0
+offset_left = -250.0
+offset_top = -185.0
+offset_right = 250.0
+offset_bottom = 185.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dialog")
@@ -474,13 +474,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_dialog")
 [node name="Margin" type="MarginContainer" parent="SettingsPopup/DialogPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 28
-theme_override_constants/margin_top = 22
+theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 28
-theme_override_constants/margin_bottom = 22
+theme_override_constants/margin_bottom = 20
 
 [node name="VBox" type="VBoxContainer" parent="SettingsPopup/DialogPanel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 14
 
 [node name="HeaderBox" type="VBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox"]
 layout_mode = 2
@@ -498,6 +498,73 @@ custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 color = Color(0.7, 0.55, 0.25, 0.8)
 
+[node name="StockSection" type="VBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StockSectionTitle" type="Label" parent="SettingsPopup/DialogPanel/Margin/VBox/StockSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 13
+text = "SOUL SURVIVAL / STOCKS"
+horizontal_alignment = 1
+
+[node name="StockButtons" type="HBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox/StockSection"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="BtnStock1" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/StockSection/StockButtons"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "1 SOUL"
+
+[node name="BtnStock2" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/StockSection/StockButtons"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "2 SOULS"
+
+[node name="BtnStock3" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/StockSection/StockButtons"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "3 SOULS"
+
+[node name="BtnStock5" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/StockSection/StockButtons"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "5 SOULS"
+
+[node name="StockRuleDesc" type="Label" parent="SettingsPopup/DialogPanel/Margin/VBox/StockSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.68, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "Fighters respawn with soul gems. Loss of all gems leads to defeat."
+horizontal_alignment = 1
+
 [node name="TimeSection" type="VBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 8
@@ -511,47 +578,58 @@ horizontal_alignment = 1
 
 [node name="TimeButtons" type="HBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Btn30s" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
-custom_minimum_size = Vector2(100, 42)
-layout_mode = 2
-focus_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
-theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
-theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
-text = "30s"
-
-[node name="Btn60s" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
-custom_minimum_size = Vector2(100, 42)
-layout_mode = 2
-focus_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
-theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
-theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
-text = "60s"
-
 [node name="Btn99s" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
-custom_minimum_size = Vector2(100, 42)
+custom_minimum_size = Vector2(100, 38)
 layout_mode = 2
 focus_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_opt_active")
 theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
 theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
 text = "99s"
 
+[node name="Btn120s" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "120s"
+
+[node name="Btn150s" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "150s"
+
+[node name="BtnInf" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeButtons"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_opt_inactive")
+theme_override_styles/hover = SubResource("StyleBoxFlat_opt_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_opt_active")
+theme_override_styles/focus = SubResource("StyleBoxFlat_opt_hover")
+text = "∞ INFINITY"
+
 [node name="TimeRuleDesc" type="Label" parent="SettingsPopup/DialogPanel/Margin/VBox/TimeSection"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.65, 0.68, 0.75, 1)
 theme_override_font_sizes/font_size = 11
-text = "When time runs out, fighter with higher remaining HP wins."
+text = "When time expires with equal standing, sudden death begins!"
 horizontal_alignment = 1
 
 [node name="CloseBox" type="HBoxContainer" parent="SettingsPopup/DialogPanel/Margin/VBox"]
@@ -560,7 +638,7 @@ theme_override_constants/separation = 12
 alignment = 1
 
 [node name="BtnClose" type="Button" parent="SettingsPopup/DialogPanel/Margin/VBox/CloseBox"]
-custom_minimum_size = Vector2(200, 38)
+custom_minimum_size = Vector2(220, 38)
 layout_mode = 2
 focus_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
