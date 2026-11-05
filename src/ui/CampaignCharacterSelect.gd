@@ -151,11 +151,17 @@ var current_device_id: int = -1
 @onready var btn_back: Button = $BottomBar/BtnBack
 @onready var btn_start: Button = $BottomBar/BtnStart
 @onready var status_hint: Label = $BottomBar/StatusHint
+@onready var fade_overlay: ColorRect = get_node_or_null("FadeOverlay")
 
 var warning_tween: Tween
 
 func _ready() -> void:
 	GameManager.game_mode = "campaign"
+
+	if fade_overlay:
+		fade_overlay.color = Color(0, 0, 0, 1)
+		var enter_tw = create_tween()
+		enter_tw.tween_property(fade_overlay, "color:a", 0.0, 0.25)
 
 	# Hubungkan tombol footer
 	btn_back.pressed.connect(_on_back_pressed)
@@ -314,6 +320,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_back_pressed() -> void:
 	if transition_started:
 		return
+	transition_started = true
+	if fade_overlay:
+		var fade_tw = create_tween()
+		fade_tw.tween_property(fade_overlay, "color:a", 1.0, 0.2)
+		await fade_tw.finished
 	GameManager.go_to_main_menu()
 
 func _on_start_pressed() -> void:
@@ -338,7 +349,12 @@ func _confirm_and_start() -> void:
 	tween.tween_property(portrait_frame, "scale", Vector2(1.08, 1.08), 0.18).set_trans(Tween.TRANS_BACK)
 	tween.tween_property(btn_start, "scale", Vector2(1.1, 1.1), 0.18)
 
-	await get_tree().create_timer(0.7).timeout
+	await get_tree().create_timer(0.35).timeout
+	if fade_overlay:
+		var fade_tw = create_tween()
+		fade_tw.tween_property(fade_overlay, "color:a", 1.0, 0.25)
+		await fade_tw.finished
+
 	GameManager.start_campaign(data["id"], current_device_type, current_device_id)
 
 func _show_warning(msg: String) -> void:

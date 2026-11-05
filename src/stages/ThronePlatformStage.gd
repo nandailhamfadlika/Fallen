@@ -40,6 +40,7 @@ var p2: FighterBase
 
 var fighters: Array[FighterBase] = []
 var match_over: bool = false
+var match_started: bool = false
 var match_timer: float = 99.0
 var timer_enabled: bool = false
 
@@ -98,6 +99,8 @@ func _ready() -> void:
 		assigned_positions.append(spawn_pos)
 		fighter.position = spawn_pos
 		fighter.set_device(p_info.get("device_type", "keyboard_wasd"), p_info.get("device_id", -1))
+		fighter.input_enabled = false
+		fighter.velocity = Vector2.ZERO
 		add_child(fighter)
 		fighters.append(fighter)
 
@@ -145,7 +148,7 @@ func _ready() -> void:
 		timer_enabled = true
 		hud.update_timer(int(match_timer))
 
-	# Match intro banner
+	# Match intro banner & 2-second freeze
 	var mode_text = ""
 	if GameManager.game_mode == "campaign":
 		var cur_stage = GameManager.campaign_stage_index
@@ -157,13 +160,41 @@ func _ready() -> void:
 		mode_text = "%d PLAYERS BATTLE!" % fighters.size()
 	else:
 		mode_text = "Training Mode"
-	hud.show_banner("FIGHT!", mode_text)
-	await get_tree().create_timer(1.8).timeout
-	if !match_over:
+
+	_start_match_intro_sequence(mode_text)
+
+func _start_match_intro_sequence(mode_text: String) -> void:
+	match_started = false
+
+	# Ensure all fighters are frozen
+	for f in fighters:
+		if is_instance_valid(f):
+			f.input_enabled = false
+			f.velocity.x = 0.0
+
+	# Show MATCH START banner
+	hud.show_banner("MATCH START", mode_text)
+
+	# 2-second delay before characters can move and battle commences
+	await get_tree().create_timer(2.0, false).timeout
+	if match_over or not is_inside_tree():
+		return
+
+	# Allow all fighters to move and start AI / player inputs
+	for f in fighters:
+		if is_instance_valid(f):
+			f.input_enabled = true
+
+	match_started = true
+
+	# Flash FIGHT! banner briefly
+	hud.show_banner("FIGHT!", "")
+	await get_tree().create_timer(0.6, false).timeout
+	if not match_over and is_inside_tree():
 		hud.hide_banner()
 
 func _process(delta: float) -> void:
-	if match_over or not timer_enabled:
+	if match_over or not timer_enabled or not match_started:
 		return
 
 	match_timer -= delta
@@ -256,7 +287,8 @@ func _input(event: InputEvent) -> void:
 				return
 
 	if event.is_action_pressed("restart") or (event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_R):
-		get_tree().reload_current_scene()
+		if GameManager.game_mode != "campaign":
+			get_tree().reload_current_scene()
 
 func _on_fighter_hp_changed(p_id: int, cur: float, max_hp: float) -> void:
 	hud.update_fighter_hp(p_id, cur, max_hp)

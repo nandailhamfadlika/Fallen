@@ -125,7 +125,10 @@ func _physics_process(delta: float) -> void:
 
 	# AI Decision & Movement
 	if is_boss_ai:
-		_process_boss_ai(delta)
+		if input_enabled:
+			_process_boss_ai(delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0.0, 800.0 * delta)
 
 	move_and_slide()
 
@@ -330,6 +333,43 @@ func trigger_phase_2_transformation() -> void:
 	is_invulnerable = true
 	change_state(State.HURT)
 	velocity = Vector2.ZERO
+
+	var gm = get_node_or_null("/root/GameManager")
+	var is_campaign = gm and gm.game_mode == "campaign"
+	var p1_char = gm.p1_character if gm else "aron"
+
+	if is_campaign:
+		_play_phase_2_cutscene(p1_char, func():
+			_execute_phase_2_shockwave()
+		)
+	else:
+		_execute_phase_2_shockwave()
+
+func _play_phase_2_cutscene(p1_char: String, on_complete: Callable) -> void:
+	var tree = get_tree()
+	if not tree:
+		on_complete.call()
+		return
+
+	var vn_scene = load("res://src/ui/cutscenes/VisualNovelPlayer.tscn")
+	if not vn_scene:
+		on_complete.call()
+		return
+
+	var canvas = CanvasLayer.new()
+	canvas.layer = 120
+	tree.root.add_child(canvas)
+
+	var vn_inst: VisualNovelPlayer = vn_scene.instantiate()
+	vn_inst.auto_start = false
+	canvas.add_child(vn_inst)
+
+	vn_inst.play_first_fallen_evolve(p1_char, func():
+		canvas.queue_free()
+		on_complete.call()
+	)
+
+func _execute_phase_2_shockwave() -> void:
 	apply_phase(BossPhase.PHASE_2_BEAST)
 
 	# Camera shake impact

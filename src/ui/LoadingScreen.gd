@@ -22,6 +22,22 @@ const TIPS = [
 	"TIP: Watch your fighter's shadow to accurately judge landing position above floating ledges."
 ]
 
+const STORY_TIPS = [
+	"TIP: The throne colosseum in the sky calls to those with unbroken conviction.",
+	"TIP: Press [SPACE] or [ENTER] to advance dialogue, or [TAB] / [ESC] to skip cutscenes.",
+	"TIP: Master light combos, air recoveries, and dodges before challenging rival Claimants.",
+	"TIP: Each Claimant journeys to the Throne of The Fallen with their own purpose.",
+	"TIP: Defeating The First Fallen requires overcoming both his sovereign blades and monstrous wrath."
+]
+
+const STORY_STATUS_MESSAGES: Array[String] = [
+	"COMMUNING WITH ANCIENT ARCHIVES...",
+	"UNVEILING THE SCRIPTURES OF THE FALLEN...",
+	"DESCENDING TOWARD THE HEAVENLY SPHERE...",
+	"AWAKENING THE CLAIMANT'S RESOLVE...",
+	"PREPARING NARRATIVE EXPERIENCE..."
+]
+
 const STAGE_TITLES = {
 	"ruined_school": "RUINED ACADEMY",
 	"temple_ruin": "TEMPLE RUIN",
@@ -94,8 +110,20 @@ const CHARACTER_INFO = {
 	"the_first_fallen": {
 		"name": "THE FIRST FALLEN",
 		"title": "Ancient Sovereign",
-		"portrait": "res://assets/ui/portraits/portrait_first_fallen.png",
+		"portrait": "res://assets/characters/the_first_fallen/Chara select First fallen phase 1.jpg",
 		"color": Color(0.8, 0.2, 0.9)
+	},
+	"the_first_fallen_p1": {
+		"name": "THE FIRST FALLEN",
+		"title": "Ancient Sovereign (Phase 1)",
+		"portrait": "res://assets/characters/the_first_fallen/Chara select First fallen phase 1.jpg",
+		"color": Color(0.8, 0.2, 0.9)
+	},
+	"the_first_fallen_p2": {
+		"name": "THE FIRST FALLEN",
+		"title": "Monstrous Beast (Phase 2)",
+		"portrait": "res://assets/characters/the_first_fallen/Chara select first fallen phase 2.jpg",
+		"color": Color(0.95, 0.15, 0.2)
 	},
 	"dummy": {
 		"name": "TRAINING DUMMY",
@@ -133,12 +161,27 @@ var status_timer: float = 0.0
 @onready var tip_lbl: Label = $ContentContainer/MainVBox/BottomSection/TipLabel
 @onready var fade_overlay: ColorRect = $FadeOverlay
 
+func _load_texture_safe(path: String) -> Texture2D:
+	if ResourceLoader.exists(path):
+		var res = load(path)
+		if res is Texture2D:
+			return res
+	if FileAccess.file_exists(path):
+		var img = Image.load_from_file(path)
+		if img:
+			return ImageTexture.create_from_image(img)
+	return null
+
 func _ready() -> void:
 	target_scene_path = GameManager.target_stage_scene
 	if target_scene_path.is_empty():
 		# Fallback if opened directly in editor
 		target_scene_path = GameManager.STAGES.get("temple_ruin", "res://src/stages/TempleRuinStage.tscn")
 		ResourceLoader.load_threaded_request(target_scene_path)
+	
+	if target_scene_path.contains("CampaignStoryScene"):
+		status_messages = STORY_STATUS_MESSAGES.duplicate()
+		status_lbl.text = status_messages[0]
 	
 	_setup_stage_visuals()
 	_setup_matchup()
@@ -150,28 +193,74 @@ func _ready() -> void:
 	tween.tween_property(fade_overlay, "modulate:a", 0.0, 0.25)
 
 func _setup_stage_visuals() -> void:
-	var stage_id = GameManager.selected_stage
-	var title = STAGE_TITLES.get(stage_id, "ANCIENT ARENA")
-	stage_title_lbl.text = title
-	
-	var players_count = max(2, GameManager.active_players.size())
-	if GameManager.game_mode == "training":
-		subtitle_lbl.text = "TRAINING DOJO • PRACTICE SESSION"
-	elif players_count == 2:
-		subtitle_lbl.text = "DUEL OF SOULS • 1 ON 1 CLASH"
-	elif players_count == 3:
-		subtitle_lbl.text = "TRIPLE THREAT • 3-WAY BATTLE ROYALE"
-	elif players_count >= 4:
-		subtitle_lbl.text = "FATAL FOUR-WAY • 4-PLAYER MAYHEM"
-	
-	var stocks_str = GameManager.get_stocks_text()
-	var time_str = GameManager.get_time_limit_text()
-	if rules_badge_lbl:
-		rules_badge_lbl.text = "⚔ %s • %s • %s ⚔" % [stocks_str.to_upper(), time_str.to_upper(), title]
-	
-	var bg_path = STAGE_PREVIEWS.get(stage_id, "res://assets/stages/temple_ruin_stage.png")
-	if ResourceLoader.exists(bg_path):
-		background.texture = load(bg_path)
+	var is_story: bool = target_scene_path.contains("CampaignStoryScene")
+	if is_story:
+		var mode = GameManager.campaign_story_mode if "campaign_story_mode" in GameManager else "prologue"
+		match mode:
+			"facing_the_fallen":
+				stage_title_lbl.text = "FACING THE FALLEN"
+				subtitle_lbl.text = "CLIMAX • THE SOVEREIGN OF ASHES"
+				if rules_badge_lbl:
+					rules_badge_lbl.text = "⚔ PRE-BOSS CONFRONTATION • PHASE 1 ⚔"
+				var ftf_bg = "res://assets/Scene/facing_the_fallen/facing_the_fallen_intro.png"
+				var bg_tex = _load_texture_safe(ftf_bg)
+				if bg_tex:
+					background.texture = bg_tex
+				else:
+					background.texture = _load_texture_safe("res://assets/stages/ruined_school_stage.png")
+			"epilogue":
+				stage_title_lbl.text = "THE NEW SOVEREIGN"
+				subtitle_lbl.text = "VICTORY EPILOGUE • THE THRONE CLAIMED"
+				if rules_badge_lbl:
+					rules_badge_lbl.text = "✦ A NEW ERA DAWNS • EPILOGUE ✦"
+				var char_id = GameManager.p1_character.to_lower()
+				var epi_bg = "res://assets/Scene/%s/%s_epilogue_01.png" % [char_id, char_id]
+				var bg_tex = _load_texture_safe(epi_bg)
+				if not bg_tex:
+					epi_bg = "res://assets/Scene/%s/%s_epilogue_01.jpg" % [char_id, char_id]
+					bg_tex = _load_texture_safe(epi_bg)
+				if bg_tex:
+					background.texture = bg_tex
+				else:
+					background.texture = _load_texture_safe("res://assets/stages/ruined_school_stage.png")
+			_: # prologue
+				stage_title_lbl.text = "CHRONICLES OF THE FALLEN"
+				subtitle_lbl.text = "PROLOGUE • THE CLAIMING OF THE THRONE"
+				if rules_badge_lbl:
+					rules_badge_lbl.text = "✦ ANCIENT PROPHECY • THE CATACLYSM ✦"
+				var pro_bg = "res://assets/Scene/cerita_fallen/cerita_fallen_01.jpg"
+				var bg_tex = _load_texture_safe(pro_bg)
+				if not bg_tex:
+					pro_bg = "res://assets/Scene/cerita_fallen/cerita_fallen_01.png"
+					bg_tex = _load_texture_safe(pro_bg)
+				if bg_tex:
+					background.texture = bg_tex
+				else:
+					background.texture = _load_texture_safe("res://assets/stages/temple_ruin_stage.png")
+	else:
+		var stage_id = GameManager.selected_stage
+		var title = STAGE_TITLES.get(stage_id, "ANCIENT ARENA")
+		stage_title_lbl.text = title
+		
+		var players_count = max(2, GameManager.active_players.size())
+		if GameManager.game_mode == "training":
+			subtitle_lbl.text = "TRAINING DOJO • PRACTICE SESSION"
+		elif players_count == 2:
+			subtitle_lbl.text = "DUEL OF SOULS • 1 ON 1 CLASH"
+		elif players_count == 3:
+			subtitle_lbl.text = "TRIPLE THREAT • 3-WAY BATTLE ROYALE"
+		elif players_count >= 4:
+			subtitle_lbl.text = "FATAL FOUR-WAY • 4-PLAYER MAYHEM"
+		
+		var stocks_str = GameManager.get_stocks_text()
+		var time_str = GameManager.get_time_limit_text()
+		if rules_badge_lbl:
+			rules_badge_lbl.text = "⚔ %s • %s • %s ⚔" % [stocks_str.to_upper(), time_str.to_upper(), title]
+		
+		var bg_path = STAGE_PREVIEWS.get(stage_id, "res://assets/stages/temple_ruin_stage.png")
+		var bg_tex = _load_texture_safe(bg_path)
+		if bg_tex:
+			background.texture = bg_tex
 
 func _setup_matchup() -> void:
 	# Clear any placeholder children
@@ -188,11 +277,17 @@ func _setup_matchup() -> void:
 	var total_p = players.size()
 	
 	# Adjust separation based on player count to keep layout perfectly centered & balanced
-	if total_p == 2:
+	if total_p == 1:
+		matchup_container.alignment = BoxContainer.ALIGNMENT_CENTER
+		matchup_container.add_theme_constant_override("separation", 0)
+	elif total_p == 2:
+		matchup_container.alignment = BoxContainer.ALIGNMENT_CENTER
 		matchup_container.add_theme_constant_override("separation", 36)
 	elif total_p == 3:
+		matchup_container.alignment = BoxContainer.ALIGNMENT_CENTER
 		matchup_container.add_theme_constant_override("separation", 20)
 	else:
+		matchup_container.alignment = BoxContainer.ALIGNMENT_CENTER
 		matchup_container.add_theme_constant_override("separation", 14)
 	
 	for i in range(total_p):
@@ -234,7 +329,12 @@ func _create_fighter_card(p_data: Dictionary, idx: int, total_players: int) -> C
 	var name_font_size = 18
 	var title_font_size = 11
 	
-	if total_players == 3:
+	if total_players == 1:
+		frame_w = 210
+		frame_h = 265
+		name_font_size = 20
+		title_font_size = 12
+	elif total_players == 3:
 		frame_w = 175
 		frame_h = 230
 		name_font_size = 17
@@ -271,7 +371,14 @@ func _create_fighter_card(p_data: Dictionary, idx: int, total_players: int) -> C
 	tag_margin.add_theme_constant_override("margin_bottom", 2)
 	
 	var tag_lbl = Label.new()
-	tag_lbl.text = "PLAYER %d" % actual_p_id
+	var tag_text = "PLAYER %d" % actual_p_id
+	if target_scene_path.contains("CampaignStoryScene"):
+		tag_text = "CHOSEN CLAIMANT"
+	elif GameManager.game_mode == "training" and idx == 0:
+		tag_text = "TRAINEE"
+	elif GameManager.game_mode == "training" and idx == 1:
+		tag_text = "TARGET DUMMY"
+	tag_lbl.text = tag_text
 	tag_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tag_lbl.add_theme_font_size_override("font_size", 11)
 	tag_lbl.add_theme_color_override("font_color", p_color)
@@ -304,6 +411,12 @@ func _create_fighter_card(p_data: Dictionary, idx: int, total_players: int) -> C
 	var port_path = info.get("portrait", "")
 	if ResourceLoader.exists(port_path):
 		portrait_tex.texture = load(port_path)
+	elif FileAccess.file_exists(port_path):
+		var img = Image.load_from_file(port_path)
+		if img:
+			portrait_tex.texture = ImageTexture.create_from_image(img)
+	elif ResourceLoader.exists("res://assets/ui/portraits/portrait_first_fallen.png"):
+		portrait_tex.texture = load("res://assets/ui/portraits/portrait_first_fallen.png")
 	frame_panel.add_child(portrait_tex)
 	card_vbox.add_child(frame_panel)
 	
@@ -429,8 +542,10 @@ func _create_vs_separator(total_players: int) -> Control:
 	return vs_box
 
 func _setup_tip() -> void:
-	var tip_text = TIPS[randi() % TIPS.size()]
-	tip_lbl.text = tip_text
+	if target_scene_path.contains("CampaignStoryScene"):
+		tip_lbl.text = STORY_TIPS[randi() % STORY_TIPS.size()]
+	else:
+		tip_lbl.text = TIPS[randi() % TIPS.size()]
 
 func _process(delta: float) -> void:
 	elapsed_time += delta
@@ -468,7 +583,10 @@ func _process(delta: float) -> void:
 func _finish_loading() -> void:
 	progress_bar.value = 100
 	percent_lbl.text = "100%"
-	status_lbl.text = "BATTLE READY!"
+	if target_scene_path.contains("CampaignStoryScene"):
+		status_lbl.text = "PROLOGUE READY!"
+	else:
+		status_lbl.text = "BATTLE READY!"
 	status_lbl.modulate = Color(1.0, 0.9, 0.4)
 	
 	var tween = create_tween()

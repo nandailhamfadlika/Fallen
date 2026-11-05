@@ -180,6 +180,8 @@ func register_hit() -> void:
 	combo_label.text = "%d HITS!" % combo_count
 	combo_label.modulate = Color(0.2, 0.9, 1.0) if combo_count < 3 else Color(1.0, 0.8, 0.1)
 
+var _banner_tween: Tween = null
+
 func show_banner(title: String, subtitle: String = "") -> void:
 	banner_label.text = title
 	banner_label.visible = true
@@ -189,6 +191,15 @@ func show_banner(title: String, subtitle: String = "") -> void:
 	else:
 		sub_banner.visible = false
 
+	if _banner_tween and _banner_tween.is_valid():
+		_banner_tween.kill()
+	_banner_tween = create_tween()
+	banner_label.pivot_offset = banner_label.size * 0.5
+	banner_label.scale = Vector2(1.15, 1.15)
+	_banner_tween.tween_property(banner_label, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
 func hide_banner() -> void:
+	if _banner_tween and _banner_tween.is_valid():
+		_banner_tween.kill()
 	banner_label.visible = false
 	sub_banner.visible = false

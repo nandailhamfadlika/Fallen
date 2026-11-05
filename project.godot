@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="FALLEN"
-run/main_scene="res://src/ui/MainMenu.tscn"
+run/main_scene="res://src/ui/OpeningVideoScene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.png"
 
@@ -142,3 +142,5 @@ restart={
 textures/canvas_textures/default_texture_filter=0
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+

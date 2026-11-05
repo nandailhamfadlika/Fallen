@@ -62,7 +62,10 @@ func update() -> void:
 		move_axis = 0.0
 		return
 	
-	# If dead or stunned, do nothing
+	# If input disabled (match start freeze) or dead, do nothing
+	if "input_enabled" in fighter and not fighter.input_enabled:
+		move_axis = 0.0
+		return
 	if "current_state" in fighter and fighter.current_state == 8: # DEAD
 		move_axis = 0.0
 		return

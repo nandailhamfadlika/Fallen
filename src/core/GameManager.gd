@@ -173,6 +173,7 @@ var campaign_claimants: Array[String] = []
 var campaign_stages: Array[String] = []
 var campaign_player_device_type: String = "keyboard_wasd"
 var campaign_player_device_id: int = -1
+var campaign_story_mode: String = "prologue" # "prologue", "facing_the_fallen", "epilogue"
 
 func setup_campaign(difficulty: String = "medium") -> void:
 	campaign_difficulty = difficulty
@@ -183,6 +184,7 @@ func setup_campaign(difficulty: String = "medium") -> void:
 
 func start_campaign(chosen_char: String = "aron", dev_type: String = "keyboard_wasd", dev_id: int = -1) -> void:
 	game_mode = "campaign"
+	campaign_story_mode = "prologue"
 	p1_character = chosen_char
 	campaign_player_device_type = dev_type
 	campaign_player_device_id = dev_id
@@ -204,7 +206,7 @@ func start_campaign(chosen_char: String = "aron", dev_type: String = "keyboard_w
 	active_players = [
 		{"player_id": 1, "device_type": campaign_player_device_type, "device_id": campaign_player_device_id, "character": p1_character, "color": PLAYER_COLORS[0]}
 	]
-	get_tree().change_scene_to_file("res://src/ui/cutscenes/CampaignStoryScene.tscn")
+	load_stage_with_screen("res://src/ui/cutscenes/CampaignStoryScene.tscn")
 
 func start_campaign_stage(stage_idx: int) -> void:
 	campaign_stage_index = stage_idx
@@ -255,7 +257,13 @@ func start_campaign_stage_1() -> void:
 func advance_campaign_stage() -> void:
 	var next_idx = campaign_stage_index + 1
 	if next_idx <= CAMPAIGN_TOTAL_STAGES:
-		start_campaign_stage(next_idx)
+		if next_idx == CAMPAIGN_TOTAL_STAGES:
+			# Final Boss: Facing The Fallen pre-boss cutscene
+			campaign_stage_index = next_idx
+			campaign_story_mode = "facing_the_fallen"
+			load_stage_with_screen("res://src/ui/cutscenes/CampaignStoryScene.tscn")
+		else:
+			start_campaign_stage(next_idx)
 	else:
 		go_to_campaign_victory()
 
@@ -263,5 +271,5 @@ func retry_campaign_stage() -> void:
 	start_campaign_stage(campaign_stage_index)
 
 func go_to_campaign_victory() -> void:
-	game_mode = "pvp"
-	go_to_main_menu()
+	campaign_story_mode = "epilogue"
+	load_stage_with_screen("res://src/ui/cutscenes/CampaignStoryScene.tscn")

@@ -26,6 +26,17 @@ const ANIMATION_DURATION := 0.3
 
 
 func _ready() -> void:
+	# Smooth fade-in on menu entry
+	var fade = ColorRect.new()
+	fade.color = Color.BLACK
+	fade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fade.z_index = 50
+	add_child(fade)
+	var tw = create_tween()
+	tw.tween_property(fade, "modulate:a", 0.0, 0.4)
+	tw.tween_callback(fade.queue_free)
+
 	if btn_campaign:
 		btn_campaign.pressed.connect(_on_campaign_pressed)
 		setup_button_effect(btn_campaign)
