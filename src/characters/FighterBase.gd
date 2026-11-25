@@ -193,6 +193,9 @@ func _post_physics_checks() -> void:
 	if is_on_floor():
 		air_jumps_left = 1
 		if current_state == State.FALL or current_state == State.WALL_SLIDE or current_state == State.JUMP:
+			var am := get_node_or_null("/root/AudioManager")
+			if am:
+				am.play_sfx("land", 0.08)
 			change_state(State.IDLE if abs(velocity.x) < 10 else State.RUN)
 
 	# Check wall slide condition
@@ -208,6 +211,14 @@ func change_state(new_state: State) -> void:
 	var old_state = current_state
 	current_state = new_state
 	state_changed.emit(old_state, new_state)
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		if new_state == State.JUMP:
+			am.play_sfx("jump", 0.05)
+		elif new_state == State.DASH:
+			am.play_sfx("dash", 0.05)
+		elif new_state == State.WALL_SLIDE:
+			am.play_sfx("wall_slide", 0.05)
 	_on_enter_state(new_state)
 
 func respawn_to(spawn_pos: Vector2) -> void:
@@ -223,6 +234,9 @@ func respawn_to(spawn_pos: Vector2) -> void:
 		sprite.modulate = base_modulate
 	set_facing(facing_direction)
 	current_state = State.IDLE
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("respawn", 0.05)
 	change_state(State.FALL)
 
 func grant_spawn_invulnerability(duration: float = 1.5) -> void:

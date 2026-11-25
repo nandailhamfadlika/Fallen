@@ -42,11 +42,17 @@ func set_unjoined() -> void:
 	is_ready = false
 	unjoined_box.visible = true
 	joined_box.visible = false
-	unjoined_title.text = "PLAYER %d" % player_num
+	unjoined_title.text = "%s %d" % [tr("CS_PLAYER"), player_num]
 	unjoined_title.modulate = player_color
-	unjoined_prompt.text = default_join_text
+
+	var prompt := default_join_text
+	var press_tr := tr("CS_PRESS_KEY")
+	if press_tr != "CS_PRESS_KEY":
+		prompt = prompt.replace("PRESS", press_tr)
+	unjoined_prompt.text = prompt
+
 	if unjoined_sub != null:
-		unjoined_sub.text = "TO JOIN BATTLE"
+		unjoined_sub.text = tr("CS_TO_JOIN")
 
 	_start_unjoined_pulse()
 
@@ -94,9 +100,9 @@ func update_character(char_data: Dictionary) -> void:
 
 	if is_locked:
 		char_sprite.modulate = Color(0.4, 0.4, 0.45, 0.8)
-		name_lbl.text = char_data.get("name", "") + " (LOCKED)"
+		name_lbl.text = char_data.get("name", "") + " (" + tr("CS_LOCKED") + ")"
 		name_lbl.modulate = Color(0.65, 0.65, 0.7)
-		status_lbl.text = "[LOCKED]"
+		status_lbl.text = "[" + tr("CS_LOCKED") + "]"
 		status_lbl.modulate = Color(1.0, 0.35, 0.35)
 	else:
 		char_sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
@@ -104,10 +110,10 @@ func update_character(char_data: Dictionary) -> void:
 		name_lbl.modulate = char_data.get("color", Color.WHITE)
 
 		if is_ready:
-			status_lbl.text = "READY!"
+			status_lbl.text = tr("CS_READY")
 			status_lbl.modulate = Color(0.2, 1.0, 0.4)
 		else:
-			status_lbl.text = "CHOOSING..."
+			status_lbl.text = tr("CS_CHOOSING")
 			status_lbl.modulate = Color(1.0, 0.85, 0.3)
 
 func set_ready_state(ready: bool) -> void:

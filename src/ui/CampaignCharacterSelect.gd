@@ -157,6 +157,9 @@ var warning_tween: Tween
 
 func _ready() -> void:
 	GameManager.game_mode = "campaign"
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_bgm("main_menu", 0.4)
 
 	if fade_overlay:
 		fade_overlay.color = Color(0, 0, 0, 1)
@@ -166,8 +169,18 @@ func _ready() -> void:
 	# Hubungkan tombol footer
 	btn_back.pressed.connect(_on_back_pressed)
 	btn_start.pressed.connect(_on_start_pressed)
+	if am:
+		am.suppress_select_for(120)
+		am.wire_button_sfx(btn_back, "", true)
+		am.wire_button_sfx(btn_start, "", true)
 
 	_setup_roster_buttons()
+
+	var lm := get_node_or_null("/root/LocalizationManager")
+	if lm and lm.has_signal("locale_changed"):
+		lm.locale_changed.connect(func(_l: String): _update_locale_ui())
+	_update_locale_ui()
+
 	_select_character(0)
 
 	# Berikan fokus pada tombol karakter pertama agar gamepad & keyboard langsung aktif
@@ -204,6 +217,9 @@ func _setup_roster_buttons() -> void:
 
 func _on_button_focused(idx: int) -> void:
 	if idx != selected_index:
+		var am := get_node_or_null("/root/AudioManager")
+		if am:
+			am.play_sfx("select")
 		_select_character(idx)
 	_animate_button(button_nodes[idx], true)
 
@@ -215,17 +231,27 @@ func _on_button_clicked(idx: int) -> void:
 	else:
 		_confirm_and_start()
 
+func _update_locale_ui() -> void:
+	var header_lbl := get_node_or_null("TopBar/HeaderTitle") as Label
+	if header_lbl:
+		header_lbl.text = tr("CS_HEADER")
+	if btn_back:
+		btn_back.text = "◀ " + tr("UI_BACK") + " [ESC]"
+	_select_character(selected_index)
+
 func _select_character(idx: int) -> void:
 	selected_index = idx
 	var data = CHARACTERS[idx]
+	var char_id: String = data["id"]
+	var lm := get_node_or_null("/root/LocalizationManager")
 
 	# Update UI Showcase kiri
 	hero_name_label.text = data["name"]
 	hero_name_label.modulate = data["color"]
-	hero_title_label.text = data["title"]
+	hero_title_label.text = lm.get_character_title(char_id) if lm else data["title"]
 	archetype_label.text = data["archetype"]
 	archetype_label.modulate = data["color"]
-	lore_label.text = data["lore"]
+	lore_label.text = lm.get_character_bio(char_id) if lm else data["lore"]
 
 	stat_speed.text = data.get("speed", "★★★☆☆")
 	stat_power.text = data.get("power", "★★★☆☆")
@@ -242,13 +268,13 @@ func _select_character(idx: int) -> void:
 		portrait_texture.modulate = Color(0.4, 0.4, 0.45, 0.8)
 		lock_badge.visible = true
 		btn_start.disabled = true
-		btn_start.text = "LOCKED"
+		btn_start.text = tr("CS_LOCKED")
 		btn_start.modulate = Color(0.6, 0.6, 0.6)
 	else:
 		portrait_texture.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		lock_badge.visible = false
 		btn_start.disabled = false
-		btn_start.text = "START CAMPAIGN ▶ [ENTER/F]"
+		btn_start.text = tr("CS_START_CAMPAIGN") + " ▶ [ENTER/F]"
 		btn_start.modulate = Color(1.0, 0.85, 0.35)
 
 	# Update frame border color
@@ -321,6 +347,9 @@ func _on_back_pressed() -> void:
 	if transition_started:
 		return
 	transition_started = true
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("back")
 	if fade_overlay:
 		var fade_tw = create_tween()
 		fade_tw.tween_property(fade_overlay, "color:a", 1.0, 0.2)
@@ -339,6 +368,9 @@ func _confirm_and_start() -> void:
 	if transition_started:
 		return
 	transition_started = true
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("confirm")
 
 	var data = CHARACTERS[selected_index]
 	status_hint.text = "ENTERING THE FALLEN AS %s..." % data["name"]
@@ -358,6 +390,9 @@ func _confirm_and_start() -> void:
 	GameManager.start_campaign(data["id"], current_device_type, current_device_id)
 
 func _show_warning(msg: String) -> void:
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("back")
 	if warning_tween and warning_tween.is_valid():
 		warning_tween.kill()
 

@@ -173,6 +173,10 @@ func _load_texture_safe(path: String) -> Texture2D:
 	return null
 
 func _ready() -> void:
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.stop_bgm(0.35)
+
 	target_scene_path = GameManager.target_stage_scene
 	if target_scene_path.is_empty():
 		# Fallback if opened directly in editor
@@ -542,7 +546,12 @@ func _create_vs_separator(total_players: int) -> Control:
 	return vs_box
 
 func _setup_tip() -> void:
-	if target_scene_path.contains("CampaignStoryScene"):
+	var tip_idx: int = (randi() % 8) + 1
+	var tip_key: String = "TIP_%02d" % tip_idx
+	var val: String = tr(tip_key)
+	if val != tip_key and not val.is_empty():
+		tip_lbl.text = val
+	elif target_scene_path.contains("CampaignStoryScene"):
 		tip_lbl.text = STORY_TIPS[randi() % STORY_TIPS.size()]
 	else:
 		tip_lbl.text = TIPS[randi() % TIPS.size()]

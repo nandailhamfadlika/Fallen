@@ -1,0 +1,164 @@
+keys,en,id
+UI_GAME_TITLE,THE FALLEN,THE FALLEN
+UI_PRESS_ANY_KEY,PRESS ANY BUTTON TO START,TEKAN TOMBOL APAPUN UNTUK MULAI
+UI_CAMPAIGN,CAMPAIGN,MODE CERITA
+UI_VS_MODE,VS MODE,MODE TARUNG
+UI_TRAINING,TRAINING,LATIHAN
+UI_OPTIONS,OPTIONS,PENGATURAN
+UI_QUIT,QUIT,KELUAR
+UI_BACK,BACK,KEMBALI
+UI_CONFIRM,CONFIRM,KONFIRMASI
+UI_SELECT,SELECT,PILIH
+UI_CLOSE,CLOSE,TUTUP
+UI_RESUME,RESUME,LANJUTKAN
+UI_REMATCH,REMATCH,TANDING ULANG
+UI_CHARACTER_SELECT,CHARACTER SELECT,PILIH KARAKTER
+UI_STAGE_SELECT,STAGE SELECT,PILIH ARENA
+UI_MAIN_MENU,MAIN MENU,MENU UTAMA
+UI_WARNING,WARNING,PERINGATAN
+UI_YES,YES,YA
+UI_NO,NO,TIDAK
+UI_LEAVE_MATCH_CONFIRM,"Are you sure you want to change character? Current match progress will be lost.","Apakah Anda yakin ingin mengganti karakter? Pertandingan saat ini akan diulang."
+UI_QUIT_GAME_CONFIRM,"Are you sure you want to exit the game?","Apakah Anda yakin ingin keluar dari permainan?"
+MODAL_CONFIRM_TITLE,CONFIRMATION,KONFIRMASI
+CS_CHOOSING,CHOOSING...,MEMILIH...
+CS_PLAYER,PLAYER,PEMAIN
+CS_TO_JOIN,TO JOIN BATTLE,UNTUK BERGABUNG
+CS_START_CAMPAIGN,START CAMPAIGN,MULAI MODE CERITA
+STAGE_RANDOM_NAME,Random Battlefield,Arena Acak
+STAGE_RANDOM_DESC,Fate decides the battlefield.,Takdir yang menentukan arena pertarungan.
+SS_STOCK_DESC,"Fighters respawn with soul gems. Loss of all gems leads to defeat.","Petarung bangkit kembali dengan permata soul. Kehabisan permata berarti kalah."
+SS_TIMER_DESC,"When time expires with equal standing, sudden death begins!","Jika waktu habis dengan Soul seimbang, Sudden Death dimulai!"
+DIFFICULTY_TITLE,SELECT DIFFICULTY,PILIH TINGKAT KESULITAN
+DIFFICULTY_SUBTITLE,"Choose enemy intelligence and aggression in Soul Trial","Pilih intensitas kecerdasan dan agresi lawan dalam Soul Trial"
+DIFFICULTY_EASY,EASY,MUDAH
+DIFFICULTY_EASY_HEADER,"🟢 NOVICE (EASY)","🟢 PEMULA (MUDAH)"
+DIFFICULTY_EASY_DESC,"Relaxed enemy attacks, measured reflexes, ideal for beginners.","Serangan musuh santai, refleks terukur, ideal untuk pemula."
+DIFFICULTY_MEDIUM,MEDIUM,SEDANG
+DIFFICULTY_MEDIUM_HEADER,"🟡 WARRIOR (MEDIUM)","🟡 PETARUNG (SEDANG)"
+DIFFICULTY_MEDIUM_DESC,"Balanced challenge. Active AI chase, 2-3 hit combos, and recovery.","Tantangan seimbang. AI aktif mengejar, kombo 2-3 pukulan, dan recovery."
+DIFFICULTY_HARD,HARD,SULIT
+DIFFICULTY_HARD_HEADER,"🔴 SOVEREIGN (HARD)","🔴 PENGUASA (SULIT)"
+DIFFICULTY_HARD_DESC,"The true trial. High aggression, rapid reflexes, and ruthless punishes.","Ujian sesungguhnya. Agresi tinggi, refleks cepat, dan serangan balasan tajam."
+PAUSE_CAMPAIGN_TITLE,CAMPAIGN PAUSED,MODE CERITA DIJEDA
+PAUSE_TRAINING_TITLE,TRAINING PAUSED,MODE LATIHAN DIJEDA
+PAUSE_VS_TITLE,VS BATTLE PAUSED,PERTANDINGAN DIJEDA
+PAUSE_CHANGE_CHAR_TITLE,CHANGE CHARACTER?,GANTI KARAKTER?
+PAUSE_CHANGE_CHAR_CAMPAIGN_MSG,"Are you sure you want to change character?
+
+Current Campaign run will be forfeit and you will return to Campaign Character Select.","Apakah Anda yakin ingin mengganti karakter?
+
+Kemajuan Mode Cerita saat ini akan dibatalkan dan Anda akan kembali ke Menu Pilih Karakter."
+PAUSE_CHANGE_CHAR_VS_MSG,"Are you sure you want to change character?
+
+Current match will end and you will return to Fighter Selection.","Apakah Anda yakin ingin mengganti karakter?
+
+Pertandingan saat ini akan berakhir dan Anda akan kembali ke Pemilihan Petarung."
+PAUSE_CHANGE_CHAR_BTN,Change Character,Ganti Karakter
+PAUSE_RESET_POS,Reset Positions [R],Atur Ulang Posisi [R]
+PAUSE_STAGE_SUBTITLE,"STAGE %d/6 — SOUL TRIAL vs %s","BABAK %d/6 — TANTANGAN SOUL vs %s"
+PAUSE_TRAINING_SUBTITLE,PRACTICE DOJO,ARENA LATIHAN
+PAUSE_VS_SUBTITLE,"%d PLAYERS LOCAL BRAWL","DUEL %d PEMAIN LOKAL"
+CS_STATUS_NO_PLAYERS,PRESS BUTTON TO JOIN (MIN 2 PLAYERS TO BATTLE),TEKAN TOMBOL UNTUK BERGABUNG (MINIMAL 2 PEMAIN)
+CS_STATUS_ONE_PLAYER,1 PLAYER JOINED - WAITING FOR OPPONENTS TO JOIN...,1 PEMAIN BERGABUNG - MENUNGGU LAWAN BERGABUNG...
+CS_STATUS_READY_COUNT,"%d / %d PLAYERS READY - PRESS ATTACK TO READY UP","%d / %d PEMAIN SIAP - TEKAN SERANG UNTUK SIAP"
+CS_STATUS_ALL_READY,ALL FIGHTERS READY! ENTERING ARENA...,SEMUA PETARUNG SIAP! MEMASUKI ARENA...
+CS_STATUS_PREPARE_BATTLE,ALL FIGHTERS READY! PREPARE FOR BATTLE!,SEMUA PETARUNG SIAP! BERSIAPLAH BERTARUNG!
+CS_HINT_CONTROLS,[ATTACK] Confirm | [DODGE] Cancel/Leave | [ESC] Main Menu,[SERANG] Konfirmasi | [HINDAR] Batal/Keluar | [ESC] Menu Utama
+CS_PRESS_KEY,PRESS,TEKAN
+CS_WARN_LOCKED,"P%d: Fighter is locked!","P%d: Karakter masih terkunci!"
+OPT_HEADER,GAME SETTINGS,PENGATURAN GAME
+OPT_SECTION_DISPLAY,DISPLAY SETTINGS,PENGATURAN TAMPILAN
+OPT_FULLSCREEN,Fullscreen,Layar Penuh
+OPT_SECTION_AUDIO,AUDIO VOLUME,VOLUME SUARA
+OPT_MASTER_VOL,Master Volume,Volume Utama
+OPT_MUSIC_VOL,Music Volume,Volume Musik
+OPT_SFX_VOL,SFX Volume,Volume Efek Suara
+OPT_SECTION_LANGUAGE,LANGUAGE,BAHASA
+OPT_CURRENT_LANG,Language: English,Bahasa: Indonesia
+CS_HEADER,SELECT YOUR FIGHTER,PILIH PETARUNG ANDA
+CS_P1_PROMPT,PLAYER 1: SELECT FIGHTER,PEMAIN 1: PILIH PETARUNG
+CS_P2_PROMPT,PLAYER 2: SELECT FIGHTER,PEMAIN 2: PILIH PETARUNG
+CS_PRESS_TO_JOIN,PRESS ATTACK TO JOIN,TEKAN SERANG UNTUK BERGABUNG
+CS_READY,READY!,SIAP!
+CS_LOCKED,LOCKED,TERKUNCI
+CS_STAT_HEALTH,Health,Darah
+CS_STAT_SPEED,Speed,Kecepatan
+CS_STAT_POWER,Power,Kekuatan
+CS_STAT_DEFENSE,Defense,Pertahanan
+CHAR_ARON_NAME,Aron,Aron
+CHAR_ARON_TITLE,The Street Boxer,Petinju Jalanan
+CHAR_ARON_BIO,"An underdog boxer with unbreakable spirit, striving to become the main protagonist.","Petinju underdog dengan semangat tak terpatahkan, bertekad membuktikan diri sebagai karakter utama."
+CHAR_MIKE_NAME,Mike,Mike
+CHAR_MIKE_TITLE,The Exhausted Scholar,Mahasiswa Abadi
+CHAR_MIKE_BIO,"A thesis fighter fueled by instant coffee and academic fury.","Petarung skripsi yang digerakkan oleh kopi sachet dan amarah akademik."
+CHAR_RIN_NAME,Rin,Rin
+CHAR_RIN_TITLE,The Shinto Weaver,Penenun Benang Gaib
+CHAR_RIN_BIO,"A maiden guarding spiritual balance through sacred woven destiny.","Gadis kuil penjaga keseimbangan spiritual lewat tenunan benang suci."
+CHAR_MUSLAN_NAME,Muslan,Muslan
+CHAR_MUSLAN_TITLE,The Coast Troubadour,Musisi Pesisir
+CHAR_MUSLAN_BIO,"A wandering troubadour whose acoustic chords harmonize life and battle.","Musisi jalanan pengelana yang memadukan petikan senar dengan ritme pertarungan."
+CHAR_KEMET_NAME,Kemet,Kemet
+CHAR_KEMET_TITLE,The Bio-Weapon,Senjata Rekayasa Genetika
+CHAR_KEMET_BIO,"An escaped laboratory experiment armed with brutal bio-engineered fury.","Hasil eksperimen lab yang meloloskan diri dengan amarah buas tak terkendali."
+CHAR_BUTLER_NAME,Butler,Butler
+CHAR_BUTLER_TITLE,The Blazing Steward,Pelayan Membara
+CHAR_BUTLER_BIO,"An aristocratic butler commanding blazing flames with impeccable etiquette.","Pelayan aristokrat berselimut api membara dengan tata krama sempurna."
+CHAR_OM_HAMI_NAME,Om Hami,Om Hami
+CHAR_OM_HAMI_TITLE,The Tobacco Elder,Sesepuh Pos Ronda
+CHAR_OM_HAMI_BIO,"A relaxed neighbourhood elder carrying ancient wisdom, black coffee, and clove smoke.","Sesepuh kampung santai pembawa petuah kuno, kopi tubruk, dan asap kretek."
+CHAR_SUNKIBO_NAME,Sunkibo,Sunkibo
+CHAR_SUNKIBO_TITLE,The Sun Monkey,Kera Surya
+CHAR_SUNKIBO_BIO,"A legendary martial artist wielding ancestral celestial energy.","Pendekar silat lincah pewaris kekuatan mistis surya langit purba."
+CHAR_FIRST_FALLEN_NAME,The First Fallen,The First Fallen
+CHAR_FIRST_FALLEN_TITLE,Ancient Void Sovereign,Penguasa Kehampaan Purba
+CHAR_FIRST_FALLEN_BIO,"The ancient tyrant seated upon the throne of power.","Penguasa takhta legendaris pemilik kekuatan kehampaan mutlak."
+CHAR_THE_FIRST_FALLEN_NAME,The First Fallen,The First Fallen
+CHAR_THE_FIRST_FALLEN_TITLE,Ancient Void Sovereign,Penguasa Kehampaan Purba
+CHAR_THE_FIRST_FALLEN_BIO,"The ancient tyrant seated upon the throne of power.","Penguasa takhta legendaris pemilik kekuatan kehampaan mutlak."
+SS_HEADER,CHOOSE BATTLEFIELD,PILIH ARENA PERTARUNGAN
+SS_SETTINGS_BTN,BATTLE SETTINGS,ATURAN TANDING
+SS_MODAL_TITLE,MATCH SETTINGS,ATURAN PERTANDINGAN
+SS_STOCK_LABEL,Soul Stocks,Jumlah Soul
+SS_TIMER_LABEL,Match Duration,Durasi Waktu
+SS_INFINITE,Unlimited,Tanpa Batas
+SS_SEC,Seconds,Detik
+STAGE_ROOFTOP_NAME,Rooftop Arena,Atap Gedung
+STAGE_ROOFTOP_DESC,Midnight duel above the illuminated neon cityscape.,Duel tengah malam di atas atap gedung kota metropolitan.
+STAGE_WATERFALL_NAME,Magic Waterfall,Air Terjun Magis
+STAGE_WATERFALL_DESC,Ancient cliff blessed with enchanted roaring cascades.,Tebing purba dengan gemuruh aliran air terjun mistis.
+STAGE_MAGIC_WATERFALL_NAME,Magic Waterfall,Air Terjun Magis
+STAGE_MAGIC_WATERFALL_DESC,Ancient cliff blessed with enchanted roaring cascades.,Tebing purba dengan gemuruh aliran air terjun mistis.
+STAGE_MAD_LAB_NAME,Mad Laboratory,Laboratorium Genetika
+STAGE_MAD_LAB_DESC,Subterranean experimental testing ground of horrors.,Fasilitas rahasia bawah tanah tempat eksperimen genetika buas.
+STAGE_TEMPLE_RUIN_NAME,Temple Ruins,Reruntuhan Kuil
+STAGE_TEMPLE_RUIN_DESC,Sacred stone sanctuary echoing with forgotten celestial power.,Kuil batu purba yang menyimpan gema kekuatan langit kuno.
+STAGE_WILD_WEST_NAME,Wild West Canyon,Ngarai Barat Gersang
+STAGE_WILD_WEST_DESC,Scorching desert valley under blazing noon sun.,Lembah gurun terik berbatu di bawah sengatan matahari padang pasir.
+STAGE_HEAVEN_SECRET_NAME,Heaven's Secret Garden,Taman Rahasia Kahyangan
+STAGE_HEAVEN_SECRET_DESC,Ethereal realm floating high among celestial clouds.,Taman mengambang suci yang tersembunyi di atas awan kahyangan.
+STAGE_THRONE_NAME,Throne of the Fallen,Takhta The Fallen
+STAGE_THRONE_DESC,Colossal floating colosseum where legends perish.,Koloseum kolosal melayang tempat legenda diadili dan dihancurkan.
+STAGE_THRONE_PLATFORM_NAME,Throne of the Fallen,Takhta The Fallen
+STAGE_THRONE_PLATFORM_DESC,Colossal floating colosseum where legends perish.,Koloseum kolosal melayang tempat legenda diadili dan dihancurkan.
+ANN_ROUND_1,ROUND 1,RONDE 1
+ANN_MATCH_START,MATCH START,PERTANDINGAN DIMULAI
+ANN_FIGHT,FIGHT!,MULAI!
+ANN_TIME_OVER,TIME OVER!,WAKTU HABIS!
+ANN_SUDDEN_DEATH,SUDDEN DEATH!,SUDDEN DEATH!
+ANN_LAST_STAND,"LAST STAND - NEXT FATAL HIT LOSES!","PENENTUAN AKHIR - SERANGAN BERIKUTNYA KALAH!"
+ANN_TRIAL_CLEARED,TRIAL CLEARED!,TANTANGAN SELESAI!
+ANN_TRIAL_FAILED,TRIAL FAILED!,TANTANGAN GAGAL!
+ANN_VICTORY,VICTORY!,KEMENANGAN!
+ANN_DEFEAT,DEFEAT!,KEKALAHAN!
+ANN_PLAYER_WINS,"{0} WINS!","{0} MENANG!"
+VN_SKIP_BTN,SKIP [TAB],LEWATI [TAB]
+VN_ADVANCE_PROMPT,[ SPACE / ENTER ] ▶,[ SPASI / ENTER ] ▶
+TIP_01,"TIP: Use Attack + Jump combos to break through enemy defense!","TIPS: Gunakan kombo Serang + Lompat untuk menembus pertahanan lawan!"
+TIP_02,"TIP: Wall-jumping resets your air mobility for swift surprise strikes.","TIPS: Lompat dinding mengembalikan kontrol udara untuk serangan kejutan."
+TIP_03,"TIP: If time runs out with equal Souls, SUDDEN DEATH triggers: 1 Soul, 1-Hit Kill threshold!","TIPS: Jika waktu habis dengan Soul seimbang, SUDDEN DEATH aktif: 1 Soul, 1 Pukulan Fatal Menang!"
+TIP_04,"TIP: Heavy attacks inflict high knockback, ideal for ring-out victories.","TIPS: Serangan pamungkas memiliki daya dorong tinggi, efektif untuk ring-out."
+TIP_05,"TIP: Guarding reduces incoming damage and prevents knockback.","TIPS: Menangkis mengurangi luka serangan dan menahan daya dorong lawan."
+TIP_06,"TIP: Each fighter possesses unique aerial trajectories and attack ranges.","TIPS: Setiap petarung memiliki jangkauan serang dan lintasan lompat yang khas."
+TIP_07,"TIP: In Campaign Mode, memorize boss patterns to dodge brutal phase 2 void strikes.","TIPS: Di Mode Cerita, pelajari pola serangan bos untuk menghindari serangan fase 2."
+TIP_08,"TIP: Master double jumping to recover safely from deep arena drops.","TIPS: Kuasai lompatan ganda untuk kembali aman ke platform saat terlempar jauh."

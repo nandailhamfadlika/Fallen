@@ -91,6 +91,7 @@ func get_stocks_text() -> String:
 const STAGES = {
 	"temple_ruin": "res://src/stages/TempleRuinStage.tscn",
 	"ruined_school": "res://src/stages/ThronePlatformStage.tscn",
+	"throne_platform": "res://src/stages/ThronePlatformStage.tscn",
 	"mad_lab": "res://src/stages/MadLabStage.tscn",
 	"magic_waterfall": "res://src/stages/MagicWaterfallStage.tscn",
 	"wild_west": "res://src/stages/WildWestStage.tscn",
@@ -214,6 +215,19 @@ func start_campaign_stage(stage_idx: int) -> void:
 	round_stocks = CAMPAIGN_STOCKS
 	game_mode = "campaign"
 	
+	# Auto-save campaign state
+	var sm = get_node_or_null("/root/SaveManager")
+	if sm:
+		sm.save_campaign_progress(
+			p1_character,
+			campaign_difficulty,
+			campaign_stage_index,
+			campaign_claimants,
+			campaign_stages,
+			campaign_player_device_type,
+			campaign_player_device_id
+		)
+	
 	var opp_char: String = ""
 	var stage_key: String = ""
 	
@@ -250,6 +264,34 @@ func start_campaign_stage(stage_idx: int) -> void:
 	
 	launch_match()
 
+func resume_saved_campaign() -> bool:
+	var sm = get_node_or_null("/root/SaveManager")
+	if not sm or not sm.has_active_campaign():
+		return false
+	
+	var save_data: Dictionary = sm.get_active_campaign()
+	p1_character = save_data.get("hero_id", "aron")
+	campaign_difficulty = save_data.get("difficulty", "medium")
+	campaign_stage_index = int(save_data.get("stage_index", 1))
+	campaign_player_device_type = save_data.get("device_type", "keyboard_wasd")
+	campaign_player_device_id = int(save_data.get("device_id", -1))
+	
+	campaign_claimants.clear()
+	for c in save_data.get("campaign_claimants", []):
+		campaign_claimants.append(str(c))
+		
+	campaign_stages.clear()
+	for s in save_data.get("campaign_stages", []):
+		campaign_stages.append(str(s))
+		
+	round_time_limit = CAMPAIGN_TIME_LIMIT
+	round_stocks = CAMPAIGN_STOCKS
+	game_mode = "campaign"
+	
+	# Langsung menuju loading screen stage yang sedang berjalan
+	start_campaign_stage(campaign_stage_index)
+	return true
+
 # Backwards compatibility alias
 func start_campaign_stage_1() -> void:
 	start_campaign_stage(1)
@@ -271,5 +313,9 @@ func retry_campaign_stage() -> void:
 	start_campaign_stage(campaign_stage_index)
 
 func go_to_campaign_victory() -> void:
+	# Clear active run karena campaign telah sukses ditamatkan
+	var sm = get_node_or_null("/root/SaveManager")
+	if sm:
+		sm.clear_campaign_save()
 	campaign_story_mode = "epilogue"
 	load_stage_with_screen("res://src/ui/cutscenes/CampaignStoryScene.tscn")

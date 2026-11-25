@@ -23,60 +23,37 @@ func _ready() -> void:
 		
 	vn_player.auto_start = false
 
+	var am := get_node_or_null("/root/AudioManager")
 	match story_mode:
 		"facing_the_fallen":
+			if am:
+				am.stop_bgm(0.5)
 			vn_player.play_facing_the_fallen_intro(current_character, func():
 				_on_facing_the_fallen_done()
 			)
 		"epilogue":
+			if am:
+				am.stop_bgm(0.5)
 			vn_player.play_character_epilogue(current_character, func():
 				_on_epilogue_done()
 			)
 		_: # "prologue"
+			if am:
+				am.play_bgm("story_prologue", 0.8)
 			vn_player.play_universal_prologue(func():
 				_on_universal_prologue_done()
 			)
 
 func _on_universal_prologue_done() -> void:
+	# Stop universal prologue BGM before character-specific prologue begins
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.stop_bgm(0.6)
+
 	# Phase 2: Play Character-Specific Prologue
-	match current_character.to_lower():
-		"aron":
-			vn_player.play_aron_prologue(func():
-				_on_all_prologues_completed()
-			)
-		"mike":
-			vn_player.play_mike_prologue(func():
-				_on_all_prologues_completed()
-			)
-		"rin":
-			vn_player.play_rin_prologue(func():
-				_on_all_prologues_completed()
-			)
-		"muslan":
-			vn_player.play_muslan_prologue(func():
-				_on_all_prologues_completed()
-			)
-		"kemet":
-			vn_player.play_kemet_prologue(func():
-				_on_all_prologues_completed()
-			)
-		"butler":
-			vn_player.play_butler_prologue(func():
-				_on_all_prologues_completed()
-			)
-		"om_hami", "om hami", "hami":
-			vn_player.play_om_hami_prologue(func():
-				_on_all_prologues_completed()
-			)
-		"sunkibo":
-			vn_player.play_sunkibo_prologue(func():
-				_on_all_prologues_completed()
-			)
-		_:
-			# Default to Aron prologue if character is unmapped
-			vn_player.play_aron_prologue(func():
-				_on_all_prologues_completed()
-			)
+	vn_player.play_character_prologue(current_character, func():
+		_on_all_prologues_completed()
+	)
 
 func _on_all_prologues_completed() -> void:
 	# Proceeds to Stage 1 of the Campaign Mode

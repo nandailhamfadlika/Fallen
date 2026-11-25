@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://pausemenu01"]
+[gd_scene load_steps=3 format=3 uid="uid://pausemenu01"]
 
 [ext_resource type="Script" path="res://src/ui/PauseMenu.gd" id="1_pause"]
+[ext_resource type="PackedScene" path="res://src/ui/AudioSettingsGroup.tscn" id="2_audio_group"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
@@ -33,7 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Control/CenterContainer"]
-custom_minimum_size = Vector2(380, 340)
+custom_minimum_size = Vector2(380, 380)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer/PanelContainer"]
@@ -75,6 +76,12 @@ custom_minimum_size = Vector2(240, 38)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Change Character"
+
+[node name="OptionsButton" type="Button" parent="Control/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(240, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Audio Options"
 
 [node name="QuitButton" type="Button" parent="Control/CenterContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(240, 38)
@@ -149,9 +156,55 @@ custom_minimum_size = Vector2(140, 38)
 layout_mode = 2
 text = "Cancel"
 
+[node name="OptionsCenterContainer" type="CenterContainer" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionsPanel" type="PanelContainer" parent="Control/OptionsCenterContainer"]
+custom_minimum_size = Vector2(460, 310)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/OptionsCenterContainer/OptionsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 22
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/OptionsCenterContainer/OptionsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="OptionsTitle" type="Label" parent="Control/OptionsCenterContainer/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "AUDIO OPTIONS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control/OptionsCenterContainer/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AudioSettingsGroup" parent="Control/OptionsCenterContainer/OptionsPanel/MarginContainer/VBoxContainer" instance=ExtResource("2_audio_group")]
+layout_mode = 2
+
+[node name="OptionsCloseBtn" type="Button" parent="Control/OptionsCenterContainer/OptionsPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(160, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Back"
+
 [connection signal="pressed" from="Control/CenterContainer/PanelContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="Control/CenterContainer/PanelContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Control/CenterContainer/PanelContainer/VBoxContainer/CharSelectButton" to="." method="_on_char_select_button_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/PanelContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="Control/CenterContainer/PanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="Control/ConfirmCenterContainer/ConfirmPanel/MarginContainer/VBoxContainer/ButtonBox/ConfirmYesBtn" to="." method="_on_confirm_yes_button_pressed"]
 [connection signal="pressed" from="Control/ConfirmCenterContainer/ConfirmPanel/MarginContainer/VBoxContainer/ButtonBox/ConfirmNoBtn" to="." method="_on_confirm_no_button_pressed"]
+[connection signal="pressed" from="Control/OptionsCenterContainer/OptionsPanel/MarginContainer/VBoxContainer/OptionsCloseBtn" to="." method="_on_options_close_button_pressed"]

@@ -96,6 +96,7 @@ var is_settings_open: bool = false
 @onready var btn_stock_3: Button = $SettingsPopup/DialogPanel/Margin/VBox/StockSection/StockButtons/BtnStock3
 @onready var btn_stock_5: Button = $SettingsPopup/DialogPanel/Margin/VBox/StockSection/StockButtons/BtnStock5
 
+@onready var audio_settings_group: VBoxContainer = $SettingsPopup/DialogPanel/Margin/VBox/AudioSection/AudioSettingsGroup
 @onready var btn_close: Button = $SettingsPopup/DialogPanel/Margin/VBox/CloseBox/BtnClose
 
 var style_opt_active: StyleBox
@@ -103,6 +104,10 @@ var style_opt_inactive: StyleBox
 var slot_nodes: Array[Control] = []
 
 func _ready() -> void:
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_bgm("main_menu", 0.4)
+
 	# Set initial selection from GameManager
 	selected_index = 1
 	for i in range(STAGE_OPTIONS.size()):
@@ -181,6 +186,59 @@ func _setup_settings_popup() -> void:
 	# Row 3: Close button
 	btn_close.focus_neighbor_top = btn_120s.get_path()
 
+	if audio_settings_group:
+		var first_slider: Control = audio_settings_group.get_first_focusable()
+		var last_slider: Control = audio_settings_group.get_last_focusable()
+		if first_slider and last_slider:
+			btn_99s.focus_neighbor_bottom = first_slider.get_path()
+			btn_120s.focus_neighbor_bottom = first_slider.get_path()
+			btn_150s.focus_neighbor_bottom = first_slider.get_path()
+			btn_inf.focus_neighbor_bottom = first_slider.get_path()
+			first_slider.focus_neighbor_top = btn_120s.get_path()
+			last_slider.focus_neighbor_bottom = btn_close.get_path()
+			btn_close.focus_neighbor_top = last_slider.get_path()
+
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.wire_button_sfx(settings_btn, "", true)
+		for btn in [btn_99s, btn_120s, btn_150s, btn_inf, btn_stock_1, btn_stock_2, btn_stock_3, btn_stock_5]:
+			am.wire_button_sfx(btn, "confirm", true)
+		am.wire_button_sfx(btn_close, "", true)
+
+	var lm := get_node_or_null("/root/LocalizationManager")
+	if lm and lm.has_signal("locale_changed"):
+		lm.locale_changed.connect(func(_l: String): _update_localized_ui())
+	_update_localized_ui()
+
+	_update_settings_ui()
+
+func _update_localized_ui() -> void:
+	var header_lbl := get_node_or_null("HeaderContainer/HeaderLabel") as Label
+	if header_lbl:
+		header_lbl.text = tr("SS_HEADER")
+	if settings_btn:
+		settings_btn.text = "⚙ " + tr("SS_SETTINGS_BTN")
+	if btn_close:
+		btn_close.text = tr("UI_CONFIRM") + " & " + tr("UI_CLOSE") + " [ESC]"
+	var dialog_title := get_node_or_null("SettingsPopup/DialogPanel/Margin/VBox/HeaderBox/Title") as Label
+	if dialog_title:
+		dialog_title.text = "⚔ " + tr("SS_MODAL_TITLE") + " ⚔"
+	var stock_title := get_node_or_null("SettingsPopup/DialogPanel/Margin/VBox/StockSection/StockSectionTitle") as Label
+	if stock_title:
+		stock_title.text = tr("SS_STOCK_LABEL").to_upper()
+	var stock_desc := get_node_or_null("SettingsPopup/DialogPanel/Margin/VBox/StockSection/StockRuleDesc") as Label
+	if stock_desc:
+		stock_desc.text = tr("SS_STOCK_DESC")
+	var time_title := get_node_or_null("SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeSectionTitle") as Label
+	if time_title:
+		time_title.text = tr("SS_TIMER_LABEL").to_upper()
+	var time_desc := get_node_or_null("SettingsPopup/DialogPanel/Margin/VBox/TimeSection/TimeRuleDesc") as Label
+	if time_desc:
+		time_desc.text = tr("SS_TIMER_DESC")
+	var audio_sec_title := get_node_or_null("SettingsPopup/DialogPanel/Margin/VBox/AudioSection/AudioSectionTitle") as Label
+	if audio_sec_title:
+		audio_sec_title.text = tr("OPT_SECTION_AUDIO") + " & " + tr("OPT_SECTION_LANGUAGE")
+	_update_display()
 	_update_settings_ui()
 
 func _setup_slots() -> void:
@@ -194,6 +252,10 @@ func _setup_slots() -> void:
 		slot.gui_input.connect(func(event: InputEvent):
 			if event is InputEventMouseButton and event.pressed and not is_locked_in:
 				if idx < STAGE_OPTIONS.size() and not STAGE_OPTIONS[idx]["locked"]:
+					if selected_index != idx:
+						var am := get_node_or_null("/root/AudioManager")
+						if am:
+							am.play_sfx("select")
 					selected_index = idx
 					_update_display()
 					_update_token_position()
@@ -228,13 +290,22 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("p1_attack") or event.is_action_pressed("p2_attack") or event.is_action_pressed("ui_accept"):
 		_confirm_selection()
 	elif event.is_action_pressed("pause"):
+		var am := get_node_or_null("/root/AudioManager")
+		if am:
+			am.play_sfx("back")
 		GameManager.go_to_character_select()
 
 func _open_settings_popup() -> void:
 	if is_locked_in or is_settings_open or not settings_popup:
 		return
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("confirm")
+		am.suppress_select_for(80)
 	is_settings_open = true
 	settings_popup.visible = true
+	if audio_settings_group:
+		audio_settings_group.refresh()
 	_update_settings_ui()
 
 	dialog_panel.pivot_offset = dialog_panel.size / 2.0
@@ -258,6 +329,9 @@ func _open_settings_popup() -> void:
 func _close_settings_popup() -> void:
 	if not is_settings_open:
 		return
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("back")
 	is_settings_open = false
 	var tween = create_tween()
 	tween.tween_property(dialog_panel, "modulate:a", 0.0, 0.1)
@@ -365,11 +439,23 @@ func _move_selection(dir: int) -> void:
 			selected_index = 7
 	_update_display()
 	_update_token_position()
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("select")
 
 func _update_display() -> void:
 	var data = STAGE_OPTIONS[selected_index]
-	stage_title_lbl.text = data["name"]
-	stage_desc_lbl.text = data["desc"]
+	var stage_id: String = data["id"]
+	var lm := get_node_or_null("/root/LocalizationManager")
+	if stage_id == "random":
+		stage_title_lbl.text = tr("STAGE_RANDOM_NAME")
+		stage_desc_lbl.text = tr("STAGE_RANDOM_DESC")
+	elif lm:
+		stage_title_lbl.text = lm.get_stage_name(stage_id)
+		stage_desc_lbl.text = lm.get_stage_desc(stage_id)
+	else:
+		stage_title_lbl.text = data["name"]
+		stage_desc_lbl.text = data["desc"]
 	
 	if ResourceLoader.exists(data["preview"]):
 		stage_preview.texture = load(data["preview"])
@@ -392,6 +478,9 @@ func _update_token_position() -> void:
 
 func _confirm_selection() -> void:
 	is_locked_in = true
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("confirm")
 	var chosen_id = STAGE_OPTIONS[selected_index]["id"]
 	
 	if chosen_id == "random":

@@ -21,7 +21,10 @@ config/icon="res://icon.png"
 
 [autoload]
 
+SaveManager="*res://src/core/SaveManager.gd"
 GameManager="*res://src/core/GameManager.gd"
+AudioManager="*res://src/core/AudioManager.gd"
+LocalizationManager="*res://src/core/LocalizationManager.gd"
 
 [display]
 

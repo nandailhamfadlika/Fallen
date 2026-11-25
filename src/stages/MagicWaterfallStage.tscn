@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://magicwaterfall01"]
 
-[ext_resource type="Script" path="res://src/stages/ThronePlatformStage.gd" id="1_stage"]
+[ext_resource type="Script" path="res://src/stages/MagicWaterfallStage.gd" id="1_stage"]
 [ext_resource type="Script" path="res://src/stages/DeathZone.gd" id="2_death"]
 [ext_resource type="PackedScene" uid="uid://hudview01" path="res://src/ui/HUD.tscn" id="3_hud"]
 [ext_resource type="PackedScene" uid="uid://pausemenu01" path="res://src/ui/PauseMenu.tscn" id="4_pause"]
@@ -139,3 +139,17 @@ margin = Vector2(360, 240)
 follow_speed = 6.0
 zoom_speed = 5.0
 max_camera_y = 520.0
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="P1Spawn" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(700, 460)
+
+[node name="P2Spawn" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(950, 460)
+
+[node name="P3Spawn" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(580, 460)
+
+[node name="P4Spawn" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(1060, 460)

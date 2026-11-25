@@ -17,11 +17,18 @@ func _ready() -> void:
 	fade_overlay.modulate.a = 1.0
 	prompt_box.modulate.a = 0.0
 
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_bgm("main_menu", 0.6)
+
 	# Fade in from black cleanly
 	var enter_tween = create_tween()
 	enter_tween.tween_property(fade_overlay, "modulate:a", 0.0, 0.6)
 	await enter_tween.finished
 	can_accept_input = true
+
+	if prompt_label:
+		prompt_label.text = tr("UI_PRESS_ANY_KEY")
 
 	# Start looping pulse animation for "PRESS ANYTHING TO START"
 	_start_prompt_pulse()
@@ -55,6 +62,10 @@ func _on_start_pressed() -> void:
 		return
 	is_transitioning = true
 	can_accept_input = false
+
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("confirm")
 
 	# Stop background pulse and flash prompt enthusiastically (arcade style!)
 	if pulse_tween and pulse_tween.is_valid():

@@ -127,9 +127,9 @@ var warning_tween: Tween
 
 func _ready() -> void:
 	GameManager.game_mode = "pvp"
-
-	if header_title:
-		header_title.text = "SELECT YOUR FIGHTER"
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_bgm("main_menu", 0.4)
 
 	# Kumpulkan node slot karakter
 	slot_nodes.clear()
@@ -162,7 +162,21 @@ func _ready() -> void:
 		player_cards[i].visible = true
 		player_cards[i].set_unjoined()
 
+	var lm := get_node_or_null("/root/LocalizationManager")
+	if lm and lm.has_signal("locale_changed"):
+		lm.locale_changed.connect(func(_l: String): _update_localized_texts())
+	_update_localized_texts()
+
+func _update_localized_texts() -> void:
+	if header_title:
+		header_title.text = tr("CS_HEADER")
+	var hint := get_node_or_null("HintLabel") as Label
+	if hint:
+		hint.text = tr("CS_HINT_CONTROLS")
 	_update_status_banner()
+	for slot in slots:
+		if not slot.is_joined and slot.card:
+			slot.card.set_unjoined()
 
 func _join_player(slot_idx: int, dev_type: String, dev_id: int, initial_char_idx: int = -1) -> void:
 	if slot_idx < 0 or slot_idx >= slots.size():
@@ -210,12 +224,20 @@ func _join_player(slot_idx: int, dev_type: String, dev_id: int, initial_char_idx
 	slot.card.set_joined(dev_name, CHARACTERS[slot.cursor_idx])
 	slot.cursor.visible = true
 
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("confirm")
+
 	call_deferred("_update_cursor_position", slot_idx)
 	_update_status_banner()
 
 func _leave_player(slot_idx: int) -> void:
 	if slot_idx < 0 or slot_idx >= slots.size():
 		return
+
+	var am := get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx("back")
 
 	var slot = slots[slot_idx]
 	slot.is_joined = false
@@ -248,6 +270,9 @@ func _process(delta: float) -> void:
 
 	# ESC untuk kembali ke Main Menu
 	if Input.is_action_just_pressed("pause") or Input.is_physical_key_pressed(KEY_ESCAPE):
+		var am := get_node_or_null("/root/AudioManager")
+		if am:
+			am.play_sfx("back")
 		GameManager.go_to_main_menu()
 		return
 
@@ -284,13 +309,22 @@ func _process(delta: float) -> void:
 				slot.cursor_idx = _navigate_grid(slot.cursor_idx, move_dir)
 				slot.card.update_character(CHARACTERS[slot.cursor_idx])
 				_update_cursor_position(i)
+				var am := get_node_or_null("/root/AudioManager")
+				if am:
+					am.play_sfx("select")
 
 			# Konfirmasi Pilihan (Attack Button / Enter / F)
 			if slot.input_reader.attack_just_pressed:
 				var char_data = CHARACTERS[slot.cursor_idx]
 				if char_data.get("locked", false):
-					_show_warning("P%d: Karakter masih dikunci!" % slot.player_num)
+					var am := get_node_or_null("/root/AudioManager")
+					if am:
+						am.play_sfx("back")
+					_show_warning(tr("CS_WARN_LOCKED") % slot.player_num)
 				else:
+					var am := get_node_or_null("/root/AudioManager")
+					if am:
+						am.play_sfx("confirm")
 					slot.is_ready = true
 					slot.card.set_ready_state(true)
 					_check_all_ready()
@@ -301,6 +335,9 @@ func _process(delta: float) -> void:
 		else:
 			# Batalkan status READY (Dodge atau Down)
 			if slot.input_reader.dodge_just_pressed or slot.input_reader.down_just_pressed:
+				var am := get_node_or_null("/root/AudioManager")
+				if am:
+					am.play_sfx("back")
 				slot.is_ready = false
 				slot.card.set_ready_state(false)
 				_update_status_banner()
@@ -378,16 +415,16 @@ func _update_status_banner() -> void:
 				ready_count += 1
 
 	if joined_count == 0:
-		match_status_lbl.text = "PRESS BUTTON TO JOIN (MIN 2 PLAYERS TO BATTLE)"
+		match_status_lbl.text = tr("CS_STATUS_NO_PLAYERS")
 		match_status_lbl.modulate = Color(1.0, 0.85, 0.35)
 	elif joined_count == 1:
-		match_status_lbl.text = "1 PLAYER JOINED - WAITING FOR OPPONENTS TO JOIN..."
+		match_status_lbl.text = tr("CS_STATUS_ONE_PLAYER")
 		match_status_lbl.modulate = Color(1.0, 0.75, 0.3)
 	elif ready_count < joined_count:
-		match_status_lbl.text = "%d / %d PLAYERS READY - PRESS ATTACK TO READY UP" % [ready_count, joined_count]
+		match_status_lbl.text = tr("CS_STATUS_READY_COUNT") % [ready_count, joined_count]
 		match_status_lbl.modulate = Color(0.3, 0.9, 1.0)
 	else:
-		match_status_lbl.text = "ALL FIGHTERS READY! ENTERING ARENA..."
+		match_status_lbl.text = tr("CS_STATUS_ALL_READY")
 		match_status_lbl.modulate = Color(0.2, 1.0, 0.4)
 
 func _check_all_ready() -> void:
@@ -411,7 +448,7 @@ func _check_all_ready() -> void:
 
 	if joined_count >= 2 and ready_count == joined_count:
 		transition_started = true
-		match_status_lbl.text = "ALL FIGHTERS READY! PREPARE FOR BATTLE!"
+		match_status_lbl.text = tr("CS_STATUS_PREPARE_BATTLE")
 		match_status_lbl.modulate = Color(1.0, 0.2, 0.2)
 
 		var tween = create_tween()
@@ -451,6 +488,9 @@ func _on_slot_gui_input(event: InputEvent, idx: int) -> void:
 				slots[0].card.update_character(CHARACTERS[idx])
 				_update_cursor_position(0)
 				if not CHARACTERS[idx].get("locked", false):
+					var am := get_node_or_null("/root/AudioManager")
+					if am:
+						am.play_sfx("confirm")
 					slots[0].is_ready = true
 					slots[0].card.set_ready_state(true)
 					_check_all_ready()
@@ -463,6 +503,9 @@ func _on_slot_gui_input(event: InputEvent, idx: int) -> void:
 				slots[1].card.update_character(CHARACTERS[idx])
 				_update_cursor_position(1)
 				if not CHARACTERS[idx].get("locked", false):
+					var am := get_node_or_null("/root/AudioManager")
+					if am:
+						am.play_sfx("confirm")
 					slots[1].is_ready = true
 					slots[1].card.set_ready_state(true)
 					_check_all_ready()
